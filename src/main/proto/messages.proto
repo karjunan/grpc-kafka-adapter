@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+option java_package="com.grpc.server.proto";
+
+message Grpc_Message {
+  string correlation_id = 1;
+  string key = 2;
+  string value = 3;
+}
+
+message GetAllMessages {}
+
+message Request {
+    string key = 1;
+}
+
+message Response {
+    Grpc_Message message = 1;
+}
+
+
+message OkResponse {
+  bool isOk = 1;
+}
+
+service KafkaService {
+  rpc GetAll (GetAllMessages) returns (stream Response);
+  rpc Save (Request) returns (OkResponse);
+}
