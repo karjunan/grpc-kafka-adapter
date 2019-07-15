@@ -1,7 +1,6 @@
 package com.grpc.server.interceptor;
 
 import com.google.common.annotations.VisibleForTesting;
-import io.grpc.ForwardingServerCall.SimpleForwardingServerCall;
 import io.grpc.Metadata;
 import io.grpc.ServerCall;
 import io.grpc.ServerCallHandler;

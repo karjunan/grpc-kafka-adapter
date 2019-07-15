@@ -12,6 +12,7 @@ message GetAllMessages {}
 
 message Request {
     string key = 1;
+    string value = 2;
 }
 
 message Response {

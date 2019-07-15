@@ -1,0 +1,8 @@
+{"namespace": "com.grpc.server.avro",
+  "type": "record",
+  "name": "grpc_message",
+  "fields": [
+    {"name": "key", "type": "string"},
+    {"name": "value",  "type": "string"}
+  ]
+}

@@ -6,13 +6,18 @@ import io.grpc.Server;
 import io.grpc.ServerBuilder;
 import io.grpc.ServerInterceptors;
 
+import java.util.logging.Logger;
+
 public class GrpcKafkaServer {
+    private static final Logger logger = Logger.getLogger(GrpcKafkaServer.class.getName());
+
     public static void main(String[] args) {
+
         try {
             GrpcKafkaServer grpcKafkaServer = new GrpcKafkaServer();
             grpcKafkaServer.start();
         } catch (Exception e) {
-            System.err.println(e);
+            logger.severe("Problem while starting the producer server " + e.getMessage());
         }
     }
     
@@ -27,11 +32,11 @@ public class GrpcKafkaServer {
                 .build()
                 .start();
 
-        System.out.println("Listening on port " + port);
+        logger.info("Listening on port " + port);
         Runtime.getRuntime().addShutdownHook(new Thread() {
             @Override
             public void run() {
-                System.out.println("Shutting down server");
+                logger.severe("Shutting down server");
                 GrpcKafkaServer.this.stop();
             }
         });
