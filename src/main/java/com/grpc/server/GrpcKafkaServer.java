@@ -6,7 +6,12 @@ import io.grpc.Server;
 import io.grpc.ServerBuilder;
 import io.grpc.ServerInterceptors;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Properties;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 public class GrpcKafkaServer {
     private static final Logger logger = Logger.getLogger(GrpcKafkaServer.class.getName());
@@ -25,7 +30,12 @@ public class GrpcKafkaServer {
     
     private void start() throws Exception {
         final int port = 8000;
-        ProducerService service = new ProducerService();
+        String servers = System.getenv("bootstrapServers");
+        String schemaRegistries = System.getenv("schemaRegistry");
+        List<String> serverList = getServerList(servers);
+        List<String> schemaRegistryList = getServerList(schemaRegistries);
+        Properties properties = new Properties();
+        ProducerService service = new ProducerService(properties);
 
         server = ServerBuilder.forPort(port)
                 .addService(ServerInterceptors.intercept(service,new HeaderServerInterceptor()))
@@ -44,7 +54,12 @@ public class GrpcKafkaServer {
         server.awaitTermination();
         
     }
-    
+
+    private List<String> getServerList(String servers) {
+        String [] list = servers.split(",");
+        return Arrays.stream(list).collect(Collectors.toList());
+    }
+
     private void stop() {
         if (server != null) {
             server.shutdown();

@@ -1,21 +1,18 @@
 package com.grpc.server.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.grpc.server.domain.Request;
-import com.grpc.server.interceptor.HeaderServerInterceptor;
+import com.google.common.annotations.VisibleForTesting;
+import com.google.protobuf.Message;
 import com.grpc.server.proto.KafkaServiceGrpc;
 import com.grpc.server.proto.Messages;
-import io.confluent.kafka.serializers.KafkaAvroSerializer;
 import io.grpc.stub.StreamObserver;
 import org.apache.avro.Schema;
 import org.apache.avro.generic.GenericData;
 import org.apache.avro.generic.GenericRecord;
 import org.apache.kafka.clients.producer.KafkaProducer;
-import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.clients.producer.ProducerRecord;
-import org.apache.kafka.common.serialization.StringSerializer;
 
+import java.io.IOException;
+import java.util.Objects;
 import java.util.Properties;
 import java.util.logging.Logger;
 
@@ -24,20 +21,26 @@ public class ProducerService extends KafkaServiceGrpc.KafkaServiceImplBase {
 
     private static final Logger logger = Logger.getLogger(ProducerService.class.getName());
 
-    static Properties properties;
+    private Properties properties;
+    private TestHelper testHelper;
 
-    public ProducerService() {
-        properties = new Properties();
-        properties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG,System.getenv("HOST_IP") );
-        properties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG,StringSerializer.class.getName());
-        properties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG,KafkaAvroSerializer.class.getName());
+    public ProducerService(Properties properties) {
+        this.properties = properties;
     }
 
     @Override
-    public void save(Messages.Request request, StreamObserver<Messages.OkResponse> responseObserver) {
+    public void save(Messages.ProducerRequest request, StreamObserver<Messages.OkResponse> responseObserver) {
 
+        if(Objects.isNull(request.getTopicName())) {
+            responseObserver.onError(new Exception(" Topic name cannot be null"));
+            return;
+        }
+        System.out.println("Properrties => " + properties);
         try(KafkaProducer<String,GenericRecord> producer = new KafkaProducer<>(properties)){
-            ProducerRecord<String,GenericRecord> producerRecord = new ProducerRecord<>(System.getenv("TOPIC"),avroRecord(request) );
+
+            GenericRecord record = avroRecord(request);
+            System.out.println(record);
+            ProducerRecord<String,GenericRecord> producerRecord = new ProducerRecord<>(request.getTopicName(),record);
             producer.send(producerRecord);
             logger.info("Message Persisted => " + producerRecord.toString());
             Messages.OkResponse response =
@@ -46,19 +49,43 @@ public class ProducerService extends KafkaServiceGrpc.KafkaServiceImplBase {
                             .build();
             responseObserver.onNext(response);
             responseObserver.onCompleted();
+            if(testHelper != null ) {
+                testHelper.onMessage(response);
+            }
             return;
         } catch (Exception ex) {
-            logger.severe(() -> ex.getMessage());
+            logger.severe("Exception while persisting data - " + ex.getMessage());
+            if(testHelper != null ) {
+                testHelper.onRpcError(new Exception(ex.getMessage()));
+            }
+            responseObserver.onError(ex);
         }
-        responseObserver.onError(new Exception(" Cannot persist the data " + request.getKey()));
     }
 
-    private GenericRecord avroRecord(Messages.Request request) {
+    private GenericRecord avroRecord(Messages.ProducerRequest request) throws IOException {
         Schema.Parser parser = new Schema.Parser();
-        Schema schema = parser.parse("message.avsc");
+        Schema schema = parser.parse(request.getAvroSchemaFormat());
         GenericRecord avroRecord = new GenericData.Record(schema);
-        avroRecord.put(request.getKey(),request.getValue());
+        avroRecord.put("value",request.getValue());
+        avroRecord.put("header",request.getHeaderMap());
         return avroRecord;
     }
 
+    @VisibleForTesting
+    interface TestHelper {
+        /**
+         * Used for verify/inspect message received from server.
+         */
+        void onMessage(Message message);
+
+        /**
+         * Used for verify/inspect error received from server.
+         */
+        void onRpcError(Throwable exception);
+    }
+
+    @VisibleForTesting
+    void setTestHelper(TestHelper testHelper) {
+        this.testHelper = testHelper;
+    }
 }

@@ -1,8 +1,9 @@
-{"namespace": "com.grpc.server.avro",
+{
+  "namespace": "com.grpc.server.avro",
   "type": "record",
-  "name": "grpc_message",
+  "name": "message",
   "fields": [
-    {"name": "key", "type": "string"},
-    {"name": "value",  "type": "string"}
+    {"name": "value",  "type": "string"},
+    {"name": "header", "type": {"type": "map", "values": "string"}}
   ]
 }
