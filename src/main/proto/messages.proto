@@ -2,8 +2,8 @@ syntax = "proto3";
 
 option java_package="com.grpc.server.proto";
 
-message Grpc_Message {
-    map<string,string> header = 1;
+message Event {
+    Header header = 1;
     string key = 2;
     string value = 3;
 
@@ -12,20 +12,23 @@ message Grpc_Message {
 message ProducerRequest {
     string topic_name = 1;
     int32 partition = 2;
-    string key = 3;
-    string value = 4;
-    string schemaName = 5;
-    string avroSchemaFormat = 6;
-    map<string,string> header = 7;
+    int64 seconds = 3;
+    string key = 4;
+    string value = 5;
+    Header header = 6;
+    string avroSchema= 7;
 }
 
+message Header {
+    map<string, string> pairs = 1;
+}
 
 message GetAllMessages {}
 
 
 
 message Response {
-    Grpc_Message message = 1;
+    Event event = 1;
 }
 
 
