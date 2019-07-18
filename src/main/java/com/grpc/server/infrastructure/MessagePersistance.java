@@ -6,6 +6,7 @@ import org.apache.avro.Schema;
 import org.apache.avro.generic.GenericData;
 import org.apache.avro.generic.GenericRecord;
 import org.apache.kafka.clients.producer.KafkaProducer;
+import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.common.header.Header;
 import org.apache.kafka.common.header.Headers;
 import org.apache.kafka.common.header.internals.RecordHeader;
@@ -29,7 +30,14 @@ public interface MessagePersistance {
      */
     default void saveDefault(Messages.ProducerRequest request,
                              KafkaProducer<String,GenericRecord> producer) {
+        GenericRecord record = MessagePersistance.getAvroRecord(request);
+        Headers headers = MessagePersistance.getRecordHaders(request.getHeader());
+        ProducerRecord<String,GenericRecord> producerRecord = new ProducerRecord<>
+                (request.getTopicName(),request.getPartition(),request.getKey(),record,headers);
 
+//        logger.info("Message to be  Persisted => " + producerRecord.toString());
+        producer.send(producerRecord);
+//        logger.info("Message Persisted " + producerRecord.value());
     }
 
     static Headers getRecordHaders(Messages.Header protoHeader) {

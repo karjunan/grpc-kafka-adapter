@@ -10,7 +10,7 @@ import org.apache.kafka.clients.producer.KafkaProducer;
 import java.util.Properties;
 import java.util.logging.Logger;
 
-public class KafkaPersistance extends MessageAbstractPersistance {
+public class KafkaPersistance implements MessagePersistance {
 
     private static final Logger logger = Logger.getLogger(KafkaPersistance.class.getName());
 

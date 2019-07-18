@@ -1,17 +1,13 @@
 package com.grpc.server.service;
 
-import com.google.protobuf.Descriptors;
 import com.grpc.server.infrastructure.KafkaPersistance;
 import com.grpc.server.infrastructure.MessagePersistance;
 import com.grpc.server.proto.KafkaServiceGrpc;
 import com.grpc.server.proto.Messages;
-import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
 import org.apache.avro.Schema;
 import org.apache.avro.generic.GenericData;
 import org.apache.avro.generic.GenericRecord;
-import org.apache.kafka.clients.producer.KafkaProducer;
-import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.common.header.Header;
 import org.apache.kafka.common.header.Headers;
 import org.apache.kafka.common.header.internals.RecordHeader;
