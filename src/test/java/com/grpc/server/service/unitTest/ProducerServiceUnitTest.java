@@ -76,12 +76,14 @@ public class ProducerServiceUnitTest {
                 .build();
 
         Messages.ProducerRequest producerRequest = Messages.ProducerRequest.newBuilder()
-                .setTopicName("topic-1")
+                .addTopic("topic-1")
+                .addTopic("topic-2")
                 .setValue("Hai from grpc")
 //                .setAvroSchema(getAvroData())
                 .setHeader(header)
                 .build();
 
+        System.out.println("Producer request => " + producerRequest);
         thrown.expect(StatusRuntimeException.class);
         thrown.expectMessage("Avro schema or schema name has to be provided");
         Messages.OkResponse reply =  blockingStub.save(producerRequest);
@@ -143,7 +145,7 @@ public class ProducerServiceUnitTest {
                 .build();
 
         Messages.ProducerRequest producerRequest = Messages.ProducerRequest.newBuilder()
-                .setTopicName("topic-1")
+                .addTopic("topic-2")
                 .setValue("Hai from grpc")
                 .setAvroSchema(getAvroData())
                 .setHeader(header)
@@ -188,7 +190,7 @@ public class ProducerServiceUnitTest {
 //    }
 
     private String getAvroData() throws Exception {
-        return Files.lines(Paths.get("src","main","resources","message.avsc"))
+        return Files.lines(Paths.get("src","main","resources", "avro","message.avsc"))
                 .collect(Collectors.toList()).stream().collect(Collectors.joining(" "));
     }
 }

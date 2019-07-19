@@ -1,6 +1,6 @@
 package com.grpc.server.service;
 
-import com.grpc.server.infrastructure.KafkaPersistance;
+import com.grpc.server.infrastructure.KafkaPersistanceImpl;
 import com.grpc.server.infrastructure.MessagePersistance;
 import com.grpc.server.proto.KafkaServiceGrpc;
 import com.grpc.server.proto.Messages;
@@ -20,7 +20,7 @@ public class ProducerService extends KafkaServiceGrpc.KafkaServiceImplBase {
 
     @Override
     public void save(Messages.ProducerRequest request, StreamObserver<Messages.OkResponse> responseObserver) {
-        MessagePersistance persistance = new KafkaPersistance();
+        MessagePersistance persistance = new KafkaPersistanceImpl();
         persistance.save(request,properties,responseObserver);
     }
 

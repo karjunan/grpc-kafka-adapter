@@ -6,3 +6,4 @@ java-grpc-server.jar
 *.jar
 *.iml
 .project
+*-log*

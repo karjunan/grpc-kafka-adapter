@@ -10,14 +10,19 @@ message Event {
 }
 
 message ProducerRequest {
-    string topic_name = 1;
+    repeated string topic = 1;
     int32 partition = 2;
     int64 seconds = 3;
     string key = 4;
     string value = 5;
     Header header = 6;
     string avroSchema= 7;
+    enum transcational {
+        YES = 0;
+        NO = 1;
+    }
 }
+
 
 message Header {
     map<string, string> pairs = 1;

@@ -10,22 +10,22 @@ import org.apache.kafka.clients.producer.KafkaProducer;
 import java.util.Properties;
 import java.util.logging.Logger;
 
-public class KafkaPersistance implements MessagePersistance {
+public class KafkaPersistanceImpl implements MessagePersistance {
 
-    private static final Logger logger = Logger.getLogger(KafkaPersistance.class.getName());
+    private static final Logger logger = Logger.getLogger(KafkaPersistanceImpl.class.getName());
 
     private Properties properties;
-    private static final String TOPIC_NAME = "topic_name";
+    private static final String TOPIC_NAME = "topic";
     private static final String AVRO_SCHEMA = "avroSchema";
 
     @Override
     public void save(Messages.ProducerRequest request, Properties properties,
             StreamObserver<Messages.OkResponse> responseObserver) {
 
-        Descriptors.FieldDescriptor topicDescriptor = request.getDescriptorForType().findFieldByName(TOPIC_NAME);
+
         Descriptors.FieldDescriptor avroSchemaDescriptor = request.getDescriptorForType().findFieldByName(AVRO_SCHEMA);
 
-        if( !request.hasField(topicDescriptor) || request.getTopicName().length() == 0 ) {
+        if( request.getTopicList().isEmpty() ) {
             Exception ex = new Exception("Topic name cannot be null");
             responseObserver.onError(Status.INTERNAL.withDescription(ex.getMessage())
                     .augmentDescription("Custom exception")
@@ -56,7 +56,7 @@ public class KafkaPersistance implements MessagePersistance {
             responseObserver.onCompleted();
             return;
         } catch (Exception ex) {
-            logger.severe("Exception while persisting data - " + ex.getMessage());
+            logger.severe("Exception while persisting data - " + ex);
             responseObserver.onError(Status.INTERNAL.withDescription(ex.getMessage())
                     .augmentDescription("Custom exception")
                     .withCause(ex)

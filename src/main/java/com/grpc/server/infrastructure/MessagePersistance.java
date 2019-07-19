@@ -14,7 +14,6 @@ import org.apache.kafka.common.header.internals.RecordHeaders;
 
 import java.util.Properties;
 
-@FunctionalInterface
 public interface MessagePersistance {
 
     /*
@@ -25,19 +24,18 @@ public interface MessagePersistance {
                             StreamObserver<Messages.OkResponse> responseObserver);
 
     /*
-        There is a default implementation already provided in the
-        abstract class
+        There is a default implementation to persist the records in kafka.
      */
     default void saveDefault(Messages.ProducerRequest request,
                              KafkaProducer<String,GenericRecord> producer) {
         GenericRecord record = MessagePersistance.getAvroRecord(request);
         Headers headers = MessagePersistance.getRecordHaders(request.getHeader());
-        ProducerRecord<String,GenericRecord> producerRecord = new ProducerRecord<>
-                (request.getTopicName(),request.getPartition(),request.getKey(),record,headers);
-
-//        logger.info("Message to be  Persisted => " + producerRecord.toString());
-        producer.send(producerRecord);
-//        logger.info("Message Persisted " + producerRecord.value());
+        for(String topic: request.getTopicList()) {
+            ProducerRecord<String,GenericRecord> producerRecord = new ProducerRecord<>
+                    (topic,request.getPartition(),request.getKey(),record,headers);
+            System.out.println(producerRecord);
+            producer.send(producerRecord);
+        }
     }
 
     static Headers getRecordHaders(Messages.Header protoHeader) {
