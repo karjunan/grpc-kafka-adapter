@@ -5,16 +5,15 @@ import com.grpc.server.service.ProducerService;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
 import io.grpc.ServerInterceptors;
+import lombok.extern.log4j.Log4j;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
+@Log4j
 public class GrpcKafkaServer {
-    private static final Logger logger = Logger.getLogger(GrpcKafkaServer.class.getName());
 
     public static void main(String[] args) {
 
@@ -22,7 +21,7 @@ public class GrpcKafkaServer {
             GrpcKafkaServer grpcKafkaServer = new GrpcKafkaServer();
             grpcKafkaServer.start();
         } catch (Exception e) {
-            logger.severe("Problem while starting the producer server " + e.getMessage());
+            log.error("Problem while starting the producer server " + e.getMessage());
         }
     }
     
@@ -41,12 +40,11 @@ public class GrpcKafkaServer {
                 .addService(ServerInterceptors.intercept(service,new HeaderServerInterceptor()))
                 .build()
                 .start();
-
-        logger.info("Listening on port " + port);
+        log.info("Listening on port " + port);
         Runtime.getRuntime().addShutdownHook(new Thread() {
             @Override
             public void run() {
-                logger.severe("Shutting down server");
+                log.error("Shutting down server");
                 GrpcKafkaServer.this.stop();
             }
         });
