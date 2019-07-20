@@ -10,36 +10,36 @@ import org.springframework.context.support.GenericApplicationContext;
 
 public class ServiceContextAware  {
 
-    @Autowired
-    private static GenericApplicationContext applicationContext;
-
-
-    public static ApplicationContext getContext() {
-        return applicationContext;
-    }
-
-    @Bean
-    public ProducerService getProducerService() {
-
-        return new ProducerService();
-    }
-
-    @Bean
-    public KafkaProducerConfig getKafkaProducerConfig() {
-
-        return new KafkaProducerConfig();
-    }
-
-
-    @Bean
-    public GrpcKafkaServer getGrpcKafkaServer() {
-
-        return new GrpcKafkaServer();
-    }
-
-    @Bean
-    public KafkaProducerProperties getKafkaProducerProperties() {
-
-        return new KafkaProducerProperties();
-    }
+//    @Autowired
+//    private static GenericApplicationContext applicationContext;
+//
+//
+//    public static ApplicationContext getContext() {
+//        return applicationContext;
+//    }
+//
+//    @Bean
+//    public ProducerService getProducerService() {
+//
+//        return new ProducerService();
+//    }
+//
+//    @Bean
+//    public KafkaProducerConfig getKafkaProducerConfig() {
+//
+//        return new KafkaProducerConfig();
+//    }
+//
+//
+//    @Bean
+//    public GrpcKafkaServer getGrpcKafkaServer() {
+//
+//        return new GrpcKafkaServer();
+//    }
+//
+//    @Bean
+//    public KafkaProducerProperties getKafkaProducerProperties() {
+//
+//        return new KafkaProducerProperties();
+//    }
 }

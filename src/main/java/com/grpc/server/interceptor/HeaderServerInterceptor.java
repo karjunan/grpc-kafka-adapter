@@ -5,9 +5,11 @@ import io.grpc.Metadata;
 import io.grpc.ServerCall;
 import io.grpc.ServerCallHandler;
 import io.grpc.ServerInterceptor;
+import org.springframework.stereotype.Component;
 
 import java.util.logging.Logger;
 
+@Component
 public class HeaderServerInterceptor  implements ServerInterceptor {
 
     private static final Logger logger = Logger.getLogger(HeaderServerInterceptor.class.getName());

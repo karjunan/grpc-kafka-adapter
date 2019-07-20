@@ -2,6 +2,7 @@ package com.grpc.server.service.integrationTest;
 
 import com.grpc.server.proto.Messages;
 import com.grpc.server.service.ProducerService;
+import com.grpc.server.util.Utils;
 import io.confluent.kafka.serializers.AbstractKafkaAvroSerDeConfig;
 import io.confluent.kafka.serializers.KafkaAvroSerializer;
 import io.grpc.inprocess.InProcessChannelBuilder;
@@ -14,19 +15,13 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import org.junit.runner.RunWith;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 import java.util.stream.Collectors;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
+
 public class ProducerServiceRemoteKafkaTest {
 
     /**
@@ -91,7 +86,7 @@ public class ProducerServiceRemoteKafkaTest {
         Messages.ProducerRequest producerRequest = Messages.ProducerRequest.newBuilder()
                 .addTopic("t1")
                 .addTopic("t2")
-                .setAvroSchema(getAvroData())
+                .setAvroSchema(Utils.getAvroData())
                 .setValue("Finally its working")
                 .setHeader(header)
                 .build();
@@ -102,8 +97,5 @@ public class ProducerServiceRemoteKafkaTest {
 
     }
 
-    private String getAvroData() throws Exception {
-        return Files.lines(Paths.get("src", "main", "resources", "avro/message.avsc"))
-                .collect(Collectors.toList()).stream().collect(Collectors.joining(" "));
-    }
+
 }
