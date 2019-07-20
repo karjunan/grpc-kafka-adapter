@@ -1,6 +1,5 @@
 package com.grpc.server.service.integrationTest;
 
-import com.grpc.server.avro.message;
 import com.grpc.server.proto.Messages;
 import com.grpc.server.service.ProducerService;
 import com.grpc.server.util.CustomAvroSerializer;
@@ -85,7 +84,7 @@ public class ProducerServiceTest {
         properties.put(AbstractKafkaAvroSerDeConfig.SCHEMA_REGISTRY_URL_CONFIG, SCHEMA_REGISTRIES);
         ZookeeperGrpcTestServer zookeeperGrpcTestServer = new ZookeeperGrpcTestServer();
         testServer = new KafkaGrpcTestServer(properties,zookeeperGrpcTestServer);
-        schemaRegistryClient.register("topic-1",message.SCHEMA$);
+//        schemaRegistryClient.register("topic-1",Message.SCHEMA$);
         testServer.start();
     }
 
@@ -104,7 +103,7 @@ public class ProducerServiceTest {
 
         // Create a server, add service, start, and register for automatic graceful shutdown.
         grpcCleanup.register(InProcessServerBuilder
-                .forName(serverName).directExecutor().addService(new ProducerService(properties)).build().start());
+                .forName(serverName).directExecutor().addService(new ProducerService()).build().start());
 
         com.grpc.server.proto.KafkaServiceGrpc.KafkaServiceBlockingStub blockingStub = com.grpc.server.proto.KafkaServiceGrpc.newBlockingStub(
                 // Create a client channel and register for automatic graceful shutdown.

@@ -1,38 +1,32 @@
 package com.grpc.server.service.integrationTest;
 
-import com.grpc.server.avro.message;
 import com.grpc.server.proto.Messages;
 import com.grpc.server.service.ProducerService;
-import com.grpc.server.util.CustomAvroSerializer;
-import com.grpc.server.util.KafkaGrpcTestServer;
-import com.grpc.server.util.ZookeeperGrpcTestServer;
-import com.salesforce.kafka.test.KafkaTestServer;
-import io.confluent.kafka.schemaregistry.client.MockSchemaRegistryClient;
-import io.confluent.kafka.schemaregistry.client.SchemaRegistryClient;
 import io.confluent.kafka.serializers.AbstractKafkaAvroSerDeConfig;
-import io.confluent.kafka.serializers.KafkaAvroDeserializer;
 import io.confluent.kafka.serializers.KafkaAvroSerializer;
 import io.grpc.inprocess.InProcessChannelBuilder;
 import io.grpc.inprocess.InProcessServerBuilder;
 import io.grpc.testing.GrpcCleanupRule;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import org.junit.runner.RunWith;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Properties;
 import java.util.stream.Collectors;
 
+@RunWith(SpringRunner.class)
+@SpringBootTest
 public class ProducerServiceRemoteKafkaTest {
 
     /**
@@ -82,7 +76,7 @@ public class ProducerServiceRemoteKafkaTest {
 
         // Create a server, add service, start, and register for automatic graceful shutdown.
         grpcCleanup.register(InProcessServerBuilder
-                .forName(serverName).directExecutor().addService(new ProducerService(properties)).build().start());
+                .forName(serverName).directExecutor().addService(new ProducerService()).build().start());
 
         com.grpc.server.proto.KafkaServiceGrpc.KafkaServiceBlockingStub blockingStub = com.grpc.server.proto.KafkaServiceGrpc.newBlockingStub(
                 // Create a client channel and register for automatic graceful shutdown.

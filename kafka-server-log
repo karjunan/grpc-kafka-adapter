@@ -1446,3 +1446,237 @@ INFO main org.apache.kafka.common.utils.AppInfoParser - Kafka version: 2.2.0
 INFO main org.apache.kafka.common.utils.AppInfoParser - Kafka commitId: 05fcfde8f69b0349
 INFO kafka-producer-network-thread | producer-1 org.apache.kafka.clients.Metadata - Cluster ID: NP7GAltUTTKT5dwSWhopWg
 INFO main org.apache.kafka.clients.producer.KafkaProducer - [Producer clientId=producer-1] Closing the Kafka producer with timeoutMillis = 9223372036854775807 ms.
+INFO main com.grpc.server.server.GrpcKafkaServer - Listening on port 8000
+INFO main com.grpc.server.server.GrpcKafkaServer - Listening on port 8000
+INFO main org.apache.kafka.clients.producer.ProducerConfig - ProducerConfig values: 
+	acks = 1
+	batch.size = 16384
+	bootstrap.servers = [http://localhost:9092]
+	buffer.memory = 33554432
+	client.dns.lookup = default
+	client.id = 
+	compression.type = none
+	connections.max.idle.ms = 540000
+	delivery.timeout.ms = 120000
+	enable.idempotence = false
+	interceptor.classes = []
+	key.serializer = class org.apache.kafka.common.serialization.StringSerializer
+	linger.ms = 0
+	max.block.ms = 60000
+	max.in.flight.requests.per.connection = 5
+	max.request.size = 1048576
+	metadata.max.age.ms = 300000
+	metric.reporters = []
+	metrics.num.samples = 2
+	metrics.recording.level = INFO
+	metrics.sample.window.ms = 30000
+	partitioner.class = class org.apache.kafka.clients.producer.internals.DefaultPartitioner
+	receive.buffer.bytes = 32768
+	reconnect.backoff.max.ms = 1000
+	reconnect.backoff.ms = 50
+	request.timeout.ms = 30000
+	retries = 2147483647
+	retry.backoff.ms = 100
+	sasl.client.callback.handler.class = null
+	sasl.jaas.config = null
+	sasl.kerberos.kinit.cmd = /usr/bin/kinit
+	sasl.kerberos.min.time.before.relogin = 60000
+	sasl.kerberos.service.name = null
+	sasl.kerberos.ticket.renew.jitter = 0.05
+	sasl.kerberos.ticket.renew.window.factor = 0.8
+	sasl.login.callback.handler.class = null
+	sasl.login.class = null
+	sasl.login.refresh.buffer.seconds = 300
+	sasl.login.refresh.min.period.seconds = 60
+	sasl.login.refresh.window.factor = 0.8
+	sasl.login.refresh.window.jitter = 0.05
+	sasl.mechanism = GSSAPI
+	security.protocol = PLAINTEXT
+	send.buffer.bytes = 131072
+	ssl.cipher.suites = null
+	ssl.enabled.protocols = [TLSv1.2, TLSv1.1, TLSv1]
+	ssl.endpoint.identification.algorithm = https
+	ssl.key.password = null
+	ssl.keymanager.algorithm = SunX509
+	ssl.keystore.location = null
+	ssl.keystore.password = null
+	ssl.keystore.type = JKS
+	ssl.protocol = TLS
+	ssl.provider = null
+	ssl.secure.random.implementation = null
+	ssl.trustmanager.algorithm = PKIX
+	ssl.truststore.location = null
+	ssl.truststore.password = null
+	ssl.truststore.type = JKS
+	transaction.timeout.ms = 60000
+	transactional.id = null
+	value.serializer = class io.confluent.kafka.serializers.KafkaAvroSerializer
+
+INFO main io.confluent.kafka.serializers.KafkaAvroSerializerConfig - KafkaAvroSerializerConfig values: 
+	schema.registry.url = [http://localhost:8081]
+	max.schemas.per.subject = 1000
+
+INFO main org.apache.kafka.common.utils.AppInfoParser - Kafka version: 2.2.0
+INFO main org.apache.kafka.common.utils.AppInfoParser - Kafka commitId: 05fcfde8f69b0349
+INFO kafka-producer-network-thread | producer-1 org.apache.kafka.clients.Metadata - Cluster ID: NP7GAltUTTKT5dwSWhopWg
+INFO main org.apache.kafka.clients.producer.KafkaProducer - [Producer clientId=producer-1] Closing the Kafka producer with timeoutMillis = 9223372036854775807 ms.
+INFO main com.grpc.server.GrpcServer - Starting Spring boot  => main
+INFO main com.grpc.server.server.GrpcKafkaServer - Listening on port 8000
+INFO main com.grpc.server.GrpcServer - Starting Spring boot  => main
+INFO main com.grpc.server.server.GrpcKafkaServer -  Server Running in new Thread => main
+INFO main com.grpc.server.server.GrpcKafkaServer - Listening on port 8000
+INFO main com.grpc.server.GrpcServer - Starting Spring boot  => main
+INFO main com.grpc.server.server.GrpcKafkaServer - Listening on port 8000
+INFO main com.grpc.server.GrpcServer - Starting Spring boot Grpc Server
+INFO main com.grpc.server.GrpcServer - Starting Spring boot Grpc Server
+INFO main com.grpc.server.GrpcServer - Starting Spring boot Grpc Server
+INFO main com.grpc.server.GrpcServer - Starting Spring boot Grpc Server
+INFO main com.grpc.server.GrpcServer - Starting Spring boot Grpc Server
+INFO main com.grpc.server.GrpcServer - Starting Spring boot Grpc Server
+INFO main com.grpc.server.GrpcServer - Starting Spring boot Grpc Server
+INFO main com.grpc.server.GrpcServer - Starting Spring boot Grpc Server
+INFO main com.grpc.server.GrpcServer - Starting Spring boot Grpc Server
+INFO main com.grpc.server.GrpcServer - Starting Spring boot Grpc Server
+INFO main com.grpc.server.GrpcServer - Starting Spring boot Grpc Server
+INFO main com.grpc.server.GrpcServer - Starting Spring boot Grpc Server
+INFO main com.grpc.server.GrpcServer - Starting Spring boot Grpc Server
+INFO main com.grpc.server.GrpcServer - Starting Spring boot Grpc Server
+INFO main com.grpc.server.GrpcServer - Starting Spring boot Grpc Server
+INFO main com.grpc.server.GrpcServer - Starting Spring boot Grpc Server
+INFO main com.grpc.server.GrpcServer - Starting Spring boot Grpc Server
+INFO main com.grpc.server.GrpcServer - Starting Spring boot Grpc Server
+INFO main com.grpc.server.GrpcServer - Starting Spring boot Grpc Server
+INFO main com.grpc.server.GrpcServer - Starting Spring boot Grpc Server
+INFO main com.grpc.server.GrpcServer - Starting Spring boot Grpc Server
+INFO main com.grpc.server.GrpcServer - Starting Spring boot Grpc Server
+INFO main com.grpc.server.GrpcServer - Starting Spring boot Grpc Server
+INFO main com.grpc.server.GrpcServer - Starting Spring boot Grpc Server
+INFO main com.grpc.server.server.GrpcKafkaServer - Listening on port 8000
+INFO main com.grpc.server.GrpcServer - Starting Spring boot Grpc Server
+INFO main com.grpc.server.server.GrpcKafkaServer - Listening on port 8000
+INFO main com.grpc.server.GrpcServer - Starting Spring boot Grpc Server
+INFO main com.grpc.server.server.GrpcKafkaServer - Listening on port 8000
+INFO main com.grpc.server.GrpcServer - Starting Spring boot Grpc Server
+INFO main com.grpc.server.server.GrpcKafkaServer - Listening on port 8000
+INFO main com.grpc.server.GrpcServer - Starting Spring boot Grpc Server
+INFO main com.grpc.server.server.GrpcKafkaServer - Listening on port 8000
+INFO main com.grpc.server.GrpcServer - Starting Spring boot Grpc Server
+INFO main com.grpc.server.server.GrpcKafkaServer - Listening on port 8000
+INFO main com.grpc.server.GrpcServer - Starting Spring boot Grpc Server
+INFO main com.grpc.server.GrpcServer - Starting Spring boot Grpc Server
+INFO main com.grpc.server.GrpcServer - Starting Spring boot Grpc Server
+INFO main com.grpc.server.GrpcServer - Starting Spring boot Grpc Server
+INFO main com.grpc.server.GrpcServer - Listening on port 8000
+INFO main com.grpc.server.GrpcServer - Starting Spring boot Grpc Server
+INFO main com.grpc.server.GrpcServer - Starting Spring boot Grpc Server
+INFO main com.grpc.server.server.GrpcKafkaServer - Listening on port 8000
+INFO main com.grpc.server.GrpcServer - Starting Spring boot Grpc Server
+INFO main com.grpc.server.config.KafkaProducerConfig - Configured properties => {schema.registry.url=http://loalhost:8081, value.serializer=org.apache.kafka.common.serialization.StringSerializer, bootstrap.servers=localhost:9092, key.serializer=io.confluent.kafka.serializers.KafkaAvroSerializer}
+INFO main com.grpc.server.server.GrpcKafkaServer - Listening on port 8000
+INFO main com.grpc.server.GrpcServer - Starting Spring boot Grpc Server
+INFO main com.grpc.server.config.KafkaProducerConfig - Configured properties => {schema.registry.url=http://loalhost:8081, value.serializer=org.apache.kafka.common.serialization.StringSerializer, bootstrap.servers=localhost:9092, key.serializer=io.confluent.kafka.serializers.KafkaAvroSerializer}
+INFO main com.grpc.server.server.GrpcKafkaServer - Listening on port 8000
+INFO main org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Neither @ContextConfiguration nor @ContextHierarchy found for test class [com.grpc.server.service.integrationTest.ProducerServiceRemoteKafkaTest], using SpringBootContextLoader
+INFO main org.springframework.test.context.support.AbstractContextLoader - Could not detect default resource locations for test class [com.grpc.server.service.integrationTest.ProducerServiceRemoteKafkaTest]: no resource found for suffixes {-context.xml, Context.groovy}.
+INFO main org.springframework.test.context.support.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [com.grpc.server.service.integrationTest.ProducerServiceRemoteKafkaTest]: ProducerServiceRemoteKafkaTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+INFO main org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration com.grpc.server.GrpcServer for test class com.grpc.server.service.integrationTest.ProducerServiceRemoteKafkaTest
+INFO main org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener, org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener]
+INFO main org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Using TestExecutionListeners: [org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@2ad48653, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener@6bb4dd34, org.springframework.boot.test.autoconfigure.SpringBootDependencyInjectionTestExecutionListener@7d9f158f, org.springframework.test.context.support.DirtiesContextTestExecutionListener@45efd90f, org.springframework.test.context.transaction.TransactionalTestExecutionListener@4b8729ff, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@61710c6, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener@3214ee6, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener@383dc82c, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener@4a07d605, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener@74287ea3, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener@7d7758be]
+ERROR main org.springframework.test.context.TestContextManager - Caught exception while allowing TestExecutionListener [org.springframework.boot.test.autoconfigure.SpringBootDependencyInjectionTestExecutionListener@7d9f158f] to prepare test instance [com.grpc.server.service.integrationTest.ProducerServiceRemoteKafkaTest@1e44b638]
+java.lang.IllegalStateException: Failed to load ApplicationContext
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:125)
+	at org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:108)
+	at org.springframework.test.context.support.DependencyInjectionTestExecutionListener.injectDependencies(DependencyInjectionTestExecutionListener.java:118)
+	at org.springframework.test.context.support.DependencyInjectionTestExecutionListener.prepareTestInstance(DependencyInjectionTestExecutionListener.java:83)
+	at org.springframework.boot.test.autoconfigure.SpringBootDependencyInjectionTestExecutionListener.prepareTestInstance(SpringBootDependencyInjectionTestExecutionListener.java:44)
+	at org.springframework.test.context.TestContextManager.prepareTestInstance(TestContextManager.java:246)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.createTest(SpringJUnit4ClassRunner.java:227)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner$1.runReflectiveCall(SpringJUnit4ClassRunner.java:289)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.methodBlock(SpringJUnit4ClassRunner.java:291)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.runChild(SpringJUnit4ClassRunner.java:246)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.runChild(SpringJUnit4ClassRunner.java:97)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)
+	at org.springframework.test.context.junit4.statements.RunBeforeTestClassCallbacks.evaluate(RunBeforeTestClassCallbacks.java:61)
+	at org.springframework.test.context.junit4.statements.RunAfterTestClassCallbacks.evaluate(RunAfterTestClassCallbacks.java:70)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.run(SpringJUnit4ClassRunner.java:190)
+	at org.junit.runner.JUnitCore.run(JUnitCore.java:137)
+	at com.intellij.junit4.JUnit4IdeaTestRunner.startRunnerWithArgs(JUnit4IdeaTestRunner.java:68)
+	at com.intellij.rt.execution.junit.IdeaTestRunner$Repeater.startRunnerWithArgs(IdeaTestRunner.java:47)
+	at com.intellij.rt.execution.junit.JUnitStarter.prepareStreamsAndStart(JUnitStarter.java:242)
+	at com.intellij.rt.execution.junit.JUnitStarter.main(JUnitStarter.java:70)
+Caused by: java.lang.IllegalArgumentException: LoggerFactory is not a Logback LoggerContext but Logback is on the classpath. Either remove Logback or the competing implementation (class org.slf4j.impl.Log4jLoggerFactory loaded from file:/C:/Users/krishnakumar.arjunan/.m2/repository/org/slf4j/slf4j-log4j12/1.7.25/slf4j-log4j12-1.7.25.jar). If you are using WebLogic you will need to add 'org.slf4j' to prefer-application-packages in WEB-INF/weblogic.xml: org.slf4j.impl.Log4jLoggerFactory
+	at org.springframework.util.Assert.instanceCheckFailed(Assert.java:655)
+	at org.springframework.util.Assert.isInstanceOf(Assert.java:555)
+	at org.springframework.boot.logging.logback.LogbackLoggingSystem.getLoggerContext(LogbackLoggingSystem.java:286)
+	at org.springframework.boot.logging.logback.LogbackLoggingSystem.beforeInitialize(LogbackLoggingSystem.java:102)
+	at org.springframework.boot.context.logging.LoggingApplicationListener.onApplicationStartingEvent(LoggingApplicationListener.java:217)
+	at org.springframework.boot.context.logging.LoggingApplicationListener.onApplicationEvent(LoggingApplicationListener.java:196)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.doInvokeListener(SimpleApplicationEventMulticaster.java:172)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.invokeListener(SimpleApplicationEventMulticaster.java:165)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:139)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:127)
+	at org.springframework.boot.context.event.EventPublishingRunListener.starting(EventPublishingRunListener.java:69)
+	at org.springframework.boot.SpringApplicationRunListeners.starting(SpringApplicationRunListeners.java:48)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:302)
+	at org.springframework.boot.test.context.SpringBootContextLoader.loadContext(SpringBootContextLoader.java:127)
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContextInternal(DefaultCacheAwareContextLoaderDelegate.java:99)
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:117)
+	... 25 more
+INFO main org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Neither @ContextConfiguration nor @ContextHierarchy found for test class [com.grpc.server.service.integrationTest.ProducerServiceRemoteKafkaTest], using SpringBootContextLoader
+INFO main org.springframework.test.context.support.AbstractContextLoader - Could not detect default resource locations for test class [com.grpc.server.service.integrationTest.ProducerServiceRemoteKafkaTest]: no resource found for suffixes {-context.xml, Context.groovy}.
+INFO main org.springframework.test.context.support.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [com.grpc.server.service.integrationTest.ProducerServiceRemoteKafkaTest]: ProducerServiceRemoteKafkaTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+INFO main org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration com.grpc.server.GrpcServer for test class com.grpc.server.service.integrationTest.ProducerServiceRemoteKafkaTest
+INFO main org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener, org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener]
+INFO main org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Using TestExecutionListeners: [org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@6989da5e, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener@385c9627, org.springframework.boot.test.autoconfigure.SpringBootDependencyInjectionTestExecutionListener@139982de, org.springframework.test.context.support.DirtiesContextTestExecutionListener@682b2fa, org.springframework.test.context.transaction.TransactionalTestExecutionListener@217ed35e, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@7dcf94f8, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener@229f66ed, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener@31190526, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener@662ac478, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener@6743e411, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener@3eb25e1a]
+ERROR main org.springframework.test.context.TestContextManager - Caught exception while allowing TestExecutionListener [org.springframework.boot.test.autoconfigure.SpringBootDependencyInjectionTestExecutionListener@139982de] to prepare test instance [com.grpc.server.service.integrationTest.ProducerServiceRemoteKafkaTest@2f8dad04]
+java.lang.IllegalStateException: Failed to load ApplicationContext
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:125)
+	at org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:108)
+	at org.springframework.test.context.support.DependencyInjectionTestExecutionListener.injectDependencies(DependencyInjectionTestExecutionListener.java:118)
+	at org.springframework.test.context.support.DependencyInjectionTestExecutionListener.prepareTestInstance(DependencyInjectionTestExecutionListener.java:83)
+	at org.springframework.boot.test.autoconfigure.SpringBootDependencyInjectionTestExecutionListener.prepareTestInstance(SpringBootDependencyInjectionTestExecutionListener.java:44)
+	at org.springframework.test.context.TestContextManager.prepareTestInstance(TestContextManager.java:246)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.createTest(SpringJUnit4ClassRunner.java:227)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner$1.runReflectiveCall(SpringJUnit4ClassRunner.java:289)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.methodBlock(SpringJUnit4ClassRunner.java:291)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.runChild(SpringJUnit4ClassRunner.java:246)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.runChild(SpringJUnit4ClassRunner.java:97)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)
+	at org.springframework.test.context.junit4.statements.RunBeforeTestClassCallbacks.evaluate(RunBeforeTestClassCallbacks.java:61)
+	at org.springframework.test.context.junit4.statements.RunAfterTestClassCallbacks.evaluate(RunAfterTestClassCallbacks.java:70)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.run(SpringJUnit4ClassRunner.java:190)
+	at org.junit.runner.JUnitCore.run(JUnitCore.java:137)
+	at com.intellij.junit4.JUnit4IdeaTestRunner.startRunnerWithArgs(JUnit4IdeaTestRunner.java:68)
+	at com.intellij.rt.execution.junit.IdeaTestRunner$Repeater.startRunnerWithArgs(IdeaTestRunner.java:47)
+	at com.intellij.rt.execution.junit.JUnitStarter.prepareStreamsAndStart(JUnitStarter.java:242)
+	at com.intellij.rt.execution.junit.JUnitStarter.main(JUnitStarter.java:70)
+Caused by: java.lang.IllegalArgumentException: LoggerFactory is not a Logback LoggerContext but Logback is on the classpath. Either remove Logback or the competing implementation (class org.slf4j.impl.Log4jLoggerFactory loaded from file:/C:/Users/krishnakumar.arjunan/.m2/repository/org/slf4j/slf4j-log4j12/1.7.25/slf4j-log4j12-1.7.25.jar). If you are using WebLogic you will need to add 'org.slf4j' to prefer-application-packages in WEB-INF/weblogic.xml: org.slf4j.impl.Log4jLoggerFactory
+	at org.springframework.util.Assert.instanceCheckFailed(Assert.java:655)
+	at org.springframework.util.Assert.isInstanceOf(Assert.java:555)
+	at org.springframework.boot.logging.logback.LogbackLoggingSystem.getLoggerContext(LogbackLoggingSystem.java:286)
+	at org.springframework.boot.logging.logback.LogbackLoggingSystem.beforeInitialize(LogbackLoggingSystem.java:102)
+	at org.springframework.boot.context.logging.LoggingApplicationListener.onApplicationStartingEvent(LoggingApplicationListener.java:217)
+	at org.springframework.boot.context.logging.LoggingApplicationListener.onApplicationEvent(LoggingApplicationListener.java:196)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.doInvokeListener(SimpleApplicationEventMulticaster.java:172)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.invokeListener(SimpleApplicationEventMulticaster.java:165)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:139)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:127)
+	at org.springframework.boot.context.event.EventPublishingRunListener.starting(EventPublishingRunListener.java:69)
+	at org.springframework.boot.SpringApplicationRunListeners.starting(SpringApplicationRunListeners.java:48)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:302)
+	at org.springframework.boot.test.context.SpringBootContextLoader.loadContext(SpringBootContextLoader.java:127)
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContextInternal(DefaultCacheAwareContextLoaderDelegate.java:99)
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:117)
+	... 25 more

@@ -2,8 +2,14 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
 
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.1.0.RELEASE</version>
+    </parent>
+
+    <modelVersion>4.0.0</modelVersion>
     <groupId>com.grpc.server</groupId>
     <artifactId>grpc-kafka-server</artifactId>
     <version>1.0-SNAPSHOT</version>
@@ -16,6 +22,11 @@
         <junit.version>4.12</junit.version>
         <mockito.version>2.25.1</mockito.version>
         <log4j.version>2.12.0</log4j.version>
+        <spring-boot-autoconfigure>2.1.6.RELEASE</spring-boot-autoconfigure>
+        <gson-version>2.2.4</gson-version>
+        <kafka-embedded-version>3.1.1</kafka-embedded-version>
+        <lombok-version>1.18.8</lombok-version>
+        <spring-kafka-version>2.2.7.RELEASE</spring-kafka-version>
     </properties>
 
     <dependencies>
@@ -78,10 +89,16 @@
             <version>3.0.0</version>
         </dependency>
         <dependency>
-            <groupId>com.google.code.gson</groupId>
-            <artifactId>gson</artifactId>
-            <version>2.2.4</version>
+            <groupId>org.springframework.kafka</groupId>
+            <artifactId>spring-kafka</artifactId>
+            <version>${spring-kafka.version}</version>
         </dependency>
+
+        <!--<dependency>-->
+            <!--<groupId>com.google.code.gson</groupId>-->
+            <!--<artifactId>gson</artifactId>-->
+            <!--<version>${gson-version}</version>-->
+        <!--</dependency>-->
         <dependency>
             <groupId>org.apache.kafka</groupId>
             <artifactId>kafka-streams-test-utils</artifactId>
@@ -91,24 +108,28 @@
         <dependency>
             <groupId>com.salesforce.kafka.test</groupId>
             <artifactId>kafka-junit4</artifactId>
-            <version>3.1.1</version>
+            <version>${kafka-embedded-version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>com.salesforce.kafka.test</groupId>
             <artifactId>kafka-junit-core</artifactId>
-            <version>3.0.1</version>
+            <version>${kafka-embedded-version}</version>
         </dependency>
-
-        <!--<dependency>-->
-            <!--<groupId>io.confluent</groupId>-->
-            <!--<artifactId>kafka-schema-registry</artifactId>-->
-            <!--<version>4.1.0</version>-->
-        <!--</dependency>-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-autoconfigure</artifactId>
+            <version>${spring-boot-autoconfigure}</version>
+        </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.8</version>
+            <version>${lombok-version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -200,7 +221,7 @@
                     <!--&lt;!&ndash; MainClass in mainfest make a executable jar &ndash;&gt;-->
                     <!--<archive>-->
                         <!--<manifest>-->
-                            <!--<mainClass>com.grpc.server.GrpcKafkaServer</mainClass>-->
+                            <!--<mainClass>com.grpc.server.server.GrpcKafkaServer</mainClass>-->
                         <!--</manifest>-->
                     <!--</archive>-->
 

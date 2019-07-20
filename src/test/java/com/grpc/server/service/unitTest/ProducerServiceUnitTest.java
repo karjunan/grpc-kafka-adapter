@@ -63,7 +63,7 @@ public class ProducerServiceUnitTest {
 
         // Create a server, add service, start, and register for automatic graceful shutdown.
         grpcCleanup.register(InProcessServerBuilder
-                .forName(serverName).directExecutor().addService(new ProducerService(properties)).build().start());
+                .forName(serverName).directExecutor().addService(new ProducerService()).build().start());
 
         com.grpc.server.proto.KafkaServiceGrpc.KafkaServiceBlockingStub blockingStub = com.grpc.server.proto.KafkaServiceGrpc.newBlockingStub(
                 // Create a client channel and register for automatic graceful shutdown.
@@ -98,7 +98,7 @@ public class ProducerServiceUnitTest {
 
         // Create a server, add service, start, and register for automatic graceful shutdown.
         grpcCleanup.register(InProcessServerBuilder
-                .forName(serverName).directExecutor().addService(new ProducerService(properties)).build().start());
+                .forName(serverName).directExecutor().addService(new ProducerService()).build().start());
 
         com.grpc.server.proto.KafkaServiceGrpc.KafkaServiceBlockingStub blockingStub = com.grpc.server.proto.KafkaServiceGrpc.newBlockingStub(
                 // Create a client channel and register for automatic graceful shutdown.
@@ -132,7 +132,7 @@ public class ProducerServiceUnitTest {
 
         // Create a server, add service, start, and register for automatic graceful shutdown.
         grpcCleanup.register(InProcessServerBuilder
-                .forName(serverName).directExecutor().addService(new ProducerService(properties)).build().start());
+                .forName(serverName).directExecutor().addService(new ProducerService()).build().start());
 
         com.grpc.server.proto.KafkaServiceGrpc.KafkaServiceBlockingStub blockingStub = com.grpc.server.proto.KafkaServiceGrpc.newBlockingStub(
                 // Create a client channel and register for automatic graceful shutdown.
