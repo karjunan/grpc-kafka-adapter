@@ -1,391 +1,25 @@
-INFO main com.grpc.server.config.KafkaProducerConfig - Configured properties => {schema.registry.url=http://loalhost:8081, value.serializer=org.apache.kafka.common.serialization.StringSerializer, bootstrap.servers=localhost:9092, key.serializer=io.confluent.kafka.serializers.KafkaAvroSerializer}
-INFO main com.grpc.server.config.KafkaProducerConfig - Configured properties => {schema.registry.url=http://loalhost:8081, value.serializer=org.apache.kafka.common.serialization.StringSerializer, bootstrap.servers=localhost:9092, key.serializer=io.confluent.kafka.serializers.KafkaAvroSerializer}
-INFO main com.grpc.server.config.KafkaProducerConfig - Configured properties => {schema.registry.url=http://loalhost:8081, value.serializer=org.apache.kafka.common.serialization.StringSerializer, bootstrap.servers=localhost:9092, key.serializer=io.confluent.kafka.serializers.KafkaAvroSerializer}
+ERROR main com.grpc.server.service.ProducerService - Exception while persisting data - java.lang.IllegalStateException: Stream was terminated by error, no further calls are allowed
+INFO main com.grpc.server.config.KafkaProducerConfig - Configured properties => {schema.registry.url=null, value.serializer=null, bootstrap.servers=null, key.serializer=null}
+INFO main com.grpc.server.util.Utils - AvroSchema from Header => {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.config.KafkaProducerConfig - Configured properties => {schema.registry.url=null, value.serializer=null, bootstrap.servers=null, key.serializer=null}
+INFO main com.grpc.server.util.Utils - AvroSchema from Header => {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - correlationId : 1234
+INFO main com.grpc.server.util.Utils - transcationId : 5678
+INFO main com.grpc.server.util.Utils - avroSchema : {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.config.KafkaProducerConfig - Configured properties => {schema.registry.url=null, value.serializer=null, bootstrap.servers=null, key.serializer=null}
+INFO main com.grpc.server.util.Utils - AvroSchema from Header => {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - correlationId : 1234
+INFO main com.grpc.server.util.Utils - transcationId : 5678
+INFO main com.grpc.server.util.Utils - avroSchema : {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.config.KafkaProducerConfig - Configured properties => {schema.registry.url=http://localhost:8081, value.serializer=io.confluent.kafka.serializers.KafkaAvroSerializer, bootstrap.servers==localhost:9092, key.serializer=org.apache.kafka.common.serialization.StringSerializer}
+INFO main com.grpc.server.util.Utils - AvroSchema from Header => {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - correlationId : 1234
+INFO main com.grpc.server.util.Utils - transcationId : 5678
+INFO main com.grpc.server.util.Utils - avroSchema : {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
 INFO main org.apache.kafka.clients.producer.ProducerConfig - ProducerConfig values: 
 	acks = 1
 	batch.size = 16384
-	bootstrap.servers = [localhost:9092]
-	buffer.memory = 33554432
-	client.dns.lookup = default
-	client.id = 
-	compression.type = none
-	connections.max.idle.ms = 540000
-	delivery.timeout.ms = 120000
-	enable.idempotence = false
-	interceptor.classes = []
-	key.serializer = class io.confluent.kafka.serializers.KafkaAvroSerializer
-	linger.ms = 0
-	max.block.ms = 60000
-	max.in.flight.requests.per.connection = 5
-	max.request.size = 1048576
-	metadata.max.age.ms = 300000
-	metric.reporters = []
-	metrics.num.samples = 2
-	metrics.recording.level = INFO
-	metrics.sample.window.ms = 30000
-	partitioner.class = class org.apache.kafka.clients.producer.internals.DefaultPartitioner
-	receive.buffer.bytes = 32768
-	reconnect.backoff.max.ms = 1000
-	reconnect.backoff.ms = 50
-	request.timeout.ms = 30000
-	retries = 2147483647
-	retry.backoff.ms = 100
-	sasl.client.callback.handler.class = null
-	sasl.jaas.config = null
-	sasl.kerberos.kinit.cmd = /usr/bin/kinit
-	sasl.kerberos.min.time.before.relogin = 60000
-	sasl.kerberos.service.name = null
-	sasl.kerberos.ticket.renew.jitter = 0.05
-	sasl.kerberos.ticket.renew.window.factor = 0.8
-	sasl.login.callback.handler.class = null
-	sasl.login.class = null
-	sasl.login.refresh.buffer.seconds = 300
-	sasl.login.refresh.min.period.seconds = 60
-	sasl.login.refresh.window.factor = 0.8
-	sasl.login.refresh.window.jitter = 0.05
-	sasl.mechanism = GSSAPI
-	security.protocol = PLAINTEXT
-	send.buffer.bytes = 131072
-	ssl.cipher.suites = null
-	ssl.enabled.protocols = [TLSv1.2, TLSv1.1, TLSv1]
-	ssl.endpoint.identification.algorithm = https
-	ssl.key.password = null
-	ssl.keymanager.algorithm = SunX509
-	ssl.keystore.location = null
-	ssl.keystore.password = null
-	ssl.keystore.type = JKS
-	ssl.protocol = TLS
-	ssl.provider = null
-	ssl.secure.random.implementation = null
-	ssl.trustmanager.algorithm = PKIX
-	ssl.truststore.location = null
-	ssl.truststore.password = null
-	ssl.truststore.type = JKS
-	transaction.timeout.ms = 60000
-	transactional.id = null
-	value.serializer = class org.apache.kafka.common.serialization.StringSerializer
-
-INFO main io.confluent.kafka.serializers.KafkaAvroSerializerConfig - KafkaAvroSerializerConfig values: 
-	schema.registry.url = [http://loalhost:8081]
-	max.schemas.per.subject = 1000
-
-INFO main org.apache.kafka.common.utils.AppInfoParser - Kafka version: 2.2.0
-INFO main org.apache.kafka.common.utils.AppInfoParser - Kafka commitId: 05fcfde8f69b0349
-WARN kafka-producer-network-thread | producer-1 org.apache.kafka.clients.NetworkClient - [Producer clientId=producer-1] Error while fetching metadata with correlation id 1 : {t1=LEADER_NOT_AVAILABLE}
-INFO kafka-producer-network-thread | producer-1 org.apache.kafka.clients.Metadata - Cluster ID: -R5z-ZFxQ9GrD6ORtLXrdQ
-INFO Thread-3 org.apache.kafka.clients.producer.KafkaProducer - [Producer clientId=producer-1] Closing the Kafka producer with timeoutMillis = 30000 ms.
-INFO main com.grpc.server.config.KafkaProducerConfig - Configured properties => {schema.registry.url=http://loalhost:8081, value.serializer=org.apache.kafka.common.serialization.StringSerializer, bootstrap.servers=localhost:9092, key.serializer=io.confluent.kafka.serializers.KafkaAvroSerializer}
-INFO main com.grpc.server.service.ProducerService -  Producer Record => {"value": "Finally its working"}
-INFO main org.apache.kafka.clients.producer.ProducerConfig - ProducerConfig values: 
-	acks = 1
-	batch.size = 16384
-	bootstrap.servers = [localhost:9092]
-	buffer.memory = 33554432
-	client.dns.lookup = default
-	client.id = 
-	compression.type = none
-	connections.max.idle.ms = 540000
-	delivery.timeout.ms = 120000
-	enable.idempotence = false
-	interceptor.classes = []
-	key.serializer = class io.confluent.kafka.serializers.KafkaAvroSerializer
-	linger.ms = 0
-	max.block.ms = 60000
-	max.in.flight.requests.per.connection = 5
-	max.request.size = 1048576
-	metadata.max.age.ms = 300000
-	metric.reporters = []
-	metrics.num.samples = 2
-	metrics.recording.level = INFO
-	metrics.sample.window.ms = 30000
-	partitioner.class = class org.apache.kafka.clients.producer.internals.DefaultPartitioner
-	receive.buffer.bytes = 32768
-	reconnect.backoff.max.ms = 1000
-	reconnect.backoff.ms = 50
-	request.timeout.ms = 30000
-	retries = 2147483647
-	retry.backoff.ms = 100
-	sasl.client.callback.handler.class = null
-	sasl.jaas.config = null
-	sasl.kerberos.kinit.cmd = /usr/bin/kinit
-	sasl.kerberos.min.time.before.relogin = 60000
-	sasl.kerberos.service.name = null
-	sasl.kerberos.ticket.renew.jitter = 0.05
-	sasl.kerberos.ticket.renew.window.factor = 0.8
-	sasl.login.callback.handler.class = null
-	sasl.login.class = null
-	sasl.login.refresh.buffer.seconds = 300
-	sasl.login.refresh.min.period.seconds = 60
-	sasl.login.refresh.window.factor = 0.8
-	sasl.login.refresh.window.jitter = 0.05
-	sasl.mechanism = GSSAPI
-	security.protocol = PLAINTEXT
-	send.buffer.bytes = 131072
-	ssl.cipher.suites = null
-	ssl.enabled.protocols = [TLSv1.2, TLSv1.1, TLSv1]
-	ssl.endpoint.identification.algorithm = https
-	ssl.key.password = null
-	ssl.keymanager.algorithm = SunX509
-	ssl.keystore.location = null
-	ssl.keystore.password = null
-	ssl.keystore.type = JKS
-	ssl.protocol = TLS
-	ssl.provider = null
-	ssl.secure.random.implementation = null
-	ssl.trustmanager.algorithm = PKIX
-	ssl.truststore.location = null
-	ssl.truststore.password = null
-	ssl.truststore.type = JKS
-	transaction.timeout.ms = 60000
-	transactional.id = null
-	value.serializer = class org.apache.kafka.common.serialization.StringSerializer
-
-INFO main io.confluent.kafka.serializers.KafkaAvroSerializerConfig - KafkaAvroSerializerConfig values: 
-	schema.registry.url = [http://loalhost:8081]
-	max.schemas.per.subject = 1000
-
-INFO main org.apache.kafka.common.utils.AppInfoParser - Kafka version: 2.2.0
-INFO main org.apache.kafka.common.utils.AppInfoParser - Kafka commitId: 05fcfde8f69b0349
-INFO kafka-producer-network-thread | producer-1 org.apache.kafka.clients.Metadata - Cluster ID: -R5z-ZFxQ9GrD6ORtLXrdQ
-INFO Thread-3 org.apache.kafka.clients.producer.KafkaProducer - [Producer clientId=producer-1] Closing the Kafka producer with timeoutMillis = 30000 ms.
-INFO main com.grpc.server.config.KafkaProducerConfig - Configured properties => {schema.registry.url=http://loalhost:8081, value.serializer=org.apache.kafka.common.serialization.StringSerializer, bootstrap.servers=localhost:9092, key.serializer=io.confluent.kafka.serializers.KafkaAvroSerializer}
-INFO main com.grpc.server.service.ProducerService -  Producer Record => {"value": "Finally its working"}
-INFO main org.apache.kafka.clients.producer.ProducerConfig - ProducerConfig values: 
-	acks = 1
-	batch.size = 16384
-	bootstrap.servers = [localhost:9092]
-	buffer.memory = 33554432
-	client.dns.lookup = default
-	client.id = 
-	compression.type = none
-	connections.max.idle.ms = 540000
-	delivery.timeout.ms = 120000
-	enable.idempotence = false
-	interceptor.classes = []
-	key.serializer = class io.confluent.kafka.serializers.KafkaAvroSerializer
-	linger.ms = 0
-	max.block.ms = 60000
-	max.in.flight.requests.per.connection = 5
-	max.request.size = 1048576
-	metadata.max.age.ms = 300000
-	metric.reporters = []
-	metrics.num.samples = 2
-	metrics.recording.level = INFO
-	metrics.sample.window.ms = 30000
-	partitioner.class = class org.apache.kafka.clients.producer.internals.DefaultPartitioner
-	receive.buffer.bytes = 32768
-	reconnect.backoff.max.ms = 1000
-	reconnect.backoff.ms = 50
-	request.timeout.ms = 30000
-	retries = 2147483647
-	retry.backoff.ms = 100
-	sasl.client.callback.handler.class = null
-	sasl.jaas.config = null
-	sasl.kerberos.kinit.cmd = /usr/bin/kinit
-	sasl.kerberos.min.time.before.relogin = 60000
-	sasl.kerberos.service.name = null
-	sasl.kerberos.ticket.renew.jitter = 0.05
-	sasl.kerberos.ticket.renew.window.factor = 0.8
-	sasl.login.callback.handler.class = null
-	sasl.login.class = null
-	sasl.login.refresh.buffer.seconds = 300
-	sasl.login.refresh.min.period.seconds = 60
-	sasl.login.refresh.window.factor = 0.8
-	sasl.login.refresh.window.jitter = 0.05
-	sasl.mechanism = GSSAPI
-	security.protocol = PLAINTEXT
-	send.buffer.bytes = 131072
-	ssl.cipher.suites = null
-	ssl.enabled.protocols = [TLSv1.2, TLSv1.1, TLSv1]
-	ssl.endpoint.identification.algorithm = https
-	ssl.key.password = null
-	ssl.keymanager.algorithm = SunX509
-	ssl.keystore.location = null
-	ssl.keystore.password = null
-	ssl.keystore.type = JKS
-	ssl.protocol = TLS
-	ssl.provider = null
-	ssl.secure.random.implementation = null
-	ssl.trustmanager.algorithm = PKIX
-	ssl.truststore.location = null
-	ssl.truststore.password = null
-	ssl.truststore.type = JKS
-	transaction.timeout.ms = 60000
-	transactional.id = null
-	value.serializer = class org.apache.kafka.common.serialization.StringSerializer
-
-INFO main io.confluent.kafka.serializers.KafkaAvroSerializerConfig - KafkaAvroSerializerConfig values: 
-	schema.registry.url = [http://loalhost:8081]
-	max.schemas.per.subject = 1000
-
-INFO main org.apache.kafka.common.utils.AppInfoParser - Kafka version: 2.2.0
-INFO main org.apache.kafka.common.utils.AppInfoParser - Kafka commitId: 05fcfde8f69b0349
-INFO kafka-producer-network-thread | producer-1 org.apache.kafka.clients.Metadata - Cluster ID: -R5z-ZFxQ9GrD6ORtLXrdQ
-INFO main com.grpc.server.config.KafkaProducerConfig - Configured properties => {schema.registry.url=http://loalhost:8081, value.serializer=org.apache.kafka.common.serialization.StringSerializer, bootstrap.servers=localhost:9092, key.serializer=io.confluent.kafka.serializers.KafkaAvroSerializer}
-INFO main com.grpc.server.config.KafkaProducerConfig - Configured properties => {schema.registry.url=http://localhost:8081, value.serializer=org.apache.kafka.common.serialization.StringSerializer, bootstrap.servers=localhost:9092, key.serializer=io.confluent.kafka.serializers.KafkaAvroSerializer}
-INFO main com.grpc.server.config.KafkaProducerConfig - Configured properties => {schema.registry.url=http://localhost:8081, value.serializer=org.apache.kafka.common.serialization.StringSerializer, bootstrap.servers=localhost:9092, key.serializer=io.confluent.kafka.serializers.KafkaAvroSerializer}
-INFO main com.grpc.server.config.KafkaProducerConfig - Configured properties => {schema.registry.url=http://localhost:8081, value.serializer=org.apache.kafka.common.serialization.StringSerializer, bootstrap.servers=localhost:9092, key.serializer=io.confluent.kafka.serializers.KafkaAvroSerializer}
-INFO main com.grpc.server.config.KafkaProducerConfig - Configured properties => {schema.registry.url=http://localhost:8081, value.serializer=org.apache.kafka.common.serialization.StringSerializer, bootstrap.servers=localhost:9092, key.serializer=io.confluent.kafka.serializers.KafkaAvroSerializer}
-INFO main com.grpc.server.config.KafkaProducerConfig - Configured properties => {schema.registry.url=http://localhost:8081, value.serializer=org.apache.kafka.common.serialization.StringSerializer, bootstrap.servers=localhost:9092, key.serializer=io.confluent.kafka.serializers.KafkaAvroSerializer}
-INFO main com.grpc.server.config.KafkaProducerConfig - Configured properties => {schema.registry.url=http://localhost:8081, value.serializer=org.apache.kafka.common.serialization.StringSerializer, bootstrap.servers=localhost:9092, key.serializer=io.confluent.kafka.serializers.KafkaAvroSerializer}
-INFO main com.grpc.server.service.ProducerService -  Producer Record => {"value": "Finally its working"}
-INFO main org.apache.kafka.clients.producer.ProducerConfig - ProducerConfig values: 
-	acks = 1
-	batch.size = 16384
-	bootstrap.servers = [localhost:9092]
-	buffer.memory = 33554432
-	client.dns.lookup = default
-	client.id = 
-	compression.type = none
-	connections.max.idle.ms = 540000
-	delivery.timeout.ms = 120000
-	enable.idempotence = false
-	interceptor.classes = []
-	key.serializer = class io.confluent.kafka.serializers.KafkaAvroSerializer
-	linger.ms = 0
-	max.block.ms = 60000
-	max.in.flight.requests.per.connection = 5
-	max.request.size = 1048576
-	metadata.max.age.ms = 300000
-	metric.reporters = []
-	metrics.num.samples = 2
-	metrics.recording.level = INFO
-	metrics.sample.window.ms = 30000
-	partitioner.class = class org.apache.kafka.clients.producer.internals.DefaultPartitioner
-	receive.buffer.bytes = 32768
-	reconnect.backoff.max.ms = 1000
-	reconnect.backoff.ms = 50
-	request.timeout.ms = 30000
-	retries = 2147483647
-	retry.backoff.ms = 100
-	sasl.client.callback.handler.class = null
-	sasl.jaas.config = null
-	sasl.kerberos.kinit.cmd = /usr/bin/kinit
-	sasl.kerberos.min.time.before.relogin = 60000
-	sasl.kerberos.service.name = null
-	sasl.kerberos.ticket.renew.jitter = 0.05
-	sasl.kerberos.ticket.renew.window.factor = 0.8
-	sasl.login.callback.handler.class = null
-	sasl.login.class = null
-	sasl.login.refresh.buffer.seconds = 300
-	sasl.login.refresh.min.period.seconds = 60
-	sasl.login.refresh.window.factor = 0.8
-	sasl.login.refresh.window.jitter = 0.05
-	sasl.mechanism = GSSAPI
-	security.protocol = PLAINTEXT
-	send.buffer.bytes = 131072
-	ssl.cipher.suites = null
-	ssl.enabled.protocols = [TLSv1.2, TLSv1.1, TLSv1]
-	ssl.endpoint.identification.algorithm = https
-	ssl.key.password = null
-	ssl.keymanager.algorithm = SunX509
-	ssl.keystore.location = null
-	ssl.keystore.password = null
-	ssl.keystore.type = JKS
-	ssl.protocol = TLS
-	ssl.provider = null
-	ssl.secure.random.implementation = null
-	ssl.trustmanager.algorithm = PKIX
-	ssl.truststore.location = null
-	ssl.truststore.password = null
-	ssl.truststore.type = JKS
-	transaction.timeout.ms = 60000
-	transactional.id = null
-	value.serializer = class org.apache.kafka.common.serialization.StringSerializer
-
-INFO main io.confluent.kafka.serializers.KafkaAvroSerializerConfig - KafkaAvroSerializerConfig values: 
-	schema.registry.url = [http://localhost:8081]
-	max.schemas.per.subject = 1000
-
-INFO main org.apache.kafka.common.utils.AppInfoParser - Kafka version: 2.2.0
-INFO main org.apache.kafka.common.utils.AppInfoParser - Kafka commitId: 05fcfde8f69b0349
-INFO kafka-producer-network-thread | producer-1 org.apache.kafka.clients.Metadata - Cluster ID: -R5z-ZFxQ9GrD6ORtLXrdQ
-ERROR main com.grpc.server.service.ProducerService - Exception while persisting data - org.apache.kafka.common.errors.SerializationException: Can't convert value of class org.apache.avro.generic.GenericData$Record to class org.apache.kafka.common.serialization.StringSerializer specified in value.serializer
-INFO Thread-3 org.apache.kafka.clients.producer.KafkaProducer - [Producer clientId=producer-1] Closing the Kafka producer with timeoutMillis = 30000 ms.
-INFO main com.grpc.server.config.KafkaProducerConfig - Configured properties => {schema.registry.url=http://localhost:8081, value.serializer=org.apache.kafka.common.serialization.StringSerializer, bootstrap.servers=localhost:9092, key.serializer=io.confluent.kafka.serializers.KafkaAvroSerializer}
-INFO main com.grpc.server.service.ProducerService -  Producer Record => {"value": "Finally its working"}
-INFO main org.apache.kafka.clients.producer.ProducerConfig - ProducerConfig values: 
-	acks = 1
-	batch.size = 16384
-	bootstrap.servers = [localhost:9092]
-	buffer.memory = 33554432
-	client.dns.lookup = default
-	client.id = 
-	compression.type = none
-	connections.max.idle.ms = 540000
-	delivery.timeout.ms = 120000
-	enable.idempotence = false
-	interceptor.classes = []
-	key.serializer = class io.confluent.kafka.serializers.KafkaAvroSerializer
-	linger.ms = 0
-	max.block.ms = 60000
-	max.in.flight.requests.per.connection = 5
-	max.request.size = 1048576
-	metadata.max.age.ms = 300000
-	metric.reporters = []
-	metrics.num.samples = 2
-	metrics.recording.level = INFO
-	metrics.sample.window.ms = 30000
-	partitioner.class = class org.apache.kafka.clients.producer.internals.DefaultPartitioner
-	receive.buffer.bytes = 32768
-	reconnect.backoff.max.ms = 1000
-	reconnect.backoff.ms = 50
-	request.timeout.ms = 30000
-	retries = 2147483647
-	retry.backoff.ms = 100
-	sasl.client.callback.handler.class = null
-	sasl.jaas.config = null
-	sasl.kerberos.kinit.cmd = /usr/bin/kinit
-	sasl.kerberos.min.time.before.relogin = 60000
-	sasl.kerberos.service.name = null
-	sasl.kerberos.ticket.renew.jitter = 0.05
-	sasl.kerberos.ticket.renew.window.factor = 0.8
-	sasl.login.callback.handler.class = null
-	sasl.login.class = null
-	sasl.login.refresh.buffer.seconds = 300
-	sasl.login.refresh.min.period.seconds = 60
-	sasl.login.refresh.window.factor = 0.8
-	sasl.login.refresh.window.jitter = 0.05
-	sasl.mechanism = GSSAPI
-	security.protocol = PLAINTEXT
-	send.buffer.bytes = 131072
-	ssl.cipher.suites = null
-	ssl.enabled.protocols = [TLSv1.2, TLSv1.1, TLSv1]
-	ssl.endpoint.identification.algorithm = https
-	ssl.key.password = null
-	ssl.keymanager.algorithm = SunX509
-	ssl.keystore.location = null
-	ssl.keystore.password = null
-	ssl.keystore.type = JKS
-	ssl.protocol = TLS
-	ssl.provider = null
-	ssl.secure.random.implementation = null
-	ssl.trustmanager.algorithm = PKIX
-	ssl.truststore.location = null
-	ssl.truststore.password = null
-	ssl.truststore.type = JKS
-	transaction.timeout.ms = 60000
-	transactional.id = null
-	value.serializer = class org.apache.kafka.common.serialization.StringSerializer
-
-INFO main io.confluent.kafka.serializers.KafkaAvroSerializerConfig - KafkaAvroSerializerConfig values: 
-	schema.registry.url = [http://localhost:8081]
-	max.schemas.per.subject = 1000
-
-INFO main org.apache.kafka.common.utils.AppInfoParser - Kafka version: 2.2.0
-INFO main org.apache.kafka.common.utils.AppInfoParser - Kafka commitId: 05fcfde8f69b0349
-INFO kafka-producer-network-thread | producer-1 org.apache.kafka.clients.Metadata - Cluster ID: -R5z-ZFxQ9GrD6ORtLXrdQ
-ERROR main com.grpc.server.service.ProducerService - Exception while persisting data - org.apache.kafka.common.errors.SerializationException: Can't convert value of class org.apache.avro.generic.GenericData$Record to class org.apache.kafka.common.serialization.StringSerializer specified in value.serializer
-INFO Thread-3 org.apache.kafka.clients.producer.KafkaProducer - [Producer clientId=producer-1] Closing the Kafka producer with timeoutMillis = 30000 ms.
-INFO main com.grpc.server.config.KafkaProducerConfig - Configured properties => {schema.registry.url=http://localhost:8081, value.serializer=org.apache.kafka.common.serialization.KafkaAvroSerializer, bootstrap.servers=localhost:9092, key.serializer=io.confluent.kafka.serializers.StringSerializer}
-INFO main com.grpc.server.service.ProducerService -  Producer Record => {"value": "Finally its working"}
-ERROR main com.grpc.server.service.ProducerService - Exception while persisting data - org.apache.kafka.common.config.ConfigException: Invalid value io.confluent.kafka.serializers.StringSerializer for configuration key.serializer: Class io.confluent.kafka.serializers.StringSerializer could not be found.
-INFO main com.grpc.server.config.KafkaProducerConfig - Configured properties => {schema.registry.url=http://localhost:8081, value.serializer=io.confluent.kafka.serializers.KafkaAvroSerializer, bootstrap.servers=localhost:9092, key.serializer=org.apache.kafka.common.serialization.StringSerializer}
-INFO main com.grpc.server.service.ProducerService -  Producer Record => {"value": "Finally its working"}
-INFO main org.apache.kafka.clients.producer.ProducerConfig - ProducerConfig values: 
-	acks = 1
-	batch.size = 16384
-	bootstrap.servers = [localhost:9092]
+	bootstrap.servers = [=localhost:9092]
 	buffer.memory = 33554432
 	client.dns.lookup = default
 	client.id = 
@@ -453,157 +87,38 @@ INFO main io.confluent.kafka.serializers.KafkaAvroSerializerConfig - KafkaAvroSe
 INFO main org.apache.kafka.common.utils.AppInfoParser - Kafka version: 2.2.0
 INFO main org.apache.kafka.common.utils.AppInfoParser - Kafka commitId: 05fcfde8f69b0349
 INFO kafka-producer-network-thread | producer-1 org.apache.kafka.clients.Metadata - Cluster ID: -R5z-ZFxQ9GrD6ORtLXrdQ
-INFO main com.grpc.server.service.ProducerService -  Producer Record => {"value": "Finally its working"}
-WARN kafka-producer-network-thread | producer-1 org.apache.kafka.clients.NetworkClient - [Producer clientId=producer-1] Error while fetching metadata with correlation id 3 : {t2=LEADER_NOT_AVAILABLE}
-WARN kafka-producer-network-thread | producer-1 org.apache.kafka.clients.NetworkClient - [Producer clientId=producer-1] Error while fetching metadata with correlation id 5 : {t2=LEADER_NOT_AVAILABLE}
-INFO Thread-3 org.apache.kafka.clients.producer.KafkaProducer - [Producer clientId=producer-1] Closing the Kafka producer with timeoutMillis = 30000 ms.
-INFO main com.grpc.server.config.KafkaProducerConfig - Configured properties => {schema.registry.url=http://localhost:8081, value.serializer=io.confluent.kafka.serializers.KafkaAvroSerializer, bootstrap.servers=localhost:9092, key.serializer=org.apache.kafka.common.serialization.StringSerializer}
-INFO main com.grpc.server.service.ProducerService -  Producer Record => {"value": "Finally its working"}
-INFO main org.apache.kafka.clients.producer.ProducerConfig - ProducerConfig values: 
-	acks = 1
-	batch.size = 16384
-	bootstrap.servers = [localhost:9092]
-	buffer.memory = 33554432
-	client.dns.lookup = default
-	client.id = 
-	compression.type = none
-	connections.max.idle.ms = 540000
-	delivery.timeout.ms = 120000
-	enable.idempotence = false
-	interceptor.classes = []
-	key.serializer = class org.apache.kafka.common.serialization.StringSerializer
-	linger.ms = 0
-	max.block.ms = 60000
-	max.in.flight.requests.per.connection = 5
-	max.request.size = 1048576
-	metadata.max.age.ms = 300000
-	metric.reporters = []
-	metrics.num.samples = 2
-	metrics.recording.level = INFO
-	metrics.sample.window.ms = 30000
-	partitioner.class = class org.apache.kafka.clients.producer.internals.DefaultPartitioner
-	receive.buffer.bytes = 32768
-	reconnect.backoff.max.ms = 1000
-	reconnect.backoff.ms = 50
-	request.timeout.ms = 30000
-	retries = 2147483647
-	retry.backoff.ms = 100
-	sasl.client.callback.handler.class = null
-	sasl.jaas.config = null
-	sasl.kerberos.kinit.cmd = /usr/bin/kinit
-	sasl.kerberos.min.time.before.relogin = 60000
-	sasl.kerberos.service.name = null
-	sasl.kerberos.ticket.renew.jitter = 0.05
-	sasl.kerberos.ticket.renew.window.factor = 0.8
-	sasl.login.callback.handler.class = null
-	sasl.login.class = null
-	sasl.login.refresh.buffer.seconds = 300
-	sasl.login.refresh.min.period.seconds = 60
-	sasl.login.refresh.window.factor = 0.8
-	sasl.login.refresh.window.jitter = 0.05
-	sasl.mechanism = GSSAPI
-	security.protocol = PLAINTEXT
-	send.buffer.bytes = 131072
-	ssl.cipher.suites = null
-	ssl.enabled.protocols = [TLSv1.2, TLSv1.1, TLSv1]
-	ssl.endpoint.identification.algorithm = https
-	ssl.key.password = null
-	ssl.keymanager.algorithm = SunX509
-	ssl.keystore.location = null
-	ssl.keystore.password = null
-	ssl.keystore.type = JKS
-	ssl.protocol = TLS
-	ssl.provider = null
-	ssl.secure.random.implementation = null
-	ssl.trustmanager.algorithm = PKIX
-	ssl.truststore.location = null
-	ssl.truststore.password = null
-	ssl.truststore.type = JKS
-	transaction.timeout.ms = 60000
-	transactional.id = null
-	value.serializer = class io.confluent.kafka.serializers.KafkaAvroSerializer
-
-INFO main io.confluent.kafka.serializers.KafkaAvroSerializerConfig - KafkaAvroSerializerConfig values: 
-	schema.registry.url = [http://localhost:8081]
-	max.schemas.per.subject = 1000
-
-INFO main org.apache.kafka.common.utils.AppInfoParser - Kafka version: 2.2.0
-INFO main org.apache.kafka.common.utils.AppInfoParser - Kafka commitId: 05fcfde8f69b0349
-INFO kafka-producer-network-thread | producer-1 org.apache.kafka.clients.Metadata - Cluster ID: -R5z-ZFxQ9GrD6ORtLXrdQ
-INFO main com.grpc.server.service.ProducerService -  Producer Record => {"value": "Finally its working"}
-INFO Thread-3 org.apache.kafka.clients.producer.KafkaProducer - [Producer clientId=producer-1] Closing the Kafka producer with timeoutMillis = 30000 ms.
-INFO main com.grpc.server.config.KafkaProducerConfig - Configured properties => {schema.registry.url=http://localhost:8081, value.serializer=io.confluent.kafka.serializers.KafkaAvroSerializer, bootstrap.servers=localhost:9092, key.serializer=org.apache.kafka.common.serialization.StringSerializer}
-INFO main com.grpc.server.service.ProducerService -  Producer Record => {"value": "Finally its working"}
-INFO main org.apache.kafka.clients.producer.ProducerConfig - ProducerConfig values: 
-	acks = 1
-	batch.size = 16384
-	bootstrap.servers = [localhost:9092]
-	buffer.memory = 33554432
-	client.dns.lookup = default
-	client.id = 
-	compression.type = none
-	connections.max.idle.ms = 540000
-	delivery.timeout.ms = 120000
-	enable.idempotence = false
-	interceptor.classes = []
-	key.serializer = class org.apache.kafka.common.serialization.StringSerializer
-	linger.ms = 0
-	max.block.ms = 60000
-	max.in.flight.requests.per.connection = 5
-	max.request.size = 1048576
-	metadata.max.age.ms = 300000
-	metric.reporters = []
-	metrics.num.samples = 2
-	metrics.recording.level = INFO
-	metrics.sample.window.ms = 30000
-	partitioner.class = class org.apache.kafka.clients.producer.internals.DefaultPartitioner
-	receive.buffer.bytes = 32768
-	reconnect.backoff.max.ms = 1000
-	reconnect.backoff.ms = 50
-	request.timeout.ms = 30000
-	retries = 2147483647
-	retry.backoff.ms = 100
-	sasl.client.callback.handler.class = null
-	sasl.jaas.config = null
-	sasl.kerberos.kinit.cmd = /usr/bin/kinit
-	sasl.kerberos.min.time.before.relogin = 60000
-	sasl.kerberos.service.name = null
-	sasl.kerberos.ticket.renew.jitter = 0.05
-	sasl.kerberos.ticket.renew.window.factor = 0.8
-	sasl.login.callback.handler.class = null
-	sasl.login.class = null
-	sasl.login.refresh.buffer.seconds = 300
-	sasl.login.refresh.min.period.seconds = 60
-	sasl.login.refresh.window.factor = 0.8
-	sasl.login.refresh.window.jitter = 0.05
-	sasl.mechanism = GSSAPI
-	security.protocol = PLAINTEXT
-	send.buffer.bytes = 131072
-	ssl.cipher.suites = null
-	ssl.enabled.protocols = [TLSv1.2, TLSv1.1, TLSv1]
-	ssl.endpoint.identification.algorithm = https
-	ssl.key.password = null
-	ssl.keymanager.algorithm = SunX509
-	ssl.keystore.location = null
-	ssl.keystore.password = null
-	ssl.keystore.type = JKS
-	ssl.protocol = TLS
-	ssl.provider = null
-	ssl.secure.random.implementation = null
-	ssl.trustmanager.algorithm = PKIX
-	ssl.truststore.location = null
-	ssl.truststore.password = null
-	ssl.truststore.type = JKS
-	transaction.timeout.ms = 60000
-	transactional.id = null
-	value.serializer = class io.confluent.kafka.serializers.KafkaAvroSerializer
-
-INFO main io.confluent.kafka.serializers.KafkaAvroSerializerConfig - KafkaAvroSerializerConfig values: 
-	schema.registry.url = [http://localhost:8081]
-	max.schemas.per.subject = 1000
-
-INFO main org.apache.kafka.common.utils.AppInfoParser - Kafka version: 2.2.0
-INFO main org.apache.kafka.common.utils.AppInfoParser - Kafka commitId: 05fcfde8f69b0349
-INFO kafka-producer-network-thread | producer-1 org.apache.kafka.clients.Metadata - Cluster ID: -R5z-ZFxQ9GrD6ORtLXrdQ
-INFO main com.grpc.server.service.ProducerService -  Producer Record => {"value": "Finally its working"}
-INFO Thread-3 org.apache.kafka.clients.producer.KafkaProducer - [Producer clientId=producer-1] Closing the Kafka producer with timeoutMillis = 30000 ms.
+INFO main com.grpc.server.util.Utils - AvroSchema from Header => {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - correlationId : 1234
+INFO main com.grpc.server.util.Utils - transcationId : 5678
+INFO main com.grpc.server.util.Utils - avroSchema : {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO Thread-1 org.apache.kafka.clients.producer.KafkaProducer - [Producer clientId=producer-1] Closing the Kafka producer with timeoutMillis = 30000 ms.
+INFO main com.grpc.server.config.KafkaProducerConfig - Configured properties => {schema.registry.url=null, value.serializer=null, bootstrap.servers=null, key.serializer=null}
+INFO main com.grpc.server.config.KafkaProducerConfig - Configured properties => {schema.registry.url=null, value.serializer=null, bootstrap.servers=null, key.serializer=null}
+INFO main com.grpc.server.util.Utils - AvroSchema from Header => {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - correlationId : 1234
+INFO main com.grpc.server.util.Utils - transcationId : 5678
+INFO main com.grpc.server.util.Utils - avroSchema : {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.config.KafkaProducerConfig - Configured properties => {schema.registry.url=null, value.serializer=null, bootstrap.servers=null, key.serializer=null}
+INFO main com.grpc.server.util.Utils - AvroSchema from Header => {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - correlationId : 1234
+INFO main com.grpc.server.util.Utils - transcationId : 5678
+INFO main com.grpc.server.util.Utils - avroSchema : {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.config.KafkaProducerConfig - Configured properties => {schema.registry.url=null, value.serializer=null, bootstrap.servers=null, key.serializer=null}
+INFO main com.grpc.server.util.Utils - AvroSchema from Header => {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - correlationId : 1234
+INFO main com.grpc.server.util.Utils - transcationId : 5678
+INFO main com.grpc.server.util.Utils - avroSchema : {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.config.KafkaProducerConfig - Configured properties => {schema.registry.url=null, value.serializer=null, bootstrap.servers=null, key.serializer=null}
+INFO main com.grpc.server.config.KafkaProducerConfig - Configured properties => {schema.registry.url=null, value.serializer=null, bootstrap.servers=null, key.serializer=null}
+INFO main com.grpc.server.config.KafkaProducerConfig - Configured properties => {schema.registry.url=null, value.serializer=null, bootstrap.servers=null, key.serializer=null}
+INFO main com.grpc.server.config.KafkaProducerConfig - Configured properties => {schema.registry.url=null, value.serializer=null, bootstrap.servers=null, key.serializer=null}
+INFO main com.grpc.server.util.Utils - AvroSchema from Header => {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - correlationId : 1234
+INFO main com.grpc.server.util.Utils - transcationId : 5678
+INFO main com.grpc.server.util.Utils - avroSchema : {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.config.KafkaProducerConfig - Configured properties => {schema.registry.url=null, value.serializer=null, bootstrap.servers=null, key.serializer=null}
+INFO main com.grpc.server.config.KafkaProducerConfig - Configured properties => {schema.registry.url=null, value.serializer=null, bootstrap.servers=null, key.serializer=null}
+INFO main com.grpc.server.util.Utils - AvroSchema from Header => {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - correlationId : 1234
+INFO main com.grpc.server.util.Utils - transcationId : 5678
+INFO main com.grpc.server.util.Utils - avroSchema : {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }

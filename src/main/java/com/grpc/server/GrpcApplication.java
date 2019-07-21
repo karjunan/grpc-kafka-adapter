@@ -1,9 +1,8 @@
 package com.grpc.server;
 
 
-import com.grpc.server.config.KafkaProducerConfig;
 import com.grpc.server.config.KafkaProducerProperties;
-import com.grpc.server.server.GrpcKafkaServer;
+import com.grpc.server.server.GrpcServer;
 import lombok.extern.log4j.Log4j;
 import org.springframework.boot.Banner;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -15,14 +14,14 @@ import org.springframework.context.annotation.ComponentScan;
 @ComponentScan(basePackages = { "com.grpc.server" })
 @EnableConfigurationProperties(KafkaProducerProperties.class)
 @Log4j
-public class GrpcServer {
+public class GrpcApplication {
 
     public static void main(String[] args) throws Exception {
         log.info("Starting Spring boot Grpc Server");
         new SpringApplicationBuilder()
                 .bannerMode(Banner.Mode.OFF)
+                .sources(GrpcApplication.class)
                 .sources(GrpcServer.class)
-                .sources(GrpcKafkaServer.class)
                 .build()
                 .run(args);
 

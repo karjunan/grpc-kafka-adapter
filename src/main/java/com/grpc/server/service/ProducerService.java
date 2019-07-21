@@ -1,9 +1,9 @@
 package com.grpc.server.service;
 
 import com.grpc.server.config.KafkaProducerConfig;
-import com.grpc.server.infrastructure.MessagePersistance;
 import com.grpc.server.proto.KafkaServiceGrpc;
 import com.grpc.server.proto.Messages;
+import com.grpc.server.util.Utils;
 import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
 import lombok.extern.log4j.Log4j;
@@ -11,26 +11,48 @@ import org.apache.avro.generic.GenericRecord;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Log4j
 @Service
 public class ProducerService extends KafkaServiceGrpc.KafkaServiceImplBase {
 
     @Autowired
-    KafkaProducerConfig kafkaProducerConfig;
+    private KafkaProducerConfig kafkaProducerConfig;
+
+    private static final String AVRO_SCHEMA = "avroSchema";
 
     @Override
+    @Transactional
     public void save(Messages.ProducerRequest request, StreamObserver<Messages.OkResponse> responseObserver) {
+
+
+         if( request.getTopicList().isEmpty() ) {
+            Exception ex = new Exception("Topic name missing");
+            responseObserver.onError(Status.INTERNAL.withDescription(ex.getMessage())
+                    .augmentDescription("Topic name missing")
+                    .withCause(ex)
+                    .asRuntimeException());
+            return;
+        }
+
+        if(request.getHeader().getPairsMap().size() == 0 ||
+                !request.getHeader().getPairsMap().containsKey(AVRO_SCHEMA) ||
+                !request.getHeader().getPairsMap().containsKey("correlationId")){
+            responseObserver.onError(Status.CANCELLED
+                    .withDescription("Missing Mandataory headers")
+                    .asRuntimeException());
+            return;
+        }
 
         try {
             for (String topic : request.getTopicList()) {
-                ProducerRecord producerRecord = new ProducerRecord
-                        (topic, request.getPartition(), request.getKey(), MessagePersistance.getAvroRecord(request),
-                                MessagePersistance.getRecordHaders(request.getHeader()));
-                log.info(" Producer Record => " +  MessagePersistance.getAvroRecord(request));
+                ProducerRecord<String,GenericRecord> producerRecord = new ProducerRecord<>
+                        (topic, request.getPartition(), request.getKey(), Utils.getAvroRecord(request),
+                                Utils.getRecordHaders(request.getHeader()));
                 kafkaProducerConfig.kafkaTemplate().send(producerRecord);
             }
-            System.out.println("Topic Name => " + kafkaProducerConfig);
+
             Messages.OkResponse response = Messages.OkResponse.newBuilder()
                     .setIsOk(true)
                     .build();
@@ -40,8 +62,8 @@ public class ProducerService extends KafkaServiceGrpc.KafkaServiceImplBase {
         } catch (Exception ex) {
             log.error("Exception while persisting data - " + ex);
             responseObserver.onError(Status.INTERNAL.withDescription(ex.getMessage())
-                    .augmentDescription("Custom exception")
-                    .withCause(ex)
+                    .augmentDescription(ex.getCause().getMessage())
+                    .withCause(ex.getCause())
                     .asRuntimeException());
         }
 

@@ -12,4 +12,5 @@ import org.springframework.context.annotation.PropertySource;
 @Setter
 public class PropertiesCofiguration {
 
+    private String avro_schema_name;
 }

@@ -4,7 +4,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.stream.Collectors;
 
-public class Utils {
+public class UtilHelper {
 
     public static String getAvroData() throws Exception {
         return Files.lines(Paths.get("src", "main", "resources", "avro/message.avsc"))

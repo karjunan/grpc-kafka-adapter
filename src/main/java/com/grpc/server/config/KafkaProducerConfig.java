@@ -3,6 +3,7 @@ package com.grpc.server.config;
 
 import io.confluent.kafka.serializers.AbstractKafkaAvroSerDeConfig;
 import lombok.extern.log4j.Log4j;
+import org.apache.avro.generic.GenericRecord;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -19,14 +20,15 @@ import java.util.Map;
 public class KafkaProducerConfig {
 
     @Autowired
-    KafkaProducerProperties kafkaProducerProperties;
+    private KafkaProducerProperties kafkaProducerProperties;
+
 
     @Bean
-    public ProducerFactory<String, String> producerFactory() {
+    public ProducerFactory<String, GenericRecord> producerFactory() {
         Map<String, Object> configProps = new HashMap<>();
         configProps.put(
                 ProducerConfig.BOOTSTRAP_SERVERS_CONFIG,
-                kafkaProducerProperties.getBootstrapServers());
+                kafkaProducerProperties.getBootstrap_servers());
         configProps.put(
                 ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG,
                 kafkaProducerProperties.getKey_serializer());
@@ -41,7 +43,7 @@ public class KafkaProducerConfig {
     }
 
     @Bean
-    public KafkaTemplate<String, String> kafkaTemplate() {
-        return new KafkaTemplate<>(producerFactory());
+    public KafkaTemplate<String, GenericRecord> kafkaTemplate() {
+        return new KafkaTemplate<String,GenericRecord>(producerFactory());
     }
 }

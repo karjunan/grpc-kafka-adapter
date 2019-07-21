@@ -8,12 +8,12 @@ import org.springframework.context.annotation.PropertySource;
 
 @Configuration
 @PropertySource("classpath:application.properties")
-@ConfigurationProperties(prefix = "producer")
+@ConfigurationProperties(prefix = "spring.kafka.producer")
 @Getter
 @Setter
 public class KafkaProducerProperties {
 
-        private String bootstrapServers;
+        private String bootstrap_servers;
         private String key_serializer;
         private String value_serializer;
         private String schema_registry_url;

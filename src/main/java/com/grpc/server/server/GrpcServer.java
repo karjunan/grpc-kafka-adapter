@@ -12,7 +12,7 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 
 @Log4j
-public class GrpcKafkaServer implements ApplicationRunner {
+public class GrpcServer implements ApplicationRunner {
 
     @Value("${grpc.port}")
     private String port;
@@ -40,7 +40,7 @@ public class GrpcKafkaServer implements ApplicationRunner {
             @Override
             public void run() {
                 log.error("Shutting down server");
-                GrpcKafkaServer.this.stop();
+                GrpcServer.this.stop();
             }
         });
 

@@ -16,21 +16,13 @@ message ProducerRequest {
     string key = 4;
     string value = 5;
     Header header = 6;
-    string avroSchema= 7;
-    enum transcational {
-        YES = 0;
-        NO = 1;
-    }
 }
-
 
 message Header {
     map<string, string> pairs = 1;
 }
 
 message GetAllMessages {}
-
-
 
 message Response {
     Event event = 1;
