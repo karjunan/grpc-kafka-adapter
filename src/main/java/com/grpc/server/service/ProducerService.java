@@ -11,7 +11,6 @@ import org.apache.avro.generic.GenericRecord;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Log4j
 @Service
@@ -23,11 +22,10 @@ public class ProducerService extends KafkaServiceGrpc.KafkaServiceImplBase {
     private static final String AVRO_SCHEMA = "avroSchema";
 
     @Override
-    @Transactional
     public void save(Messages.ProducerRequest request, StreamObserver<Messages.OkResponse> responseObserver) {
 
 
-         if( request.getTopicList().isEmpty() ) {
+        if (request.getTopicList().isEmpty()) {
             Exception ex = new Exception("Topic name missing");
             responseObserver.onError(Status.INTERNAL.withDescription(ex.getMessage())
                     .augmentDescription("Topic name missing")
@@ -36,9 +34,9 @@ public class ProducerService extends KafkaServiceGrpc.KafkaServiceImplBase {
             return;
         }
 
-        if(request.getHeader().getPairsMap().size() == 0 ||
+        if (request.getHeader().getPairsMap().size() == 0 ||
                 !request.getHeader().getPairsMap().containsKey(AVRO_SCHEMA) ||
-                !request.getHeader().getPairsMap().containsKey("correlationId")){
+                !request.getHeader().getPairsMap().containsKey("correlationId")) {
             responseObserver.onError(Status.CANCELLED
                     .withDescription("Missing Mandataory headers")
                     .asRuntimeException());
@@ -46,12 +44,16 @@ public class ProducerService extends KafkaServiceGrpc.KafkaServiceImplBase {
         }
 
         try {
-            for (String topic : request.getTopicList()) {
-                ProducerRecord<String,GenericRecord> producerRecord = new ProducerRecord<>
-                        (topic, request.getPartition(), request.getKey(), Utils.getAvroRecord(request),
-                                Utils.getRecordHaders(request.getHeader()));
-                kafkaProducerConfig.kafkaTemplate().send(producerRecord);
-            }
+            kafkaProducerConfig.kafkaTemplate().executeInTransaction(template -> {
+                for (String topic : request.getTopicList()) {
+                    ProducerRecord<String, GenericRecord> producerRecord = new ProducerRecord<>
+                            (topic, request.getPartition(), request.getKey(), Utils.getAvroRecord(request),
+                                    Utils.getRecordHaders(request.getHeader()));
+                    template.send(producerRecord);
+
+                }
+                return null;
+            });
 
             Messages.OkResponse response = Messages.OkResponse.newBuilder()
                     .setIsOk(true)

@@ -1,32 +1,14 @@
-ERROR main com.grpc.server.service.ProducerService - Exception while persisting data - java.lang.IllegalStateException: Stream was terminated by error, no further calls are allowed
-INFO main com.grpc.server.config.KafkaProducerConfig - Configured properties => {schema.registry.url=null, value.serializer=null, bootstrap.servers=null, key.serializer=null}
-INFO main com.grpc.server.util.Utils - AvroSchema from Header => {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
-INFO main com.grpc.server.config.KafkaProducerConfig - Configured properties => {schema.registry.url=null, value.serializer=null, bootstrap.servers=null, key.serializer=null}
-INFO main com.grpc.server.util.Utils - AvroSchema from Header => {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
-INFO main com.grpc.server.util.Utils - correlationId : 1234
-INFO main com.grpc.server.util.Utils - transcationId : 5678
-INFO main com.grpc.server.util.Utils - avroSchema : {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
-INFO main com.grpc.server.config.KafkaProducerConfig - Configured properties => {schema.registry.url=null, value.serializer=null, bootstrap.servers=null, key.serializer=null}
-INFO main com.grpc.server.util.Utils - AvroSchema from Header => {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
-INFO main com.grpc.server.util.Utils - correlationId : 1234
-INFO main com.grpc.server.util.Utils - transcationId : 5678
-INFO main com.grpc.server.util.Utils - avroSchema : {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
-INFO main com.grpc.server.config.KafkaProducerConfig - Configured properties => {schema.registry.url=http://localhost:8081, value.serializer=io.confluent.kafka.serializers.KafkaAvroSerializer, bootstrap.servers==localhost:9092, key.serializer=org.apache.kafka.common.serialization.StringSerializer}
-INFO main com.grpc.server.util.Utils - AvroSchema from Header => {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
-INFO main com.grpc.server.util.Utils - correlationId : 1234
-INFO main com.grpc.server.util.Utils - transcationId : 5678
-INFO main com.grpc.server.util.Utils - avroSchema : {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
 INFO main org.apache.kafka.clients.producer.ProducerConfig - ProducerConfig values: 
 	acks = 1
 	batch.size = 16384
-	bootstrap.servers = [=localhost:9092]
+	bootstrap.servers = [localhost:9092, localhost:9093, localhost:9094]
 	buffer.memory = 33554432
 	client.dns.lookup = default
 	client.id = 
 	compression.type = none
 	connections.max.idle.ms = 540000
 	delivery.timeout.ms = 120000
-	enable.idempotence = false
+	enable.idempotence = true
 	interceptor.classes = []
 	key.serializer = class org.apache.kafka.common.serialization.StringSerializer
 	linger.ms = 0
@@ -76,49 +58,906 @@ INFO main org.apache.kafka.clients.producer.ProducerConfig - ProducerConfig valu
 	ssl.truststore.location = null
 	ssl.truststore.password = null
 	ssl.truststore.type = JKS
-	transaction.timeout.ms = 60000
-	transactional.id = null
+	transaction.timeout.ms = 10
+	transactional.id = transaction-sample0
 	value.serializer = class io.confluent.kafka.serializers.KafkaAvroSerializer
 
 INFO main io.confluent.kafka.serializers.KafkaAvroSerializerConfig - KafkaAvroSerializerConfig values: 
 	schema.registry.url = [http://localhost:8081]
 	max.schemas.per.subject = 1000
 
+INFO main org.apache.kafka.clients.producer.KafkaProducer - [Producer clientId=producer-1, transactionalId=transaction-sample0] Instantiated a transactional producer.
+INFO main org.apache.kafka.clients.producer.KafkaProducer - [Producer clientId=producer-1, transactionalId=transaction-sample0] Overriding the default retries config to the recommended value of 2147483647 since the idempotent producer is enabled.
+INFO main org.apache.kafka.clients.producer.KafkaProducer - [Producer clientId=producer-1, transactionalId=transaction-sample0] Overriding the default acks to all since idempotence is enabled.
+WARN main org.apache.kafka.clients.producer.ProducerConfig - The configuration 'transaction-id-prefix' was supplied but isn't a known config.
 INFO main org.apache.kafka.common.utils.AppInfoParser - Kafka version: 2.2.0
 INFO main org.apache.kafka.common.utils.AppInfoParser - Kafka commitId: 05fcfde8f69b0349
-INFO kafka-producer-network-thread | producer-1 org.apache.kafka.clients.Metadata - Cluster ID: -R5z-ZFxQ9GrD6ORtLXrdQ
+INFO main org.apache.kafka.clients.producer.internals.TransactionManager - [Producer clientId=producer-1, transactionalId=transaction-sample0] ProducerId set to -1 with epoch -1
+INFO kafka-producer-network-thread | producer-1 org.apache.kafka.clients.Metadata - Cluster ID: Q-fAIC7DTyC_0QX-GFqsLg
+INFO kafka-producer-network-thread | producer-1 org.apache.kafka.clients.producer.internals.TransactionManager - [Producer clientId=producer-1, transactionalId=transaction-sample0] ProducerId set to 0 with epoch 0
 INFO main com.grpc.server.util.Utils - AvroSchema from Header => {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
 INFO main com.grpc.server.util.Utils - correlationId : 1234
 INFO main com.grpc.server.util.Utils - transcationId : 5678
 INFO main com.grpc.server.util.Utils - avroSchema : {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
-INFO Thread-1 org.apache.kafka.clients.producer.KafkaProducer - [Producer clientId=producer-1] Closing the Kafka producer with timeoutMillis = 30000 ms.
-INFO main com.grpc.server.config.KafkaProducerConfig - Configured properties => {schema.registry.url=null, value.serializer=null, bootstrap.servers=null, key.serializer=null}
-INFO main com.grpc.server.config.KafkaProducerConfig - Configured properties => {schema.registry.url=null, value.serializer=null, bootstrap.servers=null, key.serializer=null}
+INFO Thread-1 org.apache.kafka.clients.producer.KafkaProducer - [Producer clientId=producer-1, transactionalId=transaction-sample0] Closing the Kafka producer with timeoutMillis = 30000 ms.
+INFO main com.grpc.server.config.KafkaProducerConfig - Configured properties => {schema.registry.url=http://localhost:8081, value.serializer=io.confluent.kafka.serializers.KafkaAvroSerializer, enable.idempotence=true, transaction-id-prefix=transaction-sample, transaction.timeout.ms=10, bootstrap.servers=localhost:9092,localhost:9093,localhost:9094, key.serializer=org.apache.kafka.common.serialization.StringSerializer, transactional.id=server1}
+INFO main org.apache.kafka.clients.producer.ProducerConfig - ProducerConfig values: 
+	acks = 1
+	batch.size = 16384
+	bootstrap.servers = [localhost:9092, localhost:9093, localhost:9094]
+	buffer.memory = 33554432
+	client.dns.lookup = default
+	client.id = 
+	compression.type = none
+	connections.max.idle.ms = 540000
+	delivery.timeout.ms = 120000
+	enable.idempotence = true
+	interceptor.classes = []
+	key.serializer = class org.apache.kafka.common.serialization.StringSerializer
+	linger.ms = 0
+	max.block.ms = 60000
+	max.in.flight.requests.per.connection = 5
+	max.request.size = 1048576
+	metadata.max.age.ms = 300000
+	metric.reporters = []
+	metrics.num.samples = 2
+	metrics.recording.level = INFO
+	metrics.sample.window.ms = 30000
+	partitioner.class = class org.apache.kafka.clients.producer.internals.DefaultPartitioner
+	receive.buffer.bytes = 32768
+	reconnect.backoff.max.ms = 1000
+	reconnect.backoff.ms = 50
+	request.timeout.ms = 30000
+	retries = 2147483647
+	retry.backoff.ms = 100
+	sasl.client.callback.handler.class = null
+	sasl.jaas.config = null
+	sasl.kerberos.kinit.cmd = /usr/bin/kinit
+	sasl.kerberos.min.time.before.relogin = 60000
+	sasl.kerberos.service.name = null
+	sasl.kerberos.ticket.renew.jitter = 0.05
+	sasl.kerberos.ticket.renew.window.factor = 0.8
+	sasl.login.callback.handler.class = null
+	sasl.login.class = null
+	sasl.login.refresh.buffer.seconds = 300
+	sasl.login.refresh.min.period.seconds = 60
+	sasl.login.refresh.window.factor = 0.8
+	sasl.login.refresh.window.jitter = 0.05
+	sasl.mechanism = GSSAPI
+	security.protocol = PLAINTEXT
+	send.buffer.bytes = 131072
+	ssl.cipher.suites = null
+	ssl.enabled.protocols = [TLSv1.2, TLSv1.1, TLSv1]
+	ssl.endpoint.identification.algorithm = https
+	ssl.key.password = null
+	ssl.keymanager.algorithm = SunX509
+	ssl.keystore.location = null
+	ssl.keystore.password = null
+	ssl.keystore.type = JKS
+	ssl.protocol = TLS
+	ssl.provider = null
+	ssl.secure.random.implementation = null
+	ssl.trustmanager.algorithm = PKIX
+	ssl.truststore.location = null
+	ssl.truststore.password = null
+	ssl.truststore.type = JKS
+	transaction.timeout.ms = 10
+	transactional.id = transaction-sample0
+	value.serializer = class io.confluent.kafka.serializers.KafkaAvroSerializer
+
+INFO main io.confluent.kafka.serializers.KafkaAvroSerializerConfig - KafkaAvroSerializerConfig values: 
+	schema.registry.url = [http://localhost:8081]
+	max.schemas.per.subject = 1000
+
+INFO main org.apache.kafka.clients.producer.KafkaProducer - [Producer clientId=producer-1, transactionalId=transaction-sample0] Instantiated a transactional producer.
+INFO main org.apache.kafka.clients.producer.KafkaProducer - [Producer clientId=producer-1, transactionalId=transaction-sample0] Overriding the default retries config to the recommended value of 2147483647 since the idempotent producer is enabled.
+INFO main org.apache.kafka.clients.producer.KafkaProducer - [Producer clientId=producer-1, transactionalId=transaction-sample0] Overriding the default acks to all since idempotence is enabled.
+WARN main org.apache.kafka.clients.producer.ProducerConfig - The configuration 'transaction-id-prefix' was supplied but isn't a known config.
+INFO main org.apache.kafka.common.utils.AppInfoParser - Kafka version: 2.2.0
+INFO main org.apache.kafka.common.utils.AppInfoParser - Kafka commitId: 05fcfde8f69b0349
+INFO main org.apache.kafka.clients.producer.internals.TransactionManager - [Producer clientId=producer-1, transactionalId=transaction-sample0] ProducerId set to -1 with epoch -1
+INFO kafka-producer-network-thread | producer-1 org.apache.kafka.clients.Metadata - Cluster ID: Q-fAIC7DTyC_0QX-GFqsLg
+INFO kafka-producer-network-thread | producer-1 org.apache.kafka.clients.producer.internals.TransactionManager - [Producer clientId=producer-1, transactionalId=transaction-sample0] ProducerId set to 0 with epoch 1
 INFO main com.grpc.server.util.Utils - AvroSchema from Header => {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
 INFO main com.grpc.server.util.Utils - correlationId : 1234
 INFO main com.grpc.server.util.Utils - transcationId : 5678
 INFO main com.grpc.server.util.Utils - avroSchema : {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
-INFO main com.grpc.server.config.KafkaProducerConfig - Configured properties => {schema.registry.url=null, value.serializer=null, bootstrap.servers=null, key.serializer=null}
+INFO Thread-1 org.apache.kafka.clients.producer.KafkaProducer - [Producer clientId=producer-1, transactionalId=transaction-sample0] Closing the Kafka producer with timeoutMillis = 30000 ms.
+INFO main com.grpc.server.config.KafkaProducerConfig - Configured properties => {schema.registry.url=http://localhost:8081, value.serializer=io.confluent.kafka.serializers.KafkaAvroSerializer, enable.idempotence=true, transaction-id-prefix=transaction-sample, transaction.timeout.ms=10, bootstrap.servers=localhost:9092,localhost:9093,localhost:9094, key.serializer=org.apache.kafka.common.serialization.StringSerializer, transactional.id=server1}
+INFO main org.apache.kafka.clients.producer.ProducerConfig - ProducerConfig values: 
+	acks = 1
+	batch.size = 16384
+	bootstrap.servers = [localhost:9092, localhost:9093, localhost:9094]
+	buffer.memory = 33554432
+	client.dns.lookup = default
+	client.id = 
+	compression.type = none
+	connections.max.idle.ms = 540000
+	delivery.timeout.ms = 120000
+	enable.idempotence = true
+	interceptor.classes = []
+	key.serializer = class org.apache.kafka.common.serialization.StringSerializer
+	linger.ms = 0
+	max.block.ms = 60000
+	max.in.flight.requests.per.connection = 5
+	max.request.size = 1048576
+	metadata.max.age.ms = 300000
+	metric.reporters = []
+	metrics.num.samples = 2
+	metrics.recording.level = INFO
+	metrics.sample.window.ms = 30000
+	partitioner.class = class org.apache.kafka.clients.producer.internals.DefaultPartitioner
+	receive.buffer.bytes = 32768
+	reconnect.backoff.max.ms = 1000
+	reconnect.backoff.ms = 50
+	request.timeout.ms = 30000
+	retries = 2147483647
+	retry.backoff.ms = 100
+	sasl.client.callback.handler.class = null
+	sasl.jaas.config = null
+	sasl.kerberos.kinit.cmd = /usr/bin/kinit
+	sasl.kerberos.min.time.before.relogin = 60000
+	sasl.kerberos.service.name = null
+	sasl.kerberos.ticket.renew.jitter = 0.05
+	sasl.kerberos.ticket.renew.window.factor = 0.8
+	sasl.login.callback.handler.class = null
+	sasl.login.class = null
+	sasl.login.refresh.buffer.seconds = 300
+	sasl.login.refresh.min.period.seconds = 60
+	sasl.login.refresh.window.factor = 0.8
+	sasl.login.refresh.window.jitter = 0.05
+	sasl.mechanism = GSSAPI
+	security.protocol = PLAINTEXT
+	send.buffer.bytes = 131072
+	ssl.cipher.suites = null
+	ssl.enabled.protocols = [TLSv1.2, TLSv1.1, TLSv1]
+	ssl.endpoint.identification.algorithm = https
+	ssl.key.password = null
+	ssl.keymanager.algorithm = SunX509
+	ssl.keystore.location = null
+	ssl.keystore.password = null
+	ssl.keystore.type = JKS
+	ssl.protocol = TLS
+	ssl.provider = null
+	ssl.secure.random.implementation = null
+	ssl.trustmanager.algorithm = PKIX
+	ssl.truststore.location = null
+	ssl.truststore.password = null
+	ssl.truststore.type = JKS
+	transaction.timeout.ms = 10
+	transactional.id = transaction-sample0
+	value.serializer = class io.confluent.kafka.serializers.KafkaAvroSerializer
+
+INFO main io.confluent.kafka.serializers.KafkaAvroSerializerConfig - KafkaAvroSerializerConfig values: 
+	schema.registry.url = [http://localhost:8081]
+	max.schemas.per.subject = 1000
+
+INFO main org.apache.kafka.clients.producer.KafkaProducer - [Producer clientId=producer-1, transactionalId=transaction-sample0] Instantiated a transactional producer.
+INFO main org.apache.kafka.clients.producer.KafkaProducer - [Producer clientId=producer-1, transactionalId=transaction-sample0] Overriding the default retries config to the recommended value of 2147483647 since the idempotent producer is enabled.
+INFO main org.apache.kafka.clients.producer.KafkaProducer - [Producer clientId=producer-1, transactionalId=transaction-sample0] Overriding the default acks to all since idempotence is enabled.
+WARN main org.apache.kafka.clients.producer.ProducerConfig - The configuration 'transaction-id-prefix' was supplied but isn't a known config.
+INFO main org.apache.kafka.common.utils.AppInfoParser - Kafka version: 2.2.0
+INFO main org.apache.kafka.common.utils.AppInfoParser - Kafka commitId: 05fcfde8f69b0349
+INFO main org.apache.kafka.clients.producer.internals.TransactionManager - [Producer clientId=producer-1, transactionalId=transaction-sample0] ProducerId set to -1 with epoch -1
+INFO kafka-producer-network-thread | producer-1 org.apache.kafka.clients.Metadata - Cluster ID: Q-fAIC7DTyC_0QX-GFqsLg
+INFO kafka-producer-network-thread | producer-1 org.apache.kafka.clients.producer.internals.TransactionManager - [Producer clientId=producer-1, transactionalId=transaction-sample0] ProducerId set to 0 with epoch 2
 INFO main com.grpc.server.util.Utils - AvroSchema from Header => {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
 INFO main com.grpc.server.util.Utils - correlationId : 1234
 INFO main com.grpc.server.util.Utils - transcationId : 5678
 INFO main com.grpc.server.util.Utils - avroSchema : {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
-INFO main com.grpc.server.config.KafkaProducerConfig - Configured properties => {schema.registry.url=null, value.serializer=null, bootstrap.servers=null, key.serializer=null}
 INFO main com.grpc.server.util.Utils - AvroSchema from Header => {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
 INFO main com.grpc.server.util.Utils - correlationId : 1234
 INFO main com.grpc.server.util.Utils - transcationId : 5678
 INFO main com.grpc.server.util.Utils - avroSchema : {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
-INFO main com.grpc.server.config.KafkaProducerConfig - Configured properties => {schema.registry.url=null, value.serializer=null, bootstrap.servers=null, key.serializer=null}
-INFO main com.grpc.server.config.KafkaProducerConfig - Configured properties => {schema.registry.url=null, value.serializer=null, bootstrap.servers=null, key.serializer=null}
-INFO main com.grpc.server.config.KafkaProducerConfig - Configured properties => {schema.registry.url=null, value.serializer=null, bootstrap.servers=null, key.serializer=null}
-INFO main com.grpc.server.config.KafkaProducerConfig - Configured properties => {schema.registry.url=null, value.serializer=null, bootstrap.servers=null, key.serializer=null}
+INFO Thread-1 org.apache.kafka.clients.producer.KafkaProducer - [Producer clientId=producer-1, transactionalId=transaction-sample0] Closing the Kafka producer with timeoutMillis = 30000 ms.
+INFO main com.grpc.server.config.KafkaProducerConfig - Configured properties => {schema.registry.url=http://localhost:8081, value.serializer=io.confluent.kafka.serializers.KafkaAvroSerializer, enable.idempotence=true, transaction-id-prefix=transaction-sample, transaction.timeout.ms=10, bootstrap.servers=localhost:9092,localhost:9093,localhost:9094, key.serializer=org.apache.kafka.common.serialization.StringSerializer, transactional.id=server1}
+INFO main org.apache.kafka.clients.producer.ProducerConfig - ProducerConfig values: 
+	acks = 1
+	batch.size = 16384
+	bootstrap.servers = [localhost:9092, localhost:9093, localhost:9094]
+	buffer.memory = 33554432
+	client.dns.lookup = default
+	client.id = 
+	compression.type = none
+	connections.max.idle.ms = 540000
+	delivery.timeout.ms = 120000
+	enable.idempotence = true
+	interceptor.classes = []
+	key.serializer = class org.apache.kafka.common.serialization.StringSerializer
+	linger.ms = 0
+	max.block.ms = 60000
+	max.in.flight.requests.per.connection = 5
+	max.request.size = 1048576
+	metadata.max.age.ms = 300000
+	metric.reporters = []
+	metrics.num.samples = 2
+	metrics.recording.level = INFO
+	metrics.sample.window.ms = 30000
+	partitioner.class = class org.apache.kafka.clients.producer.internals.DefaultPartitioner
+	receive.buffer.bytes = 32768
+	reconnect.backoff.max.ms = 1000
+	reconnect.backoff.ms = 50
+	request.timeout.ms = 30000
+	retries = 2147483647
+	retry.backoff.ms = 100
+	sasl.client.callback.handler.class = null
+	sasl.jaas.config = null
+	sasl.kerberos.kinit.cmd = /usr/bin/kinit
+	sasl.kerberos.min.time.before.relogin = 60000
+	sasl.kerberos.service.name = null
+	sasl.kerberos.ticket.renew.jitter = 0.05
+	sasl.kerberos.ticket.renew.window.factor = 0.8
+	sasl.login.callback.handler.class = null
+	sasl.login.class = null
+	sasl.login.refresh.buffer.seconds = 300
+	sasl.login.refresh.min.period.seconds = 60
+	sasl.login.refresh.window.factor = 0.8
+	sasl.login.refresh.window.jitter = 0.05
+	sasl.mechanism = GSSAPI
+	security.protocol = PLAINTEXT
+	send.buffer.bytes = 131072
+	ssl.cipher.suites = null
+	ssl.enabled.protocols = [TLSv1.2, TLSv1.1, TLSv1]
+	ssl.endpoint.identification.algorithm = https
+	ssl.key.password = null
+	ssl.keymanager.algorithm = SunX509
+	ssl.keystore.location = null
+	ssl.keystore.password = null
+	ssl.keystore.type = JKS
+	ssl.protocol = TLS
+	ssl.provider = null
+	ssl.secure.random.implementation = null
+	ssl.trustmanager.algorithm = PKIX
+	ssl.truststore.location = null
+	ssl.truststore.password = null
+	ssl.truststore.type = JKS
+	transaction.timeout.ms = 10
+	transactional.id = transaction-sample0
+	value.serializer = class io.confluent.kafka.serializers.KafkaAvroSerializer
+
+INFO main io.confluent.kafka.serializers.KafkaAvroSerializerConfig - KafkaAvroSerializerConfig values: 
+	schema.registry.url = [http://localhost:8081]
+	max.schemas.per.subject = 1000
+
+INFO main org.apache.kafka.clients.producer.KafkaProducer - [Producer clientId=producer-1, transactionalId=transaction-sample0] Instantiated a transactional producer.
+INFO main org.apache.kafka.clients.producer.KafkaProducer - [Producer clientId=producer-1, transactionalId=transaction-sample0] Overriding the default retries config to the recommended value of 2147483647 since the idempotent producer is enabled.
+INFO main org.apache.kafka.clients.producer.KafkaProducer - [Producer clientId=producer-1, transactionalId=transaction-sample0] Overriding the default acks to all since idempotence is enabled.
+WARN main org.apache.kafka.clients.producer.ProducerConfig - The configuration 'transaction-id-prefix' was supplied but isn't a known config.
+INFO main org.apache.kafka.common.utils.AppInfoParser - Kafka version: 2.2.0
+INFO main org.apache.kafka.common.utils.AppInfoParser - Kafka commitId: 05fcfde8f69b0349
+INFO main org.apache.kafka.clients.producer.internals.TransactionManager - [Producer clientId=producer-1, transactionalId=transaction-sample0] ProducerId set to -1 with epoch -1
+INFO kafka-producer-network-thread | producer-1 org.apache.kafka.clients.Metadata - Cluster ID: Q-fAIC7DTyC_0QX-GFqsLg
+INFO kafka-producer-network-thread | producer-1 org.apache.kafka.clients.producer.internals.TransactionManager - [Producer clientId=producer-1, transactionalId=transaction-sample0] ProducerId set to 0 with epoch 3
 INFO main com.grpc.server.util.Utils - AvroSchema from Header => {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
 INFO main com.grpc.server.util.Utils - correlationId : 1234
 INFO main com.grpc.server.util.Utils - transcationId : 5678
 INFO main com.grpc.server.util.Utils - avroSchema : {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
-INFO main com.grpc.server.config.KafkaProducerConfig - Configured properties => {schema.registry.url=null, value.serializer=null, bootstrap.servers=null, key.serializer=null}
-INFO main com.grpc.server.config.KafkaProducerConfig - Configured properties => {schema.registry.url=null, value.serializer=null, bootstrap.servers=null, key.serializer=null}
 INFO main com.grpc.server.util.Utils - AvroSchema from Header => {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
 INFO main com.grpc.server.util.Utils - correlationId : 1234
 INFO main com.grpc.server.util.Utils - transcationId : 5678
 INFO main com.grpc.server.util.Utils - avroSchema : {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - AvroSchema from Header => {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - correlationId : 1234
+INFO main com.grpc.server.util.Utils - transcationId : 5678
+INFO main com.grpc.server.util.Utils - avroSchema : {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+WARN kafka-producer-network-thread | producer-1 org.apache.kafka.clients.NetworkClient - [Producer clientId=producer-1, transactionalId=transaction-sample0] Error while fetching metadata with correlation id 13 : {t3=LEADER_NOT_AVAILABLE}
+INFO Thread-1 org.apache.kafka.clients.producer.KafkaProducer - [Producer clientId=producer-1, transactionalId=transaction-sample0] Closing the Kafka producer with timeoutMillis = 30000 ms.
+INFO main com.grpc.server.config.KafkaProducerConfig - Configured properties => {schema.registry.url=http://localhost:8081, value.serializer=io.confluent.kafka.serializers.KafkaAvroSerializer, enable.idempotence=true, transaction-id-prefix=transaction-sample, transaction.timeout.ms=10, bootstrap.servers=localhost:9092,localhost:9093,localhost:9094, key.serializer=org.apache.kafka.common.serialization.StringSerializer, transactional.id=server1}
+INFO main org.apache.kafka.clients.producer.ProducerConfig - ProducerConfig values: 
+	acks = 1
+	batch.size = 16384
+	bootstrap.servers = [localhost:9092, localhost:9093, localhost:9094]
+	buffer.memory = 33554432
+	client.dns.lookup = default
+	client.id = 
+	compression.type = none
+	connections.max.idle.ms = 540000
+	delivery.timeout.ms = 120000
+	enable.idempotence = true
+	interceptor.classes = []
+	key.serializer = class org.apache.kafka.common.serialization.StringSerializer
+	linger.ms = 0
+	max.block.ms = 60000
+	max.in.flight.requests.per.connection = 5
+	max.request.size = 1048576
+	metadata.max.age.ms = 300000
+	metric.reporters = []
+	metrics.num.samples = 2
+	metrics.recording.level = INFO
+	metrics.sample.window.ms = 30000
+	partitioner.class = class org.apache.kafka.clients.producer.internals.DefaultPartitioner
+	receive.buffer.bytes = 32768
+	reconnect.backoff.max.ms = 1000
+	reconnect.backoff.ms = 50
+	request.timeout.ms = 30000
+	retries = 2147483647
+	retry.backoff.ms = 100
+	sasl.client.callback.handler.class = null
+	sasl.jaas.config = null
+	sasl.kerberos.kinit.cmd = /usr/bin/kinit
+	sasl.kerberos.min.time.before.relogin = 60000
+	sasl.kerberos.service.name = null
+	sasl.kerberos.ticket.renew.jitter = 0.05
+	sasl.kerberos.ticket.renew.window.factor = 0.8
+	sasl.login.callback.handler.class = null
+	sasl.login.class = null
+	sasl.login.refresh.buffer.seconds = 300
+	sasl.login.refresh.min.period.seconds = 60
+	sasl.login.refresh.window.factor = 0.8
+	sasl.login.refresh.window.jitter = 0.05
+	sasl.mechanism = GSSAPI
+	security.protocol = PLAINTEXT
+	send.buffer.bytes = 131072
+	ssl.cipher.suites = null
+	ssl.enabled.protocols = [TLSv1.2, TLSv1.1, TLSv1]
+	ssl.endpoint.identification.algorithm = https
+	ssl.key.password = null
+	ssl.keymanager.algorithm = SunX509
+	ssl.keystore.location = null
+	ssl.keystore.password = null
+	ssl.keystore.type = JKS
+	ssl.protocol = TLS
+	ssl.provider = null
+	ssl.secure.random.implementation = null
+	ssl.trustmanager.algorithm = PKIX
+	ssl.truststore.location = null
+	ssl.truststore.password = null
+	ssl.truststore.type = JKS
+	transaction.timeout.ms = 10
+	transactional.id = transaction-sample0
+	value.serializer = class io.confluent.kafka.serializers.KafkaAvroSerializer
+
+INFO main io.confluent.kafka.serializers.KafkaAvroSerializerConfig - KafkaAvroSerializerConfig values: 
+	schema.registry.url = [http://localhost:8081]
+	max.schemas.per.subject = 1000
+
+INFO main org.apache.kafka.clients.producer.KafkaProducer - [Producer clientId=producer-1, transactionalId=transaction-sample0] Instantiated a transactional producer.
+INFO main org.apache.kafka.clients.producer.KafkaProducer - [Producer clientId=producer-1, transactionalId=transaction-sample0] Overriding the default retries config to the recommended value of 2147483647 since the idempotent producer is enabled.
+INFO main org.apache.kafka.clients.producer.KafkaProducer - [Producer clientId=producer-1, transactionalId=transaction-sample0] Overriding the default acks to all since idempotence is enabled.
+WARN main org.apache.kafka.clients.producer.ProducerConfig - The configuration 'transaction-id-prefix' was supplied but isn't a known config.
+INFO main org.apache.kafka.common.utils.AppInfoParser - Kafka version: 2.2.0
+INFO main org.apache.kafka.common.utils.AppInfoParser - Kafka commitId: 05fcfde8f69b0349
+INFO main org.apache.kafka.clients.producer.internals.TransactionManager - [Producer clientId=producer-1, transactionalId=transaction-sample0] ProducerId set to -1 with epoch -1
+INFO kafka-producer-network-thread | producer-1 org.apache.kafka.clients.Metadata - Cluster ID: Q-fAIC7DTyC_0QX-GFqsLg
+INFO kafka-producer-network-thread | producer-1 org.apache.kafka.clients.producer.internals.TransactionManager - [Producer clientId=producer-1, transactionalId=transaction-sample0] ProducerId set to 0 with epoch 4
+INFO main com.grpc.server.util.Utils - AvroSchema from Header => {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - correlationId : 1234
+INFO main com.grpc.server.util.Utils - transcationId : 5678
+INFO main com.grpc.server.util.Utils - avroSchema : {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - AvroSchema from Header => {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - correlationId : 1234
+INFO main com.grpc.server.util.Utils - transcationId : 5678
+INFO main com.grpc.server.util.Utils - avroSchema : {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - AvroSchema from Header => {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - correlationId : 1234
+INFO main com.grpc.server.util.Utils - transcationId : 5678
+INFO main com.grpc.server.util.Utils - avroSchema : {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - AvroSchema from Header => {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - correlationId : 1234
+INFO main com.grpc.server.util.Utils - transcationId : 5678
+INFO main com.grpc.server.util.Utils - avroSchema : {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - AvroSchema from Header => {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - correlationId : 1234
+INFO main com.grpc.server.util.Utils - transcationId : 5678
+INFO main com.grpc.server.util.Utils - avroSchema : {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - AvroSchema from Header => {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - correlationId : 1234
+INFO main com.grpc.server.util.Utils - transcationId : 5678
+INFO main com.grpc.server.util.Utils - avroSchema : {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - AvroSchema from Header => {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - correlationId : 1234
+INFO main com.grpc.server.util.Utils - transcationId : 5678
+INFO main com.grpc.server.util.Utils - avroSchema : {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - AvroSchema from Header => {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - correlationId : 1234
+INFO main com.grpc.server.util.Utils - transcationId : 5678
+INFO main com.grpc.server.util.Utils - avroSchema : {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - AvroSchema from Header => {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - correlationId : 1234
+INFO main com.grpc.server.util.Utils - transcationId : 5678
+INFO main com.grpc.server.util.Utils - avroSchema : {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - AvroSchema from Header => {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - correlationId : 1234
+INFO main com.grpc.server.util.Utils - transcationId : 5678
+INFO main com.grpc.server.util.Utils - avroSchema : {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - AvroSchema from Header => {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - correlationId : 1234
+INFO main com.grpc.server.util.Utils - transcationId : 5678
+INFO main com.grpc.server.util.Utils - avroSchema : {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - AvroSchema from Header => {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - correlationId : 1234
+INFO main com.grpc.server.util.Utils - transcationId : 5678
+INFO main com.grpc.server.util.Utils - avroSchema : {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - AvroSchema from Header => {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - correlationId : 1234
+INFO main com.grpc.server.util.Utils - transcationId : 5678
+INFO main com.grpc.server.util.Utils - avroSchema : {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - AvroSchema from Header => {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - correlationId : 1234
+INFO main com.grpc.server.util.Utils - transcationId : 5678
+INFO main com.grpc.server.util.Utils - avroSchema : {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - AvroSchema from Header => {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - correlationId : 1234
+INFO main com.grpc.server.util.Utils - transcationId : 5678
+INFO main com.grpc.server.util.Utils - avroSchema : {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - AvroSchema from Header => {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - correlationId : 1234
+INFO main com.grpc.server.util.Utils - transcationId : 5678
+INFO main com.grpc.server.util.Utils - avroSchema : {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - AvroSchema from Header => {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - correlationId : 1234
+INFO main com.grpc.server.util.Utils - transcationId : 5678
+INFO main com.grpc.server.util.Utils - avroSchema : {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - AvroSchema from Header => {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - correlationId : 1234
+INFO main com.grpc.server.util.Utils - transcationId : 5678
+INFO main com.grpc.server.util.Utils - avroSchema : {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.config.KafkaProducerConfig - Configured properties => {schema.registry.url=http://localhost:8081, value.serializer=io.confluent.kafka.serializers.KafkaAvroSerializer, enable.idempotence=true, transaction-id-prefix=transaction-sample, transaction.timeout.ms=null, bootstrap.servers=localhost:9092,localhost:9093,localhost:9094, key.serializer=org.apache.kafka.common.serialization.StringSerializer, transactional.id=server1}
+INFO main org.apache.kafka.clients.producer.ProducerConfig - ProducerConfig values: 
+	acks = 1
+	batch.size = 16384
+	bootstrap.servers = [localhost:9092, localhost:9093, localhost:9094]
+	buffer.memory = 33554432
+	client.dns.lookup = default
+	client.id = 
+	compression.type = none
+	connections.max.idle.ms = 540000
+	delivery.timeout.ms = 120000
+	enable.idempotence = true
+	interceptor.classes = []
+	key.serializer = class org.apache.kafka.common.serialization.StringSerializer
+	linger.ms = 0
+	max.block.ms = 60000
+	max.in.flight.requests.per.connection = 5
+	max.request.size = 1048576
+	metadata.max.age.ms = 300000
+	metric.reporters = []
+	metrics.num.samples = 2
+	metrics.recording.level = INFO
+	metrics.sample.window.ms = 30000
+	partitioner.class = class org.apache.kafka.clients.producer.internals.DefaultPartitioner
+	receive.buffer.bytes = 32768
+	reconnect.backoff.max.ms = 1000
+	reconnect.backoff.ms = 50
+	request.timeout.ms = 30000
+	retries = 2147483647
+	retry.backoff.ms = 100
+	sasl.client.callback.handler.class = null
+	sasl.jaas.config = null
+	sasl.kerberos.kinit.cmd = /usr/bin/kinit
+	sasl.kerberos.min.time.before.relogin = 60000
+	sasl.kerberos.service.name = null
+	sasl.kerberos.ticket.renew.jitter = 0.05
+	sasl.kerberos.ticket.renew.window.factor = 0.8
+	sasl.login.callback.handler.class = null
+	sasl.login.class = null
+	sasl.login.refresh.buffer.seconds = 300
+	sasl.login.refresh.min.period.seconds = 60
+	sasl.login.refresh.window.factor = 0.8
+	sasl.login.refresh.window.jitter = 0.05
+	sasl.mechanism = GSSAPI
+	security.protocol = PLAINTEXT
+	send.buffer.bytes = 131072
+	ssl.cipher.suites = null
+	ssl.enabled.protocols = [TLSv1.2, TLSv1.1, TLSv1]
+	ssl.endpoint.identification.algorithm = https
+	ssl.key.password = null
+	ssl.keymanager.algorithm = SunX509
+	ssl.keystore.location = null
+	ssl.keystore.password = null
+	ssl.keystore.type = JKS
+	ssl.protocol = TLS
+	ssl.provider = null
+	ssl.secure.random.implementation = null
+	ssl.trustmanager.algorithm = PKIX
+	ssl.truststore.location = null
+	ssl.truststore.password = null
+	ssl.truststore.type = JKS
+	transaction.timeout.ms = null
+	transactional.id = transaction-sample0
+	value.serializer = class io.confluent.kafka.serializers.KafkaAvroSerializer
+
+INFO main io.confluent.kafka.serializers.KafkaAvroSerializerConfig - KafkaAvroSerializerConfig values: 
+	schema.registry.url = [http://localhost:8081]
+	max.schemas.per.subject = 1000
+
+INFO main org.apache.kafka.clients.producer.KafkaProducer - [Producer clientId=producer-1, transactionalId=transaction-sample0] Closing the Kafka producer with timeoutMillis = 0 ms.
+ERROR main com.grpc.server.service.ProducerService - Exception while persisting data - org.apache.kafka.common.KafkaException: Failed to construct kafka producer
+INFO main com.grpc.server.config.KafkaProducerConfig - Configured properties => {schema.registry.url=http://localhost:8081, value.serializer=io.confluent.kafka.serializers.KafkaAvroSerializer, enable.idempotence=true, transaction-id-prefix=transaction-sample, transaction.timeout.ms=100, bootstrap.servers=localhost:9092,localhost:9093,localhost:9094, key.serializer=org.apache.kafka.common.serialization.StringSerializer, transactional.id=server1}
+INFO main org.apache.kafka.clients.producer.ProducerConfig - ProducerConfig values: 
+	acks = 1
+	batch.size = 16384
+	bootstrap.servers = [localhost:9092, localhost:9093, localhost:9094]
+	buffer.memory = 33554432
+	client.dns.lookup = default
+	client.id = 
+	compression.type = none
+	connections.max.idle.ms = 540000
+	delivery.timeout.ms = 120000
+	enable.idempotence = true
+	interceptor.classes = []
+	key.serializer = class org.apache.kafka.common.serialization.StringSerializer
+	linger.ms = 0
+	max.block.ms = 60000
+	max.in.flight.requests.per.connection = 5
+	max.request.size = 1048576
+	metadata.max.age.ms = 300000
+	metric.reporters = []
+	metrics.num.samples = 2
+	metrics.recording.level = INFO
+	metrics.sample.window.ms = 30000
+	partitioner.class = class org.apache.kafka.clients.producer.internals.DefaultPartitioner
+	receive.buffer.bytes = 32768
+	reconnect.backoff.max.ms = 1000
+	reconnect.backoff.ms = 50
+	request.timeout.ms = 30000
+	retries = 2147483647
+	retry.backoff.ms = 100
+	sasl.client.callback.handler.class = null
+	sasl.jaas.config = null
+	sasl.kerberos.kinit.cmd = /usr/bin/kinit
+	sasl.kerberos.min.time.before.relogin = 60000
+	sasl.kerberos.service.name = null
+	sasl.kerberos.ticket.renew.jitter = 0.05
+	sasl.kerberos.ticket.renew.window.factor = 0.8
+	sasl.login.callback.handler.class = null
+	sasl.login.class = null
+	sasl.login.refresh.buffer.seconds = 300
+	sasl.login.refresh.min.period.seconds = 60
+	sasl.login.refresh.window.factor = 0.8
+	sasl.login.refresh.window.jitter = 0.05
+	sasl.mechanism = GSSAPI
+	security.protocol = PLAINTEXT
+	send.buffer.bytes = 131072
+	ssl.cipher.suites = null
+	ssl.enabled.protocols = [TLSv1.2, TLSv1.1, TLSv1]
+	ssl.endpoint.identification.algorithm = https
+	ssl.key.password = null
+	ssl.keymanager.algorithm = SunX509
+	ssl.keystore.location = null
+	ssl.keystore.password = null
+	ssl.keystore.type = JKS
+	ssl.protocol = TLS
+	ssl.provider = null
+	ssl.secure.random.implementation = null
+	ssl.trustmanager.algorithm = PKIX
+	ssl.truststore.location = null
+	ssl.truststore.password = null
+	ssl.truststore.type = JKS
+	transaction.timeout.ms = 100
+	transactional.id = transaction-sample0
+	value.serializer = class io.confluent.kafka.serializers.KafkaAvroSerializer
+
+INFO main io.confluent.kafka.serializers.KafkaAvroSerializerConfig - KafkaAvroSerializerConfig values: 
+	schema.registry.url = [http://localhost:8081]
+	max.schemas.per.subject = 1000
+
+INFO main org.apache.kafka.clients.producer.KafkaProducer - [Producer clientId=producer-1, transactionalId=transaction-sample0] Instantiated a transactional producer.
+INFO main org.apache.kafka.clients.producer.KafkaProducer - [Producer clientId=producer-1, transactionalId=transaction-sample0] Overriding the default retries config to the recommended value of 2147483647 since the idempotent producer is enabled.
+INFO main org.apache.kafka.clients.producer.KafkaProducer - [Producer clientId=producer-1, transactionalId=transaction-sample0] Overriding the default acks to all since idempotence is enabled.
+WARN main org.apache.kafka.clients.producer.ProducerConfig - The configuration 'transaction-id-prefix' was supplied but isn't a known config.
+INFO main org.apache.kafka.common.utils.AppInfoParser - Kafka version: 2.2.0
+INFO main org.apache.kafka.common.utils.AppInfoParser - Kafka commitId: 05fcfde8f69b0349
+INFO main org.apache.kafka.clients.producer.internals.TransactionManager - [Producer clientId=producer-1, transactionalId=transaction-sample0] ProducerId set to -1 with epoch -1
+INFO kafka-producer-network-thread | producer-1 org.apache.kafka.clients.Metadata - Cluster ID: Q-fAIC7DTyC_0QX-GFqsLg
+INFO kafka-producer-network-thread | producer-1 org.apache.kafka.clients.producer.internals.TransactionManager - [Producer clientId=producer-1, transactionalId=transaction-sample0] ProducerId set to 0 with epoch 5
+INFO main com.grpc.server.util.Utils - AvroSchema from Header => {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - correlationId : 1234
+INFO main com.grpc.server.util.Utils - transcationId : 5678
+INFO main com.grpc.server.util.Utils - avroSchema : {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - AvroSchema from Header => {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - correlationId : 1234
+INFO main com.grpc.server.util.Utils - transcationId : 5678
+INFO main com.grpc.server.util.Utils - avroSchema : {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - AvroSchema from Header => {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - correlationId : 1234
+INFO main com.grpc.server.util.Utils - transcationId : 5678
+INFO main com.grpc.server.util.Utils - avroSchema : {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - AvroSchema from Header => {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - correlationId : 1234
+INFO main com.grpc.server.util.Utils - transcationId : 5678
+INFO main com.grpc.server.util.Utils - avroSchema : {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - AvroSchema from Header => {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - correlationId : 1234
+INFO main com.grpc.server.util.Utils - transcationId : 5678
+INFO main com.grpc.server.util.Utils - avroSchema : {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - AvroSchema from Header => {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - correlationId : 1234
+INFO main com.grpc.server.util.Utils - transcationId : 5678
+INFO main com.grpc.server.util.Utils - avroSchema : {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - AvroSchema from Header => {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - correlationId : 1234
+INFO main com.grpc.server.util.Utils - transcationId : 5678
+INFO main com.grpc.server.util.Utils - avroSchema : {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - AvroSchema from Header => {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - correlationId : 1234
+INFO main com.grpc.server.util.Utils - transcationId : 5678
+INFO main com.grpc.server.util.Utils - avroSchema : {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - AvroSchema from Header => {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - correlationId : 1234
+INFO main com.grpc.server.util.Utils - transcationId : 5678
+INFO main com.grpc.server.util.Utils - avroSchema : {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - AvroSchema from Header => {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - correlationId : 1234
+INFO main com.grpc.server.util.Utils - transcationId : 5678
+INFO main com.grpc.server.util.Utils - avroSchema : {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - AvroSchema from Header => {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - correlationId : 1234
+INFO main com.grpc.server.util.Utils - transcationId : 5678
+INFO main com.grpc.server.util.Utils - avroSchema : {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - AvroSchema from Header => {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - correlationId : 1234
+INFO main com.grpc.server.util.Utils - transcationId : 5678
+INFO main com.grpc.server.util.Utils - avroSchema : {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - AvroSchema from Header => {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - correlationId : 1234
+INFO main com.grpc.server.util.Utils - transcationId : 5678
+INFO main com.grpc.server.util.Utils - avroSchema : {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - AvroSchema from Header => {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - correlationId : 1234
+INFO main com.grpc.server.util.Utils - transcationId : 5678
+INFO main com.grpc.server.util.Utils - avroSchema : {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - AvroSchema from Header => {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - correlationId : 1234
+INFO main com.grpc.server.util.Utils - transcationId : 5678
+INFO main com.grpc.server.util.Utils - avroSchema : {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - AvroSchema from Header => {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - correlationId : 1234
+INFO main com.grpc.server.util.Utils - transcationId : 5678
+INFO main com.grpc.server.util.Utils - avroSchema : {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - AvroSchema from Header => {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - correlationId : 1234
+INFO main com.grpc.server.util.Utils - transcationId : 5678
+INFO main com.grpc.server.util.Utils - avroSchema : {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - AvroSchema from Header => {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - correlationId : 1234
+INFO main com.grpc.server.util.Utils - transcationId : 5678
+INFO main com.grpc.server.util.Utils - avroSchema : {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - AvroSchema from Header => {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - correlationId : 1234
+INFO main com.grpc.server.util.Utils - transcationId : 5678
+INFO main com.grpc.server.util.Utils - avroSchema : {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - AvroSchema from Header => {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - correlationId : 1234
+INFO main com.grpc.server.util.Utils - transcationId : 5678
+INFO main com.grpc.server.util.Utils - avroSchema : {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - AvroSchema from Header => {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - correlationId : 1234
+INFO main com.grpc.server.util.Utils - transcationId : 5678
+INFO main com.grpc.server.util.Utils - avroSchema : {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - AvroSchema from Header => {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - correlationId : 1234
+INFO main com.grpc.server.util.Utils - transcationId : 5678
+INFO main com.grpc.server.util.Utils - avroSchema : {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - AvroSchema from Header => {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - correlationId : 1234
+INFO main com.grpc.server.util.Utils - transcationId : 5678
+INFO main com.grpc.server.util.Utils - avroSchema : {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - AvroSchema from Header => {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - correlationId : 1234
+INFO main com.grpc.server.util.Utils - transcationId : 5678
+INFO main com.grpc.server.util.Utils - avroSchema : {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - AvroSchema from Header => {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - correlationId : 1234
+INFO main com.grpc.server.util.Utils - transcationId : 5678
+INFO main com.grpc.server.util.Utils - avroSchema : {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - AvroSchema from Header => {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - correlationId : 1234
+INFO main com.grpc.server.util.Utils - transcationId : 5678
+INFO main com.grpc.server.util.Utils - avroSchema : {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - AvroSchema from Header => {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - correlationId : 1234
+INFO main com.grpc.server.util.Utils - transcationId : 5678
+INFO main com.grpc.server.util.Utils - avroSchema : {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - AvroSchema from Header => {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - correlationId : 1234
+INFO main com.grpc.server.util.Utils - transcationId : 5678
+INFO main com.grpc.server.util.Utils - avroSchema : {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - AvroSchema from Header => {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - correlationId : 1234
+INFO main com.grpc.server.util.Utils - transcationId : 5678
+INFO main com.grpc.server.util.Utils - avroSchema : {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - AvroSchema from Header => {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - correlationId : 1234
+INFO main com.grpc.server.util.Utils - transcationId : 5678
+INFO main com.grpc.server.util.Utils - avroSchema : {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO Thread-1 org.apache.kafka.clients.producer.KafkaProducer - [Producer clientId=producer-1, transactionalId=transaction-sample0] Closing the Kafka producer with timeoutMillis = 30000 ms.
+INFO main com.grpc.server.config.KafkaProducerConfig - Configured properties => {schema.registry.url=http://localhost:8081, value.serializer=io.confluent.kafka.serializers.KafkaAvroSerializer, enable.idempotence=true, transaction-id-prefix=transaction-sample, transaction.timeout.ms=100, bootstrap.servers=localhost:9092,localhost:9093,localhost:9094, key.serializer=org.apache.kafka.common.serialization.StringSerializer, transactional.id=server1}
+INFO main org.apache.kafka.clients.producer.ProducerConfig - ProducerConfig values: 
+	acks = 1
+	batch.size = 16384
+	bootstrap.servers = [localhost:9092, localhost:9093, localhost:9094]
+	buffer.memory = 33554432
+	client.dns.lookup = default
+	client.id = 
+	compression.type = none
+	connections.max.idle.ms = 540000
+	delivery.timeout.ms = 120000
+	enable.idempotence = true
+	interceptor.classes = []
+	key.serializer = class org.apache.kafka.common.serialization.StringSerializer
+	linger.ms = 0
+	max.block.ms = 60000
+	max.in.flight.requests.per.connection = 5
+	max.request.size = 1048576
+	metadata.max.age.ms = 300000
+	metric.reporters = []
+	metrics.num.samples = 2
+	metrics.recording.level = INFO
+	metrics.sample.window.ms = 30000
+	partitioner.class = class org.apache.kafka.clients.producer.internals.DefaultPartitioner
+	receive.buffer.bytes = 32768
+	reconnect.backoff.max.ms = 1000
+	reconnect.backoff.ms = 50
+	request.timeout.ms = 30000
+	retries = 2147483647
+	retry.backoff.ms = 100
+	sasl.client.callback.handler.class = null
+	sasl.jaas.config = null
+	sasl.kerberos.kinit.cmd = /usr/bin/kinit
+	sasl.kerberos.min.time.before.relogin = 60000
+	sasl.kerberos.service.name = null
+	sasl.kerberos.ticket.renew.jitter = 0.05
+	sasl.kerberos.ticket.renew.window.factor = 0.8
+	sasl.login.callback.handler.class = null
+	sasl.login.class = null
+	sasl.login.refresh.buffer.seconds = 300
+	sasl.login.refresh.min.period.seconds = 60
+	sasl.login.refresh.window.factor = 0.8
+	sasl.login.refresh.window.jitter = 0.05
+	sasl.mechanism = GSSAPI
+	security.protocol = PLAINTEXT
+	send.buffer.bytes = 131072
+	ssl.cipher.suites = null
+	ssl.enabled.protocols = [TLSv1.2, TLSv1.1, TLSv1]
+	ssl.endpoint.identification.algorithm = https
+	ssl.key.password = null
+	ssl.keymanager.algorithm = SunX509
+	ssl.keystore.location = null
+	ssl.keystore.password = null
+	ssl.keystore.type = JKS
+	ssl.protocol = TLS
+	ssl.provider = null
+	ssl.secure.random.implementation = null
+	ssl.trustmanager.algorithm = PKIX
+	ssl.truststore.location = null
+	ssl.truststore.password = null
+	ssl.truststore.type = JKS
+	transaction.timeout.ms = 100
+	transactional.id = transaction-sample0
+	value.serializer = class io.confluent.kafka.serializers.KafkaAvroSerializer
+
+INFO main io.confluent.kafka.serializers.KafkaAvroSerializerConfig - KafkaAvroSerializerConfig values: 
+	schema.registry.url = [http://localhost:8081]
+	max.schemas.per.subject = 1000
+
+INFO main org.apache.kafka.clients.producer.KafkaProducer - [Producer clientId=producer-1, transactionalId=transaction-sample0] Instantiated a transactional producer.
+INFO main org.apache.kafka.clients.producer.KafkaProducer - [Producer clientId=producer-1, transactionalId=transaction-sample0] Overriding the default retries config to the recommended value of 2147483647 since the idempotent producer is enabled.
+INFO main org.apache.kafka.clients.producer.KafkaProducer - [Producer clientId=producer-1, transactionalId=transaction-sample0] Overriding the default acks to all since idempotence is enabled.
+WARN main org.apache.kafka.clients.producer.ProducerConfig - The configuration 'transaction-id-prefix' was supplied but isn't a known config.
+INFO main org.apache.kafka.common.utils.AppInfoParser - Kafka version: 2.2.0
+INFO main org.apache.kafka.common.utils.AppInfoParser - Kafka commitId: 05fcfde8f69b0349
+INFO main org.apache.kafka.clients.producer.internals.TransactionManager - [Producer clientId=producer-1, transactionalId=transaction-sample0] ProducerId set to -1 with epoch -1
+INFO kafka-producer-network-thread | producer-1 org.apache.kafka.clients.Metadata - Cluster ID: Q-fAIC7DTyC_0QX-GFqsLg
+INFO kafka-producer-network-thread | producer-1 org.apache.kafka.clients.producer.internals.TransactionManager - [Producer clientId=producer-1, transactionalId=transaction-sample0] ProducerId set to 0 with epoch 6
+INFO main com.grpc.server.util.Utils - AvroSchema from Header => {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - correlationId : 1234
+INFO main com.grpc.server.util.Utils - transcationId : 5678
+INFO main com.grpc.server.util.Utils - avroSchema : {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - AvroSchema from Header => {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - correlationId : 1234
+INFO main com.grpc.server.util.Utils - transcationId : 5678
+INFO main com.grpc.server.util.Utils - avroSchema : {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - AvroSchema from Header => {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - correlationId : 1234
+INFO main com.grpc.server.util.Utils - transcationId : 5678
+INFO main com.grpc.server.util.Utils - avroSchema : {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - AvroSchema from Header => {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - correlationId : 1234
+INFO main com.grpc.server.util.Utils - transcationId : 5678
+INFO main com.grpc.server.util.Utils - avroSchema : {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - AvroSchema from Header => {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - correlationId : 1234
+INFO main com.grpc.server.util.Utils - transcationId : 5678
+INFO main com.grpc.server.util.Utils - avroSchema : {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - AvroSchema from Header => {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - correlationId : 1234
+INFO main com.grpc.server.util.Utils - transcationId : 5678
+INFO main com.grpc.server.util.Utils - avroSchema : {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - AvroSchema from Header => {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - correlationId : 1234
+INFO main com.grpc.server.util.Utils - transcationId : 5678
+INFO main com.grpc.server.util.Utils - avroSchema : {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - AvroSchema from Header => {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - correlationId : 1234
+INFO main com.grpc.server.util.Utils - transcationId : 5678
+INFO main com.grpc.server.util.Utils - avroSchema : {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - AvroSchema from Header => {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - correlationId : 1234
+INFO main com.grpc.server.util.Utils - transcationId : 5678
+INFO main com.grpc.server.util.Utils - avroSchema : {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - AvroSchema from Header => {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - correlationId : 1234
+INFO main com.grpc.server.util.Utils - transcationId : 5678
+INFO main com.grpc.server.util.Utils - avroSchema : {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - AvroSchema from Header => {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - correlationId : 1234
+INFO main com.grpc.server.util.Utils - transcationId : 5678
+INFO main com.grpc.server.util.Utils - avroSchema : {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - AvroSchema from Header => {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - correlationId : 1234
+INFO main com.grpc.server.util.Utils - transcationId : 5678
+INFO main com.grpc.server.util.Utils - avroSchema : {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - AvroSchema from Header => {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - correlationId : 1234
+INFO main com.grpc.server.util.Utils - transcationId : 5678
+INFO main com.grpc.server.util.Utils - avroSchema : {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - AvroSchema from Header => {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - correlationId : 1234
+INFO main com.grpc.server.util.Utils - transcationId : 5678
+INFO main com.grpc.server.util.Utils - avroSchema : {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - AvroSchema from Header => {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - correlationId : 1234
+INFO main com.grpc.server.util.Utils - transcationId : 5678
+INFO main com.grpc.server.util.Utils - avroSchema : {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - AvroSchema from Header => {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - correlationId : 1234
+INFO main com.grpc.server.util.Utils - transcationId : 5678
+INFO main com.grpc.server.util.Utils - avroSchema : {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - AvroSchema from Header => {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - correlationId : 1234
+INFO main com.grpc.server.util.Utils - transcationId : 5678
+INFO main com.grpc.server.util.Utils - avroSchema : {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - AvroSchema from Header => {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - correlationId : 1234
+INFO main com.grpc.server.util.Utils - transcationId : 5678
+INFO main com.grpc.server.util.Utils - avroSchema : {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - AvroSchema from Header => {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - correlationId : 1234
+INFO main com.grpc.server.util.Utils - transcationId : 5678
+INFO main com.grpc.server.util.Utils - avroSchema : {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - AvroSchema from Header => {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - correlationId : 1234
+INFO main com.grpc.server.util.Utils - transcationId : 5678
+INFO main com.grpc.server.util.Utils - avroSchema : {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - AvroSchema from Header => {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - correlationId : 1234
+INFO main com.grpc.server.util.Utils - transcationId : 5678
+INFO main com.grpc.server.util.Utils - avroSchema : {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - AvroSchema from Header => {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - correlationId : 1234
+INFO main com.grpc.server.util.Utils - transcationId : 5678
+INFO main com.grpc.server.util.Utils - avroSchema : {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - AvroSchema from Header => {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - correlationId : 1234
+INFO main com.grpc.server.util.Utils - transcationId : 5678
+INFO main com.grpc.server.util.Utils - avroSchema : {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - AvroSchema from Header => {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - correlationId : 1234
+INFO main com.grpc.server.util.Utils - transcationId : 5678
+INFO main com.grpc.server.util.Utils - avroSchema : {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - AvroSchema from Header => {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - correlationId : 1234
+INFO main com.grpc.server.util.Utils - transcationId : 5678
+INFO main com.grpc.server.util.Utils - avroSchema : {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - AvroSchema from Header => {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - correlationId : 1234
+INFO main com.grpc.server.util.Utils - transcationId : 5678
+INFO main com.grpc.server.util.Utils - avroSchema : {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - AvroSchema from Header => {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - correlationId : 1234
+INFO main com.grpc.server.util.Utils - transcationId : 5678
+INFO main com.grpc.server.util.Utils - avroSchema : {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - AvroSchema from Header => {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - correlationId : 1234
+INFO main com.grpc.server.util.Utils - transcationId : 5678
+INFO main com.grpc.server.util.Utils - avroSchema : {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - AvroSchema from Header => {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - correlationId : 1234
+INFO main com.grpc.server.util.Utils - transcationId : 5678
+INFO main com.grpc.server.util.Utils - avroSchema : {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - AvroSchema from Header => {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO main com.grpc.server.util.Utils - correlationId : 1234
+INFO main com.grpc.server.util.Utils - transcationId : 5678
+INFO main com.grpc.server.util.Utils - avroSchema : {   "namespace": "com.grpc.server.avro",   "type": "record",   "name": "Message",   "fields": [     {"name": "value",  "type": "string"}   ] }
+INFO Thread-1 org.apache.kafka.clients.producer.KafkaProducer - [Producer clientId=producer-1, transactionalId=transaction-sample0] Closing the Kafka producer with timeoutMillis = 30000 ms.

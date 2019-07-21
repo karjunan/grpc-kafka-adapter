@@ -65,15 +65,19 @@ public class ProducerServiceIntegrationTest {
        producerRequest = Messages.ProducerRequest.newBuilder()
                 .addTopic("t1")
                 .addTopic("t2")
-                .setValue("Finally its working")
+                .addTopic("t3")
+                .setValue("Entering Kafka")
                 .setHeader(header)
                 .build();
     }
 
     @Test
     public void test() {
-        Messages.OkResponse response = blockingStub.save(producerRequest);
-        Assert.assertEquals(true,response.getIsOk());
+        for(int i = 0; i < 10; i++) {
+            Messages.OkResponse response = blockingStub.save(producerRequest);
+
+        }
+//        Assert.assertEquals(true,response.getIsOk());
 //        System.out.println(response);
     }
 }

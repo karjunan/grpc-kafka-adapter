@@ -22,7 +22,6 @@ public class KafkaProducerConfig {
     @Autowired
     private KafkaProducerProperties kafkaProducerProperties;
 
-
     @Bean
     public ProducerFactory<String, GenericRecord> producerFactory() {
         Map<String, Object> configProps = new HashMap<>();
@@ -38,8 +37,20 @@ public class KafkaProducerConfig {
         configProps.put(
                 AbstractKafkaAvroSerDeConfig.SCHEMA_REGISTRY_URL_CONFIG,
                 kafkaProducerProperties.getSchema_registry_url());
+        configProps.put(
+                ProducerConfig.ENABLE_IDEMPOTENCE_CONFIG,
+                kafkaProducerProperties.getEnable_idempotence());
+        configProps.put(ProducerConfig.TRANSACTIONAL_ID_CONFIG,kafkaProducerProperties.getTransactional_id());
+
+        //TODO set the right timeout value for prod environment
+        configProps.put(ProducerConfig.TRANSACTION_TIMEOUT_CONFIG,kafkaProducerProperties.getTransaction_timeout_ms());
+        configProps.put("transaction-id-prefix",kafkaProducerProperties.getTransactional_id_prefix());
+
+
         log.info("Configured properties => "  + configProps);
-        return new DefaultKafkaProducerFactory<>(configProps);
+        ProducerFactory<String,GenericRecord> factory = new DefaultKafkaProducerFactory<>(configProps);
+      ((DefaultKafkaProducerFactory<String, GenericRecord>) factory).setTransactionIdPrefix(kafkaProducerProperties.getTransactional_id_prefix());
+        return factory;
     }
 
     @Bean
