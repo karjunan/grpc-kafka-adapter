@@ -67,6 +67,7 @@ public class ProducerService extends KafkaServiceGrpc.KafkaServiceImplBase {
                     .augmentDescription(ex.getCause().getMessage())
                     .withCause(ex.getCause())
                     .asRuntimeException());
+            return;
         }
 
     }

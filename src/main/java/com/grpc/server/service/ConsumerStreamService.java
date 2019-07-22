@@ -1,4 +1,7 @@
 package com.grpc.server.service;
 
-public class ConsumerStreamService {
+import com.grpc.server.proto.KafkaServiceGrpc;
+
+public class ConsumerStreamService extends KafkaServiceGrpc.KafkaServiceImplBase {
+
 }
