@@ -34,9 +34,9 @@ public class ProducerService extends KafkaServiceGrpc.KafkaServiceImplBase {
             return;
         }
 
-        if (request.getHeader().getPairsMap().size() == 0 ||
-                !request.getHeader().getPairsMap().containsKey(AVRO_SCHEMA) ||
-                !request.getHeader().getPairsMap().containsKey("correlationId")) {
+        if (request.getHeaderMap().size() == 0 ||
+                !request.getHeaderMap().containsKey(AVRO_SCHEMA) ||
+                !request.getHeaderMap().containsKey("correlationId")) {
             responseObserver.onError(Status.CANCELLED
                     .withDescription("Missing Mandataory headers")
                     .asRuntimeException());
@@ -48,7 +48,7 @@ public class ProducerService extends KafkaServiceGrpc.KafkaServiceImplBase {
                 for (String topic : request.getTopicList()) {
                     ProducerRecord<String, GenericRecord> producerRecord = new ProducerRecord<>
                             (topic, request.getPartition(), request.getKey(), Utils.getAvroRecord(request),
-                                    Utils.getRecordHaders(request.getHeader()));
+                                    Utils.getRecordHaders(request));
                     template.send(producerRecord);
 
                 }

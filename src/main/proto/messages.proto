@@ -3,7 +3,7 @@ syntax = "proto3";
 option java_package="com.grpc.server.proto";
 
 message Event {
-    Header header = 1;
+    map<string,string> header = 1;
     string key = 2;
     string value = 3;
 
@@ -15,12 +15,12 @@ message ProducerRequest {
     int64 seconds = 3;
     string key = 4;
     string value = 5;
-    Header header = 6;
+    map<string,string> header = 6;
 }
 
-message Header {
-    map<string, string> pairs = 1;
-}
+//message Header {
+//    map<string, string> pairs = 1;
+//}
 
 message GetAllMessages {}
 

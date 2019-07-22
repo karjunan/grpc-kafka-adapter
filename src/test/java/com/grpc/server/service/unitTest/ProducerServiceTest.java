@@ -2,6 +2,7 @@ package com.grpc.server.service.unitTest;
 
 import com.grpc.server.config.KafkaProducerConfig;
 import com.grpc.server.config.KafkaProducerProperties;
+import com.grpc.server.config.PropertiesConfiguration;
 import com.grpc.server.proto.KafkaServiceGrpc;
 import com.grpc.server.proto.Messages;
 import com.grpc.server.service.ProducerService;
@@ -17,20 +18,27 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 @RunWith(SpringRunner.class)
-@ContextConfiguration(classes = {ProducerService.class,KafkaProducerConfig.class,KafkaProducerProperties.class})
+@ContextConfiguration(classes = {ProducerService.class,KafkaProducerConfig.class,
+        KafkaProducerProperties.class,PropertiesConfiguration.class})
+@EnableConfigurationProperties(KafkaProducerProperties.class)
 public class ProducerServiceTest {
 
     @Value( "${grpc.port}" )
@@ -42,7 +50,7 @@ public class ProducerServiceTest {
     @Autowired
     KafkaProducerConfig kafkaProducerConfig;
 
-    @Autowired
+    @MockBean
     KafkaProducerProperties kafkaProducerProperties;
 
     @MockBean
@@ -73,11 +81,11 @@ public class ProducerServiceTest {
 
 
 
-        Messages.Header header = Messages.Header.newBuilder()
-                .putPairs("correlationId","1234")
-                .putPairs("transcationId","5678")
-                .putPairs("avroSchema",UtilHelper.getAvroData())
-                .build();
+        Map<String,String> headers = new HashMap<>();
+        headers.put("correlationId", "1234");
+        headers.put("transcationId", "5678");
+        headers.put("avroSchema",UtilHelper.getAvroData());
+
 
         List<String> list = new ArrayList<>();
         list.add("topic-1");
@@ -86,7 +94,7 @@ public class ProducerServiceTest {
                 .addTopic("topic-1")
 //                .addTopic("topic-2")
                 .setValue("Finally its working")
-                .setHeader(header)
+                .putAllHeader(headers)
                 .build();
 
     }
@@ -94,7 +102,9 @@ public class ProducerServiceTest {
     @Test
     public void save_message_successfully()  {
 
-        Mockito.when(template.send(Mockito.any(ProducerRecord.class))).thenReturn(Mockito.any());
+//        Mockito.when(kafkaProducerConfig.kafkaTemplate().send(Mockito.any(ProducerRecord.class)))
+//                .thenReturn(Mockito.any());
+        Mockito.when(template).thenReturn(Mockito.any());
         Messages.OkResponse reply =  blockingStub.save(producerRequest);
         Assert.assertEquals(true,reply.getIsOk());
 
@@ -103,11 +113,10 @@ public class ProducerServiceTest {
     @Test
     public void save_message_throw_missing_header_when_missing_avro_schema()  {
 
-        Messages.Header header = Messages.Header.newBuilder()
-                .putPairs("correlationId","1234")
-                .putPairs("transcationId","5678")
-//                .putPairs("avroSchema",UtilHelper.getAvroData())
-                .build();
+        Map<String,String> headers = new HashMap<>();
+        headers.put("correlationId", "1234");
+        headers.put("transcationId", "5678");
+//        headers.put("avroSchema",UtilHelper.getAvroData());
 
         List<String> list = new ArrayList<>();
         list.add("topic-1");
@@ -116,7 +125,7 @@ public class ProducerServiceTest {
                 .addTopic("topic-1")
 //                .addTopic("topic-2")
                 .setValue("Finally its working")
-                .setHeader(header)
+                .putAllHeader(headers)
                 .build();
 
 //        Mockito.when(template.send(Mockito.any(ProducerRecord.class))).thenReturn(Mockito.any());
@@ -129,11 +138,10 @@ public class ProducerServiceTest {
     @Test
     public void save_message_throw_missing_header_when_correlationId_not_present() throws Exception {
 
-        Messages.Header header = Messages.Header.newBuilder()
-//                .putPairs("correlationId","1234")
-                .putPairs("transcationId","5678")
-                .putPairs("avroSchema",UtilHelper.getAvroData())
-                .build();
+        Map<String,String> headers = new HashMap<>();
+//        headers.put("correlationId", "1234");
+        headers.put("transcationId", "5678");
+        headers.put("avroSchema",UtilHelper.getAvroData());
 
         List<String> list = new ArrayList<>();
         list.add("topic-1");
@@ -142,7 +150,7 @@ public class ProducerServiceTest {
                 .addTopic("topic-1")
 //                .addTopic("topic-2")
                 .setValue("Finally its working")
-                .setHeader(header)
+                .putAllHeader(headers)
                 .build();
 
 //        Mockito.when(template.send(Mockito.any(ProducerRecord.class))).thenReturn(Mockito.any());
@@ -156,11 +164,11 @@ public class ProducerServiceTest {
     @Test
     public void save_message_throw_missing_topic__when_topic_not_present() throws Exception {
 
-        Messages.Header header = Messages.Header.newBuilder()
-                .putPairs("correlationId","1234")
-                .putPairs("transcationId","5678")
-                .putPairs("avroSchema",UtilHelper.getAvroData())
-                .build();
+        Map<String,String> headers = new HashMap<>();
+//        headers.put("correlationId", "1234");
+        headers.put("transcationId", "5678");
+        headers.put("avroSchema",UtilHelper.getAvroData());
+
 
         List<String> list = new ArrayList<>();
         list.add("topic-1");
@@ -169,7 +177,7 @@ public class ProducerServiceTest {
 //                .addTopic("topic-1")
 //                .addTopic("topic-2")
                 .setValue("Finally its working")
-                .setHeader(header)
+                .putAllHeader(headers)
                 .build();
 
 //        Mockito.when(template.send(Mockito.any(ProducerRecord.class))).thenReturn(Mockito.any());

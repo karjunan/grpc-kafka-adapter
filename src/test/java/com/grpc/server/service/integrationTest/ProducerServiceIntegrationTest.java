@@ -22,6 +22,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = {GrpcServer.class,ProducerService.class,KafkaProducerConfig.class,
         KafkaProducerProperties.class,HeaderServerInterceptor.class,
@@ -56,18 +59,23 @@ public class ProducerServiceIntegrationTest {
 
         // Create a client channel and register for automatic graceful shutdown.
         blockingStub = com.grpc.server.proto.KafkaServiceGrpc.newBlockingStub(grpcCleanup.register(InProcessChannelBuilder.forName(serverName).directExecutor().build()));
-        Messages.Header header = Messages.Header.newBuilder()
-                .putPairs("correlationId", "1234")
-                .putPairs("transcationId", "5678")
-                .putPairs("avroSchema",UtilHelper.getAvroData())
-                .build();
+//        Messages.ProducerRequest header = Messages.Header.newBuilder()
+//                .putPairs("correlationId", "1234")
+//                .putPairs("transcationId", "5678")
+//                .putPairs("avroSchema",UtilHelper.getAvroData())
+//                .build();
 
-       producerRequest = Messages.ProducerRequest.newBuilder()
+        Map<String,String> headers = new HashMap<>();
+        headers.put("correlationId", "1234");
+        headers.put("transcationId", "5678");
+        headers.put("avroSchema",UtilHelper.getAvroData());
+
+        producerRequest = Messages.ProducerRequest.newBuilder()
                 .addTopic("t1")
                 .addTopic("t2")
                 .addTopic("t3")
                 .setValue("Entering Kafka")
-                .setHeader(header)
+                .putAllHeader(headers)
                 .build();
     }
 

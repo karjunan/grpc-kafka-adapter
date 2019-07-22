@@ -6,4 +6,4 @@ java-grpc-server.jar
 *.jar
 *.iml
 .project
-*-log*
+kafka-server-log*

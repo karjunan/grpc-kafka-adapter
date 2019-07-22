@@ -13,9 +13,9 @@ import org.apache.kafka.common.header.internals.RecordHeaders;
 @Log4j
 public class Utils {
 
-    public static Headers getRecordHaders(Messages.Header protoHeader) {
+    public static Headers getRecordHaders(Messages.ProducerRequest protoHeader) {
         Headers headers = new RecordHeaders();
-        protoHeader.getPairsMap().entrySet()
+        protoHeader.getHeaderMap().entrySet()
                 .forEach(k -> {
                     Header header = new RecordHeader(k.getKey(), k.getValue().getBytes());
                     log.info(k.getKey() + " : " + k.getValue());
@@ -25,7 +25,7 @@ public class Utils {
     }
 
     public static GenericRecord getAvroRecord(Messages.ProducerRequest request) {
-        String avroSchema = request.getHeader().getPairsMap().get("avroSchema");
+        String avroSchema = request.getHeaderMap().get("avroSchema");
         log.info("AvroSchema from Header => " + avroSchema);
         Schema.Parser parser = new Schema.Parser();
         Schema schema = parser.parse(avroSchema);

@@ -10,7 +10,7 @@ import org.springframework.context.annotation.PropertySource;
 @PropertySource("classpath:application.properties")
 @Getter
 @Setter
-public class PropertiesCofiguration {
+public class PropertiesConfiguration {
 
     private String avro_schema_name;
 }
