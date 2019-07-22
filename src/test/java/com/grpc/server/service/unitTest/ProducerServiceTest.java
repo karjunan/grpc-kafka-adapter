@@ -11,20 +11,17 @@ import io.grpc.StatusRuntimeException;
 import io.grpc.inprocess.InProcessChannelBuilder;
 import io.grpc.inprocess.InProcessServerBuilder;
 import io.grpc.testing.GrpcCleanupRule;
-import org.apache.kafka.clients.producer.ProducerRecord;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -50,10 +47,10 @@ public class ProducerServiceTest {
     @Autowired
     KafkaProducerConfig kafkaProducerConfig;
 
-    @MockBean
+    @Autowired
     KafkaProducerProperties kafkaProducerProperties;
 
-    @MockBean
+    @SpyBean
     KafkaTemplate template;
 
     @Rule
@@ -99,16 +96,14 @@ public class ProducerServiceTest {
 
     }
 
-    @Test
-    public void save_message_successfully()  {
-
-//        Mockito.when(kafkaProducerConfig.kafkaTemplate().send(Mockito.any(ProducerRecord.class)))
-//                .thenReturn(Mockito.any());
-        Mockito.when(template).thenReturn(Mockito.any());
-        Messages.OkResponse reply =  blockingStub.save(producerRequest);
-        Assert.assertEquals(true,reply.getIsOk());
-
-    }
+//    @Test
+//    public void save_message_successfully()  {
+//        Mockito.doReturn(null).when(kafkaProducerConfig).kafkaTemplate()
+//                .
+//        Messages.OkResponse reply =  blockingStub.save(producerRequest);
+//        Assert.assertEquals(true,reply.getIsOk());
+//        Mockito.verify(kafkaProducerConfig).kafkaTemplate();
+//    }
 
     @Test
     public void save_message_throw_missing_header_when_missing_avro_schema()  {
