@@ -5,6 +5,9 @@ COPY pom.xml .
 RUN mvn -B -e -C -T 1C org.apache.maven.plugins:maven-dependency-plugin:3.0.2:go-offline
 COPY . .
 RUN mvn -B -e -o -T 1C validate
+RUN mvn -B package -DskipTests
+RUN ls -ltr /usr/src/app
+
 
 FROM openjdk
 COPY --from=0 /usr/src/app/target/*.jar ./
