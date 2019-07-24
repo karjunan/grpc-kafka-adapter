@@ -1,5 +1,6 @@
 package com.grpc.server.server;
 
+import com.grpc.server.config.properties.GeneralProperties;
 import com.grpc.server.interceptor.HeaderServerInterceptor;
 import com.grpc.server.service.ProducerService;
 import io.grpc.Server;
@@ -7,15 +8,14 @@ import io.grpc.ServerBuilder;
 import io.grpc.ServerInterceptors;
 import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 
 @Log4j
 public class GrpcServer implements ApplicationRunner {
 
-    @Value("${grpc.port}")
-    private String port;
+    @Autowired
+    GeneralProperties properties;
 
     @Autowired
     private ProducerService producerService;
@@ -31,11 +31,11 @@ public class GrpcServer implements ApplicationRunner {
     private Server server;
 
     public void start() throws Exception {
-        server = ServerBuilder.forPort(Integer.parseInt(port))
+        server = ServerBuilder.forPort(properties.getGrpc_port())
                 .addService(ServerInterceptors.intercept(producerService, headerServerInterceptor))
                 .build()
                 .start();
-        log.info("Listening on port " + port);
+        log.info("Listening on port " + properties.getGrpc_port());
         Runtime.getRuntime().addShutdownHook(new Thread() {
             @Override
             public void run() {

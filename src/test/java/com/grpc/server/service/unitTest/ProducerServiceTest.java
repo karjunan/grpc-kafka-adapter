@@ -1,10 +1,11 @@
 package com.grpc.server.service.unitTest;
 
 import com.grpc.server.config.KafkaProducerConfig;
-import com.grpc.server.config.KafkaProducerProperties;
-import com.grpc.server.config.PropertiesConfiguration;
+import com.grpc.server.config.properties.KafkaProducerProperties;
+import com.grpc.server.config.properties.GeneralProperties;
 import com.grpc.server.proto.KafkaServiceGrpc;
 import com.grpc.server.proto.Messages;
+import com.grpc.server.server.GrpcServer;
 import com.grpc.server.service.ProducerService;
 import com.grpc.server.util.UtilHelper;
 import io.grpc.StatusRuntimeException;
@@ -12,26 +13,25 @@ import io.grpc.inprocess.InProcessChannelBuilder;
 import io.grpc.inprocess.InProcessServerBuilder;
 import io.grpc.testing.GrpcCleanupRule;
 import org.apache.avro.generic.GenericRecord;
-import org.apache.logging.log4j.core.appender.mom.kafka.KafkaProducerFactory;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
-import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.kafka.core.ProducerFactory;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.lang.reflect.GenericArrayType;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -39,9 +39,8 @@ import java.util.Map;
 
 
 @RunWith(SpringRunner.class)
-@ContextConfiguration(classes = {ProducerService.class,KafkaProducerConfig.class,
-        KafkaProducerProperties.class,PropertiesConfiguration.class})
-@EnableConfigurationProperties(KafkaProducerProperties.class)
+@ContextConfiguration(classes = {ProducerService.class,KafkaProducerConfig.class,GeneralProperties.class})
+@ActiveProfiles("test")
 public class ProducerServiceTest {
 
     @Value( "${grpc.port}" )
@@ -55,6 +54,9 @@ public class ProducerServiceTest {
 
     @Autowired
     KafkaProducerProperties kafkaProducerProperties;
+
+    @MockBean
+    ProducerFactory<String,GenericRecord> factory;
 
     @MockBean
     KafkaTemplate template;
@@ -104,11 +106,12 @@ public class ProducerServiceTest {
 
     @Test
     public void save_message_successfully()  {
+
         Mockito.when(template.executeInTransaction(Mockito.any())).thenReturn(Mockito.any());
 
         Messages.OkResponse reply =  blockingStub.save(producerRequest);
         Assert.assertEquals(true,reply.getIsOk());
-//        Mockito.verify(kafkaProducerConfig).kafkaTemplate();
+        Mockito.verify(template,Mockito.times(1)).executeInTransaction(Mockito.any());
     }
 
     @Test

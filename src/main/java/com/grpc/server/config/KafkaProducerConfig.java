@@ -1,6 +1,8 @@
 package com.grpc.server.config;
 
 
+import com.grpc.server.config.properties.GeneralProperties;
+import com.grpc.server.config.properties.KafkaProducerProperties;
 import io.confluent.kafka.serializers.AbstractKafkaAvroSerDeConfig;
 import lombok.extern.log4j.Log4j;
 import org.apache.avro.generic.GenericRecord;
@@ -18,6 +20,9 @@ import java.util.Map;
 @Configuration
 @Log4j
 public class KafkaProducerConfig {
+
+    @Autowired
+    private GeneralProperties generalProperties;
 
     @Autowired
     private KafkaProducerProperties kafkaProducerProperties;
@@ -44,7 +49,7 @@ public class KafkaProducerConfig {
 
         //TODO set the right timeout value for prod environment
         configProps.put(ProducerConfig.TRANSACTION_TIMEOUT_CONFIG,kafkaProducerProperties.getTransaction_timeout_ms());
-        configProps.put("transaction-id-prefix",kafkaProducerProperties.getTransactional_id_prefix());
+//        configProps.put("transaction.id.prefix",kafkaProducerProperties.getTransactional_id_prefix());
 
 
         log.info("Configured properties => "  + configProps);

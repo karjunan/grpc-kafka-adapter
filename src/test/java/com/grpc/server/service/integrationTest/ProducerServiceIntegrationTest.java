@@ -1,12 +1,8 @@
 package com.grpc.server.service.integrationTest;
 
-import com.grpc.server.GrpcApplication;
-import com.grpc.server.config.KafkaProducerConfig;
-import com.grpc.server.config.KafkaProducerProperties;
 import com.grpc.server.interceptor.HeaderServerInterceptor;
 import com.grpc.server.proto.KafkaServiceGrpc;
 import com.grpc.server.proto.Messages;
-import com.grpc.server.server.GrpcServer;
 import com.grpc.server.service.ProducerService;
 import com.grpc.server.util.UtilHelper;
 import io.grpc.inprocess.InProcessChannelBuilder;
@@ -18,34 +14,28 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.test.context.ContextConfiguration;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.SpyBean;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.HashMap;
 import java.util.Map;
 
 @RunWith(SpringRunner.class)
-@ContextConfiguration(classes = {GrpcServer.class,ProducerService.class,KafkaProducerConfig.class,
-        KafkaProducerProperties.class,HeaderServerInterceptor.class,
-GrpcApplication.class})
+@ActiveProfiles("test")
+@SpringBootTest
 public class ProducerServiceIntegrationTest {
-
-    @Value( "${grpc.port}" )
-    private String port;
-
-    @Autowired
-    GrpcServer grpcKafkaServer;
 
     @Autowired
     private ProducerService producerService;
 
     @Autowired
-    HeaderServerInterceptor headerServerInterceptor;
-
+    private HeaderServerInterceptor headerServerInterceptor;
 
     @Rule
     public final GrpcCleanupRule grpcCleanup = new GrpcCleanupRule();
+
     private KafkaServiceGrpc.KafkaServiceBlockingStub kafkaServiceBlockingStub;
 
     KafkaServiceGrpc.KafkaServiceBlockingStub blockingStub = null;
@@ -59,11 +49,6 @@ public class ProducerServiceIntegrationTest {
 
         // Create a client channel and register for automatic graceful shutdown.
         blockingStub = com.grpc.server.proto.KafkaServiceGrpc.newBlockingStub(grpcCleanup.register(InProcessChannelBuilder.forName(serverName).directExecutor().build()));
-//        Messages.ProducerRequest header = Messages.Header.newBuilder()
-//                .putPairs("correlationId", "1234")
-//                .putPairs("transcationId", "5678")
-//                .putPairs("avroSchema",UtilHelper.getAvroData())
-//                .build();
 
         Map<String,String> headers = new HashMap<>();
         headers.put("correlationId", "1234");
@@ -81,11 +66,11 @@ public class ProducerServiceIntegrationTest {
 
     @Test
     public void test() {
-        for(int i = 0; i < 10; i++) {
+//       for(int i = 0; i < 10; i++) {
             Messages.OkResponse response = blockingStub.save(producerRequest);
 
-        }
-//        Assert.assertEquals(true,response.getIsOk());
-//        System.out.println(response);
+//        }
+        Assert.assertEquals(true,response.getIsOk());
+        System.out.println(response);
     }
 }
