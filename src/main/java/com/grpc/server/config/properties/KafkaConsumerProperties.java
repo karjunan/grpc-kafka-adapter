@@ -5,9 +5,9 @@ import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 
-@ConfigurationProperties(prefix = "spring.kafka.consumer")
-@Getter
-@Setter
+//@ConfigurationProperties(prefix = "spring.kafka.consumer")
+//@Getter
+//@Setter
 public class KafkaConsumerProperties {
 
 //    private String application_id;

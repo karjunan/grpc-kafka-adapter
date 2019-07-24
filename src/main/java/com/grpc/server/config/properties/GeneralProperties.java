@@ -8,7 +8,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 
 @ConfigurationProperties
-@EnableConfigurationProperties({KafkaConsumerProperties.class,KafkaProducerProperties.class})
+@EnableConfigurationProperties({KafkaProducerProperties.class})
 @Getter
 @Setter
 public class GeneralProperties {
@@ -17,8 +17,5 @@ public class GeneralProperties {
 
     @Autowired
     private KafkaProducerProperties kafkaProducerProperties;
-
-//    @Autowired
-//    private KafkaConsumerProperties kafkaConsumerProperties;
 
 }

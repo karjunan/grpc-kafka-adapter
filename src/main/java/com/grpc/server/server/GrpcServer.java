@@ -2,7 +2,7 @@ package com.grpc.server.server;
 
 import com.grpc.server.config.properties.GeneralProperties;
 import com.grpc.server.interceptor.HeaderServerInterceptor;
-import com.grpc.server.service.ProducerService;
+import com.grpc.server.service.producer.ProducerService;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
 import io.grpc.ServerInterceptors;

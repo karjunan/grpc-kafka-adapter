@@ -10,9 +10,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Setter
 public class KafkaProducerProperties {
 
-        private String bootstrap_servers;
-        private String key_serializer;
-        private String value_serializer;
         private String schema_registry_url;
         private String transactional_id;
         private String enable_idempotence;

@@ -1,4 +1,4 @@
-package com.grpc.server.service;
+package com.grpc.server.service.producer;
 
 import com.grpc.server.config.KafkaProducerConfig;
 import com.grpc.server.proto.KafkaServiceGrpc;
@@ -10,14 +10,17 @@ import lombok.extern.log4j.Log4j;
 import org.apache.avro.generic.GenericRecord;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;
 
 @Log4j
 @Service
+@ConditionalOnProperty(name = "producerBinding", havingValue = "true")
 public class ProducerService extends KafkaServiceGrpc.KafkaServiceImplBase {
 
     @Autowired
     private KafkaProducerConfig kafkaProducerConfig;
+
 
     private static final String AVRO_SCHEMA = "avroSchema";
 
@@ -44,7 +47,14 @@ public class ProducerService extends KafkaServiceGrpc.KafkaServiceImplBase {
         }
 
         try {
-            kafkaProducerConfig.kafkaTemplate().executeInTransaction(template -> {
+
+//            for (String topic : request.getTopicList()) {
+//                ProducerRecord<String, GenericRecord> producerRecord =
+//                        new ProducerRecord<String,GenericRecord>(topic, request.getPartition(), request.getKey(), Utils.getAvroRecord(request),
+//                                    Utils.getRecordHaders(request));
+//                  kafkaProducerConfig.kafkaTemplate().send(producerRecord);
+//            }
+            kafkaProducerConfig.kafkaTemplateTranscational().executeInTransaction(template -> {
                 for (String topic : request.getTopicList()) {
                     ProducerRecord<String, GenericRecord> producerRecord = new ProducerRecord<>
                             (topic, request.getPartition(), request.getKey(), Utils.getAvroRecord(request),
