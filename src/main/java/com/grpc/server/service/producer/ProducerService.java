@@ -48,12 +48,6 @@ public class ProducerService extends KafkaServiceGrpc.KafkaServiceImplBase {
 
         try {
 
-//            for (String topic : request.getTopicList()) {
-//                ProducerRecord<String, GenericRecord> producerRecord =
-//                        new ProducerRecord<String,GenericRecord>(topic, request.getPartition(), request.getKey(), Utils.getAvroRecord(request),
-//                                    Utils.getRecordHaders(request));
-//                  kafkaProducerConfig.kafkaTemplate().send(producerRecord);
-//            }
             kafkaProducerConfig.kafkaTemplateTranscational().executeInTransaction(template -> {
                 for (String topic : request.getTopicList()) {
                     ProducerRecord<String, GenericRecord> producerRecord = new ProducerRecord<>

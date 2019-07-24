@@ -2,10 +2,10 @@ package com.grpc.server;
 
 
 import com.grpc.server.config.properties.GeneralProperties;
+import com.grpc.server.config.properties.KafkaProducerProperties;
 import com.grpc.server.server.GrpcServer;
 import lombok.extern.log4j.Log4j;
 import org.springframework.boot.Banner;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -13,7 +13,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @ComponentScan(basePackages = { "com.grpc.server" })
-@EnableConfigurationProperties(GeneralProperties.class)
+@EnableConfigurationProperties({GeneralProperties.class,KafkaProducerProperties.class})
 @Log4j
 public class GrpcApplication {
 
