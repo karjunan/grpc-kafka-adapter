@@ -5,6 +5,7 @@ import com.grpc.server.config.properties.KafkaProducerProperties;
 import com.grpc.server.config.properties.GeneralProperties;
 import com.grpc.server.proto.KafkaServiceGrpc;
 import com.grpc.server.proto.Messages;
+import com.grpc.server.server.GrpcServer;
 import com.grpc.server.service.producer.ProducerService;
 import com.grpc.server.util.UtilHelper;
 import io.grpc.StatusRuntimeException;
@@ -20,7 +21,9 @@ import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
@@ -35,27 +38,31 @@ import java.util.Map;
 
 
 @RunWith(SpringRunner.class)
-@ContextConfiguration(classes = {ProducerService.class,KafkaProducerConfig.class,GeneralProperties.class})
-@ActiveProfiles("test")
+//@ContextConfiguration(classes = {ProducerService.class,KafkaProducerConfig.class,GeneralProperties.class,
+//KafkaProducerProperties.class})
+@SpringBootTest
+@ActiveProfiles("producer-test")
 public class ProducerServiceTest {
 
     @Value( "${grpc.port}" )
     private String port;
 
     @Autowired
-    ProducerService producerService;
+    private ProducerService producerService;
 
     @Autowired
-    KafkaProducerConfig kafkaProducerConfig;
+    private KafkaProducerConfig kafkaProducerConfig;
 
     @Autowired
-    KafkaProducerProperties kafkaProducerProperties;
+    private KafkaProducerProperties kafkaProducerProperties;
 
     @MockBean
-    ProducerFactory<String,GenericRecord> factory;
+    @Qualifier("producerFactoryTranscational")
+    private ProducerFactory<String,GenericRecord> factory;
 
     @MockBean
-    KafkaTemplate template;
+    @Qualifier("kafkaTemplateTranscational")
+    private KafkaTemplate template;
 
     @Rule
     public final ExpectedException exception = ExpectedException.none();

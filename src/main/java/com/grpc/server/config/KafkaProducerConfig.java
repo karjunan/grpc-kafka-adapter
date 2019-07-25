@@ -53,29 +53,8 @@ public class KafkaProducerConfig {
 
 
     @Bean
-    public ProducerFactory<String, GenericRecord> producerFactoryNonTranscational() {
-        Map<String, Object> configProps = new HashMap<>();
-
-        configProps.put(
-                AbstractKafkaAvroSerDeConfig.SCHEMA_REGISTRY_URL_CONFIG,
-                kafkaProducerProperties.getSchema_registry_url());
-        configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG,StringSerializer.class.getName());
-        configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG,KafkaAvroSerializer.class.getName());
-        DefaultKafkaProducerFactory factory = new DefaultKafkaProducerFactory(configProps);
-        factory.setTransactionIdPrefix(kafkaProducerProperties.getTransactional_id_prefix());
-        log.info("Configured properties for Non transactional Producer => "  + configProps);
-        return factory;
-    }
-
-
-    @Bean
     public KafkaTemplate<String, GenericRecord> kafkaTemplateTranscational() {
         return new KafkaTemplate(producerFactoryTranscational());
-    }
-
-    @Bean
-    public KafkaTemplate<String, GenericRecord> kafkaTemplateNonTranscational() {
-        return new KafkaTemplate(producerFactoryNonTranscational());
     }
 
 }

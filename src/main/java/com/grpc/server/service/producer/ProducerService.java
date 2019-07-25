@@ -11,7 +11,6 @@ import org.apache.avro.generic.GenericRecord;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 @Log4j
@@ -26,8 +25,6 @@ public class ProducerService extends KafkaServiceGrpc.KafkaServiceImplBase {
 
     @Override
     public void save(Messages.ProducerRequest request, StreamObserver<Messages.OkResponse> responseObserver) {
-
-
         if (request.getTopicList().isEmpty()) {
             Exception ex = new Exception("Topic name missing");
             responseObserver.onError(Status.INTERNAL.withDescription(ex.getMessage())
@@ -47,7 +44,6 @@ public class ProducerService extends KafkaServiceGrpc.KafkaServiceImplBase {
         }
 
         try {
-
             kafkaProducerConfig.kafkaTemplateTranscational().executeInTransaction(template -> {
                 for (String topic : request.getTopicList()) {
                     ProducerRecord<String, GenericRecord> producerRecord = new ProducerRecord<>

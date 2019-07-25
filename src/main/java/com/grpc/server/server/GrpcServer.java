@@ -6,8 +6,6 @@ import com.grpc.server.service.consumer.ConsumerStreamService;
 import com.grpc.server.service.producer.ProducerService;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
-import io.grpc.ServerInterceptors;
-import io.grpc.netty.shaded.io.grpc.netty.NettyServerBuilder;
 import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;

@@ -1,10 +1,13 @@
 package com.grpc.server.service.integrationTest;
 
 import com.grpc.server.interceptor.HeaderServerInterceptor;
+import com.grpc.server.proto.KafkaConsumerServiceGrpc;
 import com.grpc.server.proto.KafkaServiceGrpc;
+import com.grpc.server.proto.MessagesConsumer;
 import com.grpc.server.service.consumer.ConsumerStreamService;
 import io.grpc.inprocess.InProcessChannelBuilder;
 import io.grpc.inprocess.InProcessServerBuilder;
+import io.grpc.stub.StreamObserver;
 import io.grpc.testing.GrpcCleanupRule;
 import org.junit.Before;
 import org.junit.Rule;
@@ -29,24 +32,25 @@ public class ConsumerServiceIntegrationTest {
     @Rule
     public final GrpcCleanupRule grpcCleanup = new GrpcCleanupRule();
 
-    private KafkaServiceGrpc.KafkaServiceBlockingStub kafkaServiceBlockingStub;
+    private KafkaConsumerServiceGrpc.KafkaConsumerServiceBlockingStub kafkaConsumerServiceBlockingStub;
 
     KafkaServiceGrpc.KafkaServiceBlockingStub blockingStub = null;
 
     @Before
     public void init() throws Exception {
-        String serverName = InProcessServerBuilder.generateName();
-        grpcCleanup.register(InProcessServerBuilder
-                .forName(serverName).directExecutor().addService(consumerStreamService).build().start());
 
-        // Create a client channel and register for automatic graceful shutdown.
-        blockingStub = com.grpc.server.proto.KafkaServiceGrpc.newBlockingStub(grpcCleanup.register(InProcessChannelBuilder.forName(serverName).directExecutor().build()));
+        KafkaConsumerServiceGrpc.KafkaConsumerServiceImplBase implBase =
+                new KafkaConsumerServiceGrpc.KafkaConsumerServiceImplBase() {
+                    @Override
+                    public void getAll(MessagesConsumer.GetAllMessages request, StreamObserver<MessagesConsumer.Response> responseObserver) {
 
+                    }
+                };
     }
 
     @Test
     public void test() {
-//        Iterator<MessagesConsumer.Response> iterator = blockingStub.getAll(  Messages.GetAllMessages.newBuilder().build());
+//        kafkaConsumerServiceBlockingStub.getAll(MessagesConsumer.GetAllMessages.newBuilder().build());
 
     }
 }

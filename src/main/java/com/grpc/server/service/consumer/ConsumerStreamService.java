@@ -2,28 +2,20 @@ package com.grpc.server.service.consumer;
 
 import com.grpc.server.config.KafkaStreamsConfig;
 import com.grpc.server.config.properties.KafkaConsumerProperties;
-import com.grpc.server.config.properties.KafkaProducerProperties;
 import com.grpc.server.proto.KafkaConsumerServiceGrpc;
 import com.grpc.server.proto.MessagesConsumer;
 import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
 import lombok.extern.log4j.Log4j;
-import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.streams.KafkaStreams;
 import org.apache.kafka.streams.StreamsBuilder;
-import org.apache.kafka.streams.StreamsConfig;
 import org.apache.kafka.streams.kstream.Consumed;
 import org.apache.kafka.streams.kstream.KStream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
 import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
 
