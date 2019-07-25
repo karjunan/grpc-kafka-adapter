@@ -2,7 +2,6 @@ package com.grpc.server.service.integrationTest;
 
 import com.grpc.server.interceptor.HeaderServerInterceptor;
 import com.grpc.server.proto.KafkaServiceGrpc;
-import com.grpc.server.proto.Messages;
 import com.grpc.server.service.consumer.ConsumerStreamService;
 import io.grpc.inprocess.InProcessChannelBuilder;
 import io.grpc.inprocess.InProcessServerBuilder;
@@ -47,7 +46,7 @@ public class ConsumerServiceIntegrationTest {
 
     @Test
     public void test() {
-        blockingStub.getAll(  Messages.GetAllMessages.newBuilder().build());
+//        Iterator<MessagesConsumer.Response> iterator = blockingStub.getAll(  Messages.GetAllMessages.newBuilder().build());
 
     }
 }

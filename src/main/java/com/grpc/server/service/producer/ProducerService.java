@@ -11,6 +11,7 @@ import org.apache.avro.generic.GenericRecord;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 @Log4j
@@ -20,7 +21,6 @@ public class ProducerService extends KafkaServiceGrpc.KafkaServiceImplBase {
 
     @Autowired
     private KafkaProducerConfig kafkaProducerConfig;
-
 
     private static final String AVRO_SCHEMA = "avroSchema";
 
@@ -66,7 +66,8 @@ public class ProducerService extends KafkaServiceGrpc.KafkaServiceImplBase {
             responseObserver.onCompleted();
             return;
         } catch (Exception ex) {
-            log.error("Exception while persisting data - " + ex);
+            log.error("Exception while persisting data - " + ex.getCause());
+            ex.printStackTrace();
             responseObserver.onError(Status.INTERNAL.withDescription(ex.getMessage())
                     .augmentDescription(ex.getCause().getMessage())
                     .withCause(ex.getCause())

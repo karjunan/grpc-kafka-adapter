@@ -12,4 +12,5 @@ public class GeneralProperties {
 
     private Integer grpc_port;
 
+
 }

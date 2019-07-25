@@ -65,11 +65,10 @@ public class ProducerServiceIntegrationTest {
 
     @Test
     public void test() {
-       for(int i = 0; i < 10; i++) {
-            Messages.OkResponse response = blockingStub.save(producerRequest);
 
+       for(int i = 0; i < 4; i++) {
+            Messages.OkResponse response = blockingStub.save(producerRequest);
+           Assert.assertEquals(true,response.getIsOk());
         }
-//        Assert.assertEquals(true,response.getIsOk());
-//        System.out.println(response);
     }
 }

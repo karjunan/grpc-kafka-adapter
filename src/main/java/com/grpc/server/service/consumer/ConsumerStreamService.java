@@ -1,76 +1,83 @@
 package com.grpc.server.service.consumer;
 
-import com.grpc.server.proto.KafkaServiceGrpc;
-import com.grpc.server.proto.Messages;
+import com.grpc.server.config.KafkaStreamsConfig;
+import com.grpc.server.config.properties.KafkaConsumerProperties;
+import com.grpc.server.config.properties.KafkaProducerProperties;
+import com.grpc.server.proto.KafkaConsumerServiceGrpc;
+import com.grpc.server.proto.MessagesConsumer;
 import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
 import lombok.extern.log4j.Log4j;
+import org.apache.kafka.clients.consumer.ConsumerConfig;
+import org.apache.kafka.common.serialization.Serdes;
+import org.apache.kafka.streams.KafkaStreams;
+import org.apache.kafka.streams.StreamsBuilder;
+import org.apache.kafka.streams.StreamsConfig;
+import org.apache.kafka.streams.kstream.Consumed;
+import org.apache.kafka.streams.kstream.KStream;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.cloud.stream.annotation.EnableBinding;
-import org.springframework.cloud.stream.annotation.Input;
-import org.springframework.cloud.stream.annotation.StreamListener;
-import org.springframework.messaging.SubscribableChannel;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
 import java.util.Queue;
-import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 @Log4j
 @Service
-public class ConsumerStreamService extends KafkaServiceGrpc.KafkaServiceImplBase {
+@ConditionalOnProperty(name = "consumerBinding", havingValue = "true")
+public class ConsumerStreamService extends KafkaConsumerServiceGrpc.KafkaConsumerServiceImplBase {
 
-    private static Queue<String> queue = new LinkedBlockingQueue<>();
+
+    private Queue<String> queue = new LinkedBlockingQueue<>();
+
+    @Autowired
+    public ConsumerStreamService(KafkaConsumerProperties kafkaConsumerProperties,
+                                 KafkaStreamsConfig kafkaStreamsConfig) {
+        StreamsBuilder nameAgeBuilder = new StreamsBuilder();
+        System.out.println("Current properties => " + kafkaConsumerProperties);
+
+        KStream<String, String> name = nameAgeBuilder.stream(kafkaConsumerProperties.getTopic(), Consumed.with(Serdes.String(), Serdes.String()));
+        name.foreach((k,v) -> {
+            System.out.println(v);
+            synchronized (queue){
+                queue.add(v);
+            }
+
+        });
+        KafkaStreams kafkaStreams = new KafkaStreams(nameAgeBuilder.build(),kafkaStreamsConfig.config());
+        kafkaStreams.start();
+    }
+
+
 
     @Override
-    public void getAll(Messages.GetAllMessages request, StreamObserver<Messages.Response> responseObserver) {
-        try{
-            queue.forEach(v -> {
-                System.out.println(queue);
-                Messages.Event event = Messages.Event.newBuilder().setValue(v).build();
-                responseObserver.onNext(Messages.Response.newBuilder().setEvent(event).build());
-                queue.poll();
+    public void getAll(MessagesConsumer.GetAllMessages request, StreamObserver<MessagesConsumer.Response> responseObserver) {
 
-            });
+        try {
+            while(true){
+                synchronized (queue) {
+                    queue.forEach(v -> {
+                        System.out.println(queue);
+                        MessagesConsumer.Event event = MessagesConsumer.Event.newBuilder().setValue(v).build();
+                        responseObserver.onNext(MessagesConsumer.Response.newBuilder().setEvent(event).build());
+                        queue.poll();
+                    });
+                }
+
+            }
+
         } catch (Exception ex) {
             responseObserver.onError(Status.CANCELLED
                     .withDescription("Something went wrong while processing the request. Please restart !!")
                     .asRuntimeException());
             return;
         }
-
     }
 
-    @ConditionalOnProperty(name = "consumerBinding", havingValue = "true")
-    @EnableBinding(ConsumerReader.ConsumerChannel.class)
-    public static class ConsumerReader {
-
-        @StreamListener(value = ConsumerChannel.INPUT)
-        public void handle(String str) {
-            System.out.println(" Receiving Message from topic t1 => " + str);
-            queue.add(str);
-        }
-
-        @StreamListener(value = ConsumerChannel.INPUT1)
-        public void handleT2(String str) {
-            System.out.println(" Receiving Message from Topic t2  => " + str);
-            queue.add(str);
-        }
-
-
-        interface ConsumerChannel {
-            String INPUT = "t1";
-
-            String INPUT1 = "t2";
-
-
-            @Input(value = INPUT)
-            SubscribableChannel inputChannel();
-
-            @Input(value = INPUT1)
-            SubscribableChannel inputChannel1();
-
-        }
-    }
 
 }
