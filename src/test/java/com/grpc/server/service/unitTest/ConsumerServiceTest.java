@@ -4,6 +4,7 @@ import com.grpc.server.interceptor.HeaderServerInterceptor;
 import com.grpc.server.proto.KafkaConsumerServiceGrpc;
 import com.grpc.server.proto.KafkaServiceGrpc;
 import com.grpc.server.proto.MessagesConsumer;
+import com.grpc.server.server.GrpcServer;
 import com.grpc.server.service.consumer.ConsumerStreamService;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
@@ -24,6 +25,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -50,7 +52,13 @@ public class ConsumerServiceTest {
 
     private final MutableHandlerRegistry serviceRegistry = new MutableHandlerRegistry();
 
-    TestClient testClient;
+    private TestClient testClient;
+
+    private KafkaConsumerServiceGrpc server;
+
+    private ManagedChannel inProcessChannel;
+
+    private Collection<MessagesConsumer.GetAllMessages> features;
 
     @Before
     public void init() throws Exception {
@@ -65,7 +73,6 @@ public class ConsumerServiceTest {
 
         testClient = new TestClient(channel);
 
-
     }
 
     @After
@@ -75,7 +82,7 @@ public class ConsumerServiceTest {
 
 
     @Test
-    public void test() {
+    public void read_message_and_validate_if_messges_are_read_in_correct_order() {
         MessagesConsumer.Response res = MessagesConsumer.Response.newBuilder().setEvent(MessagesConsumer.Event.newBuilder()
                 .setValue("Value-2").build()).build();
         Queue<String> queue = new LinkedBlockingQueue<>();
@@ -104,7 +111,13 @@ public class ConsumerServiceTest {
         testClient.getAll();
         Assert.assertEquals(res,reference.get());
         Assert.assertEquals(0, queue.size()) ;
+    }
 
+    @Test
+    public void multiple_requests_from_client() {
+//        private ManagedChannel inProcessChannel =
+//        KafkaConsumerServiceGrpc.KafkaConsumerServiceBlockingStub =
+//              KafkaConsumerServiceGrpc.newBlockingStub()
     }
 
     public static class TestClient {
@@ -112,7 +125,7 @@ public class ConsumerServiceTest {
         private final ManagedChannel channel;
         private final KafkaConsumerServiceGrpc.KafkaConsumerServiceBlockingStub blockingStub;
 
-        /** Construct client connecting to HelloWorld server at {@code host:port}. */
+        /** Construct client connecting to server at {@code host:port}. */
         public TestClient(String host, int port) {
             this(ManagedChannelBuilder.forAddress(host, port)
                     // Channels are secure by default (via SSL/TLS). For the example we disable TLS to avoid
@@ -121,7 +134,7 @@ public class ConsumerServiceTest {
                     .build());
         }
 
-        /** Construct client for accessing HelloWorld server using the existing channel. */
+        /** Construct client for accessing the server using the existing channel. */
         TestClient(ManagedChannel channel) {
             this.channel = channel;
             blockingStub = KafkaConsumerServiceGrpc.newBlockingStub(channel);
@@ -131,7 +144,7 @@ public class ConsumerServiceTest {
             channel.shutdown().awaitTermination(5, TimeUnit.SECONDS);
         }
 
-        /** Say hello to server. */
+        /** Pull messges from the server. */
         public void getAll() {
 
             MessagesConsumer.GetAllMessages request = MessagesConsumer.GetAllMessages.newBuilder().build();
@@ -144,10 +157,6 @@ public class ConsumerServiceTest {
             }
         }
 
-        /**
-         * Greet server. If provided, the first element of {@code args} is the name to use in the
-         * greeting.
-         */
         public static void main(String[] args) throws Exception {
             TestClient client = new TestClient("localhost", 50051);
             try {

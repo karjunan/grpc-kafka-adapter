@@ -5,6 +5,8 @@ import com.grpc.server.config.properties.KafkaConsumerProperties;
 import com.grpc.server.proto.KafkaConsumerServiceGrpc;
 import com.grpc.server.proto.MessagesConsumer;
 import io.grpc.Status;
+import io.grpc.stub.ServerCallStreamObserver;
+import io.grpc.stub.ServerCalls;
 import io.grpc.stub.StreamObserver;
 import lombok.extern.log4j.Log4j;
 import org.apache.kafka.common.serialization.Serdes;
@@ -27,17 +29,19 @@ public class ConsumerStreamService extends KafkaConsumerServiceGrpc.KafkaConsume
 
     private Queue<String> queue = new LinkedBlockingQueue<>();
 
+    private StreamObserver<MessagesConsumer.Response> responseObserver;
+
     @Autowired
     public ConsumerStreamService(KafkaConsumerProperties kafkaConsumerProperties,
                                  KafkaStreamsConfig kafkaStreamsConfig) {
         StreamsBuilder nameAgeBuilder = new StreamsBuilder();
-        System.out.println("Current properties => " + kafkaConsumerProperties);
-
+        log.info("Starting Consumer stream service ...");
         KStream<String, String> name = nameAgeBuilder.stream(kafkaConsumerProperties.getTopic(), Consumed.with(Serdes.String(), Serdes.String()));
         name.foreach((k,v) -> {
-            System.out.println(v);
-            synchronized (queue){
-                queue.add(v);
+            System.out.println(" Received Messaage => " + v);
+            MessagesConsumer.Event event = MessagesConsumer.Event.newBuilder().setValue(v).build();
+            if(this != null && this.responseObserver != null) {
+                this.responseObserver.onNext(MessagesConsumer.Response.newBuilder().setEvent(event).build());
             }
 
         });
@@ -45,30 +49,20 @@ public class ConsumerStreamService extends KafkaConsumerServiceGrpc.KafkaConsume
         kafkaStreams.start();
     }
 
-
-
     @Override
-    public void getAll(MessagesConsumer.GetAllMessages request, StreamObserver<MessagesConsumer.Response> responseObserver) {
+    public void getAll(MessagesConsumer.GetAllMessages request,
+                       StreamObserver<MessagesConsumer.Response> responseObserver) {
 
         try {
-            while(true){
-                synchronized (queue) {
-                    queue.forEach(v -> {
-                        System.out.println(queue);
-                        MessagesConsumer.Event event = MessagesConsumer.Event.newBuilder().setValue(v).build();
-                        responseObserver.onNext(MessagesConsumer.Response.newBuilder().setEvent(event).build());
-                        queue.poll();
-                    });
-                }
-
-            }
-
+            this.responseObserver = responseObserver;
         } catch (Exception ex) {
-            responseObserver.onError(Status.CANCELLED
-                    .withDescription("Something went wrong while processing the request. Please restart !!")
+            responseObserver.onError(Status.INTERNAL.withDescription(ex.getMessage())
+                    .augmentDescription(ex.getCause().getMessage())
+                    .withCause(ex.getCause())
                     .asRuntimeException());
             return;
         }
+
     }
 
 
