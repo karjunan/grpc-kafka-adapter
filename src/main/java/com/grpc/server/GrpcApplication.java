@@ -14,8 +14,8 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @ComponentScan(basePackages = { "com.grpc.server" })
-@EnableConfigurationProperties({GeneralProperties.class,KafkaProducerProperties.class,
-        KafkaConsumerProperties.class,GeneralProperties.class})
+@EnableConfigurationProperties({GeneralProperties.class,KafkaProducerProperties.class
+       ,GeneralProperties.class})
 @Log4j
 public class GrpcApplication {
 

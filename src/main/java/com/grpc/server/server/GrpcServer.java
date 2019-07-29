@@ -2,6 +2,7 @@ package com.grpc.server.server;
 
 import com.grpc.server.config.properties.GeneralProperties;
 import com.grpc.server.interceptor.HeaderServerInterceptor;
+import com.grpc.server.service.consumer.ConsumerService;
 import com.grpc.server.service.consumer.ConsumerStreamService;
 import com.grpc.server.service.producer.ProducerService;
 import io.grpc.Server;
@@ -15,13 +16,14 @@ import org.springframework.boot.ApplicationRunner;
 public class GrpcServer implements ApplicationRunner {
 
     private ProducerService producerService;
-    private ConsumerStreamService consumerStreamService;
+//    private ConsumerStreamService consumerStreamService;
+    private ConsumerService consumerService;
 
     @Autowired
-    public GrpcServer(ConsumerStreamService consumerStreamService,
+    public GrpcServer(ConsumerService consumerService,
                ProducerService producerService) {
 
-        this.consumerStreamService = consumerStreamService;
+        this.consumerService = consumerService;
         this.producerService = producerService;
     }
 
@@ -44,7 +46,7 @@ public class GrpcServer implements ApplicationRunner {
         server = ServerBuilder.forPort(properties.getGrpc_port())
                 .addService(producerService)
 //                .addService(ServerInterceptors.intercept(consumerStreamService,headerServerInterceptor))
-                .addService(consumerStreamService)
+                .addService(consumerService)
                 .build()
                 .start();
         log.info("Listening on port " + properties.getGrpc_port());

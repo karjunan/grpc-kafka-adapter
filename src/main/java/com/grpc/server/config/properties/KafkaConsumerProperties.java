@@ -6,7 +6,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import java.util.List;
 
-@ConfigurationProperties(prefix = "spring.kafka.streams")
+//@ConfigurationProperties(prefix = "spring.kafka.streams")
 @Getter
 @Setter
 public class KafkaConsumerProperties {
