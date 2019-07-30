@@ -4,9 +4,7 @@ import com.grpc.server.interceptor.HeaderServerInterceptor;
 import com.grpc.server.proto.KafkaConsumerServiceGrpc;
 import com.grpc.server.proto.KafkaServiceGrpc;
 import com.grpc.server.proto.MessagesConsumer;
-import com.grpc.server.service.consumer.ConsumerStreamService;
-import io.grpc.inprocess.InProcessChannelBuilder;
-import io.grpc.inprocess.InProcessServerBuilder;
+import com.grpc.server.service.consumer.ConsumerService;
 import io.grpc.stub.StreamObserver;
 import io.grpc.testing.GrpcCleanupRule;
 import org.junit.Before;
@@ -24,7 +22,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class ConsumerServiceIntegrationTest {
 
     @Autowired
-    private ConsumerStreamService consumerStreamService;
+    private ConsumerService consumerStreamService;
 
     @Autowired
     private HeaderServerInterceptor headerServerInterceptor;

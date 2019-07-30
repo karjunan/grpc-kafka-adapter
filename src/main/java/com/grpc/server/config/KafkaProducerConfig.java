@@ -3,7 +3,7 @@ package com.grpc.server.config;
 
 import com.grpc.server.config.properties.KafkaProducerProperties;
 import io.confluent.kafka.serializers.AbstractKafkaAvroSerDeConfig;
-import lombok.extern.log4j.Log4j;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.avro.generic.GenericRecord;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +18,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Configuration
-@Log4j
+@Slf4j
 @ConditionalOnProperty(name = "producerBinding", havingValue = "true")
 public class KafkaProducerConfig {
 
@@ -28,7 +28,7 @@ public class KafkaProducerConfig {
 
 
     @Bean
-    public ProducerFactory<String, GenericRecord> producerFactoryTranscational() {
+    public ProducerFactory<String, byte[]> producerFactoryTranscational() {
         Map<String, Object> configProps = new HashMap<>();
         configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG,kafkaProducerProperties.getBoot_strap_servers());
         configProps.put(AbstractKafkaAvroSerDeConfig.SCHEMA_REGISTRY_URL_CONFIG, kafkaProducerProperties.getSchema_registry_url());
@@ -50,7 +50,7 @@ public class KafkaProducerConfig {
 
 
     @Bean
-    public KafkaTemplate<String, GenericRecord> kafkaTemplateTranscational() {
+    public KafkaTemplate<String, byte[]> kafkaTemplateTranscational() {
         return new KafkaTemplate(producerFactoryTranscational());
     }
 

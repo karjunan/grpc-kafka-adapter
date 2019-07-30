@@ -2,22 +2,16 @@ package com.grpc.server.config;
 
 import com.grpc.server.config.properties.GeneralProperties;
 import com.grpc.server.config.properties.KafkaConsumerProperties;
-import io.confluent.kafka.serializers.AbstractKafkaAvroSerDeConfig;
-import lombok.extern.log4j.Log4j;
-import org.apache.kafka.clients.consumer.ConsumerConfig;
-import org.apache.kafka.streams.StreamsConfig;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.kafka.annotation.EnableKafka;
-import org.springframework.kafka.annotation.EnableKafkaStreams;
 
 import java.util.Properties;
 
 //@Configuration
 //@EnableKafka
 //@EnableKafkaStreams
-@Log4j
+@Slf4j
 @ConditionalOnProperty(name = "consumerBinding", havingValue = "true")
 public class KafkaStreamsConfig {
 

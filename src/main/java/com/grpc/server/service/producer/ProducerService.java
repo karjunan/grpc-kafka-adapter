@@ -6,14 +6,13 @@ import com.grpc.server.proto.Messages;
 import com.grpc.server.util.Utils;
 import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
-import lombok.extern.log4j.Log4j;
-import org.apache.avro.generic.GenericRecord;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;
 
-@Log4j
+@Slf4j
 @Service
 @ConditionalOnProperty(name = "producerBinding", havingValue = "true")
 public class ProducerService extends KafkaServiceGrpc.KafkaServiceImplBase {
@@ -46,8 +45,10 @@ public class ProducerService extends KafkaServiceGrpc.KafkaServiceImplBase {
         try {
             kafkaProducerConfig.kafkaTemplateTranscational().executeInTransaction(template -> {
                 for (String topic : request.getTopicList()) {
-                    ProducerRecord<String, GenericRecord> producerRecord = new ProducerRecord<>
-                            (topic, request.getPartition(), request.getKey(), Utils.getAvroRecord(request),
+
+                    ProducerRecord<String, byte[]> producerRecord = new ProducerRecord<>
+                            (topic, request.getPartition(), request.getKey(),
+                                    Utils.convertToByteArray(Utils.getAvroRecord(request)),
                                     Utils.getRecordHaders(request));
                     template.send(producerRecord);
 
@@ -72,5 +73,7 @@ public class ProducerService extends KafkaServiceGrpc.KafkaServiceImplBase {
         }
 
     }
+
+
 
 }

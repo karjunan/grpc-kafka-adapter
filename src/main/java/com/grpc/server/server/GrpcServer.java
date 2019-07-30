@@ -3,16 +3,15 @@ package com.grpc.server.server;
 import com.grpc.server.config.properties.GeneralProperties;
 import com.grpc.server.interceptor.HeaderServerInterceptor;
 import com.grpc.server.service.consumer.ConsumerService;
-import com.grpc.server.service.consumer.ConsumerStreamService;
 import com.grpc.server.service.producer.ProducerService;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
-import lombok.extern.log4j.Log4j;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 
-@Log4j
+@Slf4j
 public class GrpcServer implements ApplicationRunner {
 
     private ProducerService producerService;
@@ -49,6 +48,7 @@ public class GrpcServer implements ApplicationRunner {
                 .addService(consumerService)
                 .build()
                 .start();
+
         log.info("Listening on port " + properties.getGrpc_port());
         Runtime.getRuntime().addShutdownHook(new Thread() {
             @Override

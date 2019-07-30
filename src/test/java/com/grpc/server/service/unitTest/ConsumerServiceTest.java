@@ -2,10 +2,8 @@ package com.grpc.server.service.unitTest;
 
 import com.grpc.server.interceptor.HeaderServerInterceptor;
 import com.grpc.server.proto.KafkaConsumerServiceGrpc;
-import com.grpc.server.proto.KafkaServiceGrpc;
 import com.grpc.server.proto.MessagesConsumer;
-import com.grpc.server.server.GrpcServer;
-import com.grpc.server.service.consumer.ConsumerStreamService;
+import com.grpc.server.service.consumer.ConsumerService;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.StatusRuntimeException;
@@ -38,7 +36,7 @@ import java.util.concurrent.atomic.AtomicReference;
 public class ConsumerServiceTest {
 
     @Autowired
-    private ConsumerStreamService consumerStreamService;
+    private ConsumerService consumerStreamService;
 
     @Autowired
     private HeaderServerInterceptor headerServerInterceptor;

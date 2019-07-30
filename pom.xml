@@ -55,6 +55,11 @@
         </dependency>
         <dependency>
             <groupId>org.apache.kafka</groupId>
+            <artifactId>kafka-clients</artifactId>
+            <version>5.3.0-ccs</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.kafka</groupId>
             <artifactId>kafka-streams</artifactId>
             <version>${kafka.version}</version>
         </dependency>
@@ -80,11 +85,10 @@
             <artifactId>avro-maven-plugin</artifactId>
             <version>${avro.version}</version>
         </dependency>
-        <dependency>
-            <groupId>io.confluent</groupId>
-            <artifactId>kafka-avro-serializer</artifactId>
-            <version>3.0.0</version>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>io.confluent</groupId>-->
+            <!--<artifactId>kafka-avro-serializer</artifactId>-->
+        <!--</dependency>-->
         <dependency>
             <groupId>org.springframework.kafka</groupId>
             <artifactId>spring-kafka</artifactId>
@@ -102,17 +106,6 @@
             <artifactId>kafka-streams-test-utils</artifactId>
             <version>1.1.0</version>
             <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.salesforce.kafka.test</groupId>
-            <artifactId>kafka-junit4</artifactId>
-            <version>${kafka-embedded-version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.salesforce.kafka.test</groupId>
-            <artifactId>kafka-junit-core</artifactId>
-            <version>${kafka-embedded-version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -159,7 +152,39 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-stream-kafka</artifactId>
             <version>${cloud-kafka-stream-version}</version>
+            <!--<exclusions>-->
+                <!--<exclusion>  &lt;!&ndash; declare the exclusion here &ndash;&gt;-->
+                    <!--<groupId>org.jboss.logging</groupId>-->
+                    <!--<artifactId>jboss-logging</artifactId>-->
+                <!--</exclusion>-->
+            <!--</exclusions>-->
         </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-stream-binder-kafka-streams</artifactId>
+            <version>${cloud-kafka-stream-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.confluent</groupId>
+            <artifactId>kafka-streams-avro-serde</artifactId>
+            <version>5.3.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.26</version>
+        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.springframework.cloud</groupId>-->
+            <!--<artifactId>spring-cloud-stream-schema</artifactId>-->
+            <!--<version>${cloud-kafka-stream-version}</version>-->
+        <!--</dependency>-->
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-slf4j-impl</artifactId>
+            <version>2.12.0</version>
+        </dependency>
+
     </dependencies>
     <repositories>
         <repository>
