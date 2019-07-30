@@ -6,6 +6,7 @@ import lombok.NonNull;
 import org.apache.avro.generic.GenericRecord;
 import org.apache.kafka.streams.KeyValue;
 import org.apache.kafka.streams.kstream.KStream;
+import org.apache.kafka.streams.kstream.KTable;
 import org.apache.kafka.streams.kstream.Materialized;
 import org.apache.kafka.streams.kstream.TimeWindows;
 import org.springframework.cloud.stream.annotation.EnableBinding;
@@ -31,25 +32,19 @@ public class KStreamService {
     @StreamListener("word-input")
     @SendTo("word-output")
     @SuppressWarnings("Unchecked")
-    public KStream<?,byte[]> process(KStream<?, GenericRecord> genericRecordKStream) {
-
-        return genericRecordKStream
-                .map(((key, value) -> {
-                    String str = value.toString();
-                    return new KeyValue<>(null,str);
-                }))
-                .flatMapValues(value -> Arrays.asList(value.toLowerCase().split("\\W+")))
-                .groupBy((key, value) -> value)
-                .windowedBy(TimeWindows.of(5000))
-                .count(Materialized.as("WordsCount"))
-                .toStream()
+    public KStream<?,?> process(KStream<?, GenericRecord> genericRecordKStream) {
+       return genericRecordKStream
                 .mapValues(((key, value) -> {
-                  KeyValue keyValue =  new KeyValue<>(null, new WordCount(key.key(),value,new Date(key.window().start()),new Date(key.window().end())));
-                  GenericRecord record = Utils.buildRecord();
-                  record.put("value",keyValue);
-                  byte[] result = Utils.convertToByteArray(record);
-                  return  result;
-                }));
+                    System.out.println("Printing Values => " + value.toString());
+                    return value;
+                }))
+                .flatMapValues(value ->  Arrays.asList(value.toString().toLowerCase().split("\\W+")))
+                .groupBy((key, value) -> value)
+//                .windowedBy(TimeWindows.of(5000))
+                .count(Materialized.as("WordsCount"))
+               .toStream()
+               .map((key,value) -> new KeyValue<>(key,value));
+
     }
 
     public interface KStreamProcessor {
