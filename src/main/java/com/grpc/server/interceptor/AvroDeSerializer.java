@@ -61,36 +61,3 @@ public class AvroDeSerializer<T extends SpecificRecordBase> implements Deseriali
 
     }
 }
-
-
-//    @Override
-//    public Object deserialize(String s, byte[] bytes) {
-//        return null;
-//    }
-//
-//    @Override
-//    public void configure(Map configs, boolean isKey) {
-//
-//    }
-//
-//    @Override
-//    public Object deserialize(String topic, Headers headers, byte[] data) {
-//        GenericRecord record = null;
-//        System.out.println(data);
-//        Schema schema = new Schema.Parser().parse(Utils.getAvroData());
-//        DatumReader<GenericRecord> reader = new SpecificDatumReader<>(schema);
-//        Decoder decoder = DecoderFactory.get().binaryDecoder(data, null);
-//        try {
-//            record = reader.read(null, decoder);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        System.out.println("Message received : " + record);
-//        return record;
-//
-//    }
-//
-//    @Override
-//    public void close() {
-//
-//    }
