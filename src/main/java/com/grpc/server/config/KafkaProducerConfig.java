@@ -26,7 +26,6 @@ public class KafkaProducerConfig {
     private KafkaProducerProperties kafkaProducerProperties;
 
 
-
     @Bean
     public ProducerFactory<String, byte[]> producerFactoryTranscational() {
         Map<String, Object> configProps = new HashMap<>();
