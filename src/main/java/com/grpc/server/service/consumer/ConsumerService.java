@@ -32,6 +32,7 @@ public class ConsumerService extends KafkaConsumerServiceGrpc.KafkaConsumerServi
     public void getAll(MessagesConsumer.GetAllMessages request,
                        StreamObserver<MessagesConsumer.Response> responseObserver) {
 
+
         //track a custom event
         telemetryClient.trackEvent("Sending a custom event...");
 
@@ -56,7 +57,7 @@ public class ConsumerService extends KafkaConsumerServiceGrpc.KafkaConsumerServi
         public void input(GenericRecord input) {
             System.out.println("Input " + input);
             try {
-                log.debug("Message Read " + input);
+                log.info("Message Read " + input);
                 responseObserver.onNext(MessagesConsumer.Response.newBuilder()
                         .setEvent(MessagesConsumer.Event.newBuilder().setValue(input.toString()).build()
                         ).build());
