@@ -66,6 +66,7 @@ public class ConsumerService extends KafkaConsumerServiceGrpc.KafkaConsumerServi
 //        String [] str = {"t5","t6"};
         String [] str = request.getTopicList().toArray(new String[request.getTopicList().size()]);
         final ContainerProperties containerProperties = new ContainerProperties(str);
+        log.info("Configured properties for transactional Consumer => "  + containerProperties);
         final MessageListenerContainer container = new KafkaMessageListenerContainer<>(cf,containerProperties);
         container.setupMessageListener((MessageListener<String,GenericRecord>) req -> {
             log.info("Message Received => " + req.value());
