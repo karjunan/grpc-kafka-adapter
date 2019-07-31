@@ -10,7 +10,7 @@ RUN mvn -B package -DskipTests
 RUN ls -ltr /usr/src/app
 
 
-FROM openjdk
+FROM openjdk:8
 COPY --from=0 /usr/src/app/target/*.jar ./
 COPY --from=0 /usr/src/app/target/application.properties .
 
