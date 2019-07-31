@@ -1,5 +1,6 @@
 package com.grpc.server.service.producer;
 
+import com.grpc.server.avro.Message;
 import com.grpc.server.config.KafkaProducerConfig;
 import com.grpc.server.proto.KafkaServiceGrpc;
 import com.grpc.server.proto.Messages;
@@ -7,6 +8,7 @@ import com.grpc.server.util.Utils;
 import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.avro.generic.GenericRecord;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -45,13 +47,12 @@ public class ProducerService extends KafkaServiceGrpc.KafkaServiceImplBase {
         try {
             kafkaProducerConfig.kafkaTemplateTranscational().executeInTransaction(template -> {
                 for (String topic : request.getTopicList()) {
-
-                    ProducerRecord<String, byte[]> producerRecord = new ProducerRecord<>
-                            (topic, request.getPartition(), request.getKey(),
-                                    Utils.convertToByteArray(Utils.getAvroRecord(request)),
+                    Message message = Message.newBuilder().setValue(request.getValue()).build();
+                    ProducerRecord<String, byte[]> producerRecord = new ProducerRecord
+                            (topic, request.getPartition(), request.getKey(), message,
                                     Utils.getRecordHaders(request));
                     template.send(producerRecord);
-
+                    log.info("Message Sent => "+ message);
                 }
                 return null;
             });

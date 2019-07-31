@@ -27,7 +27,7 @@ public class ByteArrayToGenericRecordMessageConverter extends AbstractMessageCon
         }
 
         @Override
-        protected Object convertFromInternal(Message<?> message, Class<?> targetClass, Object conversionHint) {
+        protected GenericRecord convertFromInternal(Message<?> message, Class<?> targetClass, Object conversionHint) {
             Object payload = message.getPayload();
             byte[] received_message = (byte[]) payload;
             GenericRecord record = null;

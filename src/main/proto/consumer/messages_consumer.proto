@@ -10,7 +10,11 @@ message Event {
 
 }
 
-message GetAllMessages {}
+message GetAllMessages {
+    repeated string topic = 1;
+    map<string,string> header = 2;
+
+}
 
 message Response {
     Event event = 1;

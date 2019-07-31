@@ -2,6 +2,8 @@ package com.grpc.server.util;
 
 import com.grpc.server.avro.Message;
 import com.grpc.server.proto.Messages;
+import com.grpc.server.proto.MessagesConsumer;
+import io.grpc.Status;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.avro.Schema;
 import org.apache.avro.generic.GenericData;
@@ -25,6 +27,8 @@ import java.util.stream.Stream;
 @Slf4j
 public class Utils {
 
+    private static final String AVRO_SCHEMA = "avroSchema";
+
     public static Headers getRecordHaders(Messages.ProducerRequest protoHeader) {
         Headers headers = new RecordHeaders();
         protoHeader.getHeaderMap().entrySet()
@@ -42,13 +46,12 @@ public class Utils {
         Schema.Parser parser = new Schema.Parser();
         Schema schema = parser.parse(avroSchema);
         GenericRecord avroRecord = new GenericData.Record(schema);
-        avroRecord.put("value", request.getValue());
         return avroRecord;
     }
 
     public static byte[] convertToByteArray(GenericRecord record) {
         BinaryEncoder encoder = null;
-        try (ByteArrayOutputStream out = new ByteArrayOutputStream();) {
+        try (ByteArrayOutputStream out = new ByteArrayOutputStream()) {
             DatumWriter<GenericRecord> writer = new SpecificDatumWriter<>(Message.getClassSchema());
             encoder = EncoderFactory.get().binaryEncoder(out, null);
             writer.write(record, encoder);
@@ -76,10 +79,7 @@ public class Utils {
 
     public static GenericRecord buildRecord() {
         try {
-
-
             String schemaPath = "message.avsc";
-//        System.out.println();
             Stream<String> schemaString = Files.lines(Paths.get("src", "main", "resources", "message.avsc"));
             String result = schemaString.collect(Collectors.joining(" "));
             System.out.println("result =>" + result);
@@ -90,6 +90,22 @@ public class Utils {
             log.error("Error while building Generic Record" + ex.getMessage());
         }
         return null;
+    }
+
+    public static boolean isTopicPresent(MessagesConsumer.GetAllMessages request) {
+        if (request.getTopicList().isEmpty()) {
+           return false;
+        }
+        return true;
+    }
+
+    public static boolean isHeaderPresent(MessagesConsumer.GetAllMessages request) {
+        if (request.getHeaderMap().size() == 0 ||
+                !request.getHeaderMap().containsKey(AVRO_SCHEMA) ||
+                !request.getHeaderMap().containsKey("eventId")) {
+            return false;
+        }
+        return true;
     }
 
 }
