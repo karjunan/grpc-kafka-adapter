@@ -1,19 +1,22 @@
-package com.grpc.server.service;
+package com.grpc.server.service.producer;
 
+import com.grpc.server.avro.Message;
 import com.grpc.server.config.KafkaProducerConfig;
 import com.grpc.server.proto.KafkaServiceGrpc;
 import com.grpc.server.proto.Messages;
 import com.grpc.server.util.Utils;
 import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
-import lombok.extern.log4j.Log4j;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.avro.generic.GenericRecord;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;
 
-@Log4j
+@Slf4j
 @Service
+@ConditionalOnProperty(name = "producerBinding", havingValue = "true")
 public class ProducerService extends KafkaServiceGrpc.KafkaServiceImplBase {
 
     @Autowired
@@ -23,8 +26,6 @@ public class ProducerService extends KafkaServiceGrpc.KafkaServiceImplBase {
 
     @Override
     public void save(Messages.ProducerRequest request, StreamObserver<Messages.OkResponse> responseObserver) {
-
-
         if (request.getTopicList().isEmpty()) {
             Exception ex = new Exception("Topic name missing");
             responseObserver.onError(Status.INTERNAL.withDescription(ex.getMessage())
@@ -44,13 +45,14 @@ public class ProducerService extends KafkaServiceGrpc.KafkaServiceImplBase {
         }
 
         try {
-            kafkaProducerConfig.kafkaTemplate().executeInTransaction(template -> {
+            kafkaProducerConfig.kafkaTemplateTranscational().executeInTransaction(template -> {
                 for (String topic : request.getTopicList()) {
-                    ProducerRecord<String, GenericRecord> producerRecord = new ProducerRecord<>
-                            (topic, request.getPartition(), request.getKey(), Utils.getAvroRecord(request),
+                    Message message = Message.newBuilder().setValue(request.getValue()).build();
+                    ProducerRecord<String, byte[]> producerRecord = new ProducerRecord
+                            (topic, request.getPartition(), request.getKey(), message,
                                     Utils.getRecordHaders(request));
                     template.send(producerRecord);
-
+                    log.info("Message Sent => "+ message);
                 }
                 return null;
             });
@@ -62,7 +64,8 @@ public class ProducerService extends KafkaServiceGrpc.KafkaServiceImplBase {
             responseObserver.onCompleted();
             return;
         } catch (Exception ex) {
-            log.error("Exception while persisting data - " + ex);
+            log.error("Exception while persisting data - " + ex.getCause());
+            ex.printStackTrace();
             responseObserver.onError(Status.INTERNAL.withDescription(ex.getMessage())
                     .augmentDescription(ex.getCause().getMessage())
                     .withCause(ex.getCause())
@@ -71,5 +74,7 @@ public class ProducerService extends KafkaServiceGrpc.KafkaServiceImplBase {
         }
 
     }
+
+
 
 }

@@ -3,7 +3,7 @@ package com.grpc.server.service.integrationTest;
 import com.grpc.server.interceptor.HeaderServerInterceptor;
 import com.grpc.server.proto.KafkaServiceGrpc;
 import com.grpc.server.proto.Messages;
-import com.grpc.server.service.ProducerService;
+import com.grpc.server.service.producer.ProducerService;
 import com.grpc.server.util.UtilHelper;
 import io.grpc.inprocess.InProcessChannelBuilder;
 import io.grpc.inprocess.InProcessServerBuilder;
@@ -15,7 +15,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -23,7 +22,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RunWith(SpringRunner.class)
-@ActiveProfiles("test")
+@ActiveProfiles("producer-test")
 @SpringBootTest
 public class ProducerServiceIntegrationTest {
 
@@ -58,7 +57,7 @@ public class ProducerServiceIntegrationTest {
         producerRequest = Messages.ProducerRequest.newBuilder()
                 .addTopic("t1")
                 .addTopic("t2")
-                .addTopic("t3")
+//                .addTopic("t3")
                 .setValue("Entering Kafka")
                 .putAllHeader(headers)
                 .build();
@@ -66,11 +65,10 @@ public class ProducerServiceIntegrationTest {
 
     @Test
     public void test() {
-//       for(int i = 0; i < 10; i++) {
-            Messages.OkResponse response = blockingStub.save(producerRequest);
 
-//        }
-        Assert.assertEquals(true,response.getIsOk());
-        System.out.println(response);
+       for(int i = 0; i < 4; i++) {
+            Messages.OkResponse response = blockingStub.save(producerRequest);
+           Assert.assertEquals(true,response.getIsOk());
+        }
     }
 }

@@ -7,3 +7,4 @@ java-grpc-server.jar
 *.iml
 .project
 kafka-server-log*
+*jar

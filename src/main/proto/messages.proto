@@ -2,12 +2,6 @@ syntax = "proto3";
 
 option java_package="com.grpc.server.proto";
 
-message Event {
-    map<string,string> header = 1;
-    string key = 2;
-    string value = 3;
-
-}
 
 message ProducerRequest {
     repeated string topic = 1;
@@ -18,22 +12,11 @@ message ProducerRequest {
     map<string,string> header = 6;
 }
 
-//message Header {
-//    map<string, string> pairs = 1;
-//}
-
-message GetAllMessages {}
-
-message Response {
-    Event event = 1;
-}
-
 
 message OkResponse {
   bool isOk = 1;
 }
 
 service KafkaService {
-  rpc GetAll (GetAllMessages) returns (stream Response);
   rpc Save (ProducerRequest) returns (OkResponse);
 }

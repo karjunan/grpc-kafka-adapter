@@ -2,23 +2,33 @@ package com.grpc.server.server;
 
 import com.grpc.server.config.properties.GeneralProperties;
 import com.grpc.server.interceptor.HeaderServerInterceptor;
-import com.grpc.server.service.ProducerService;
+import com.grpc.server.service.consumer.ConsumerService;
+import com.grpc.server.service.producer.ProducerService;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
-import io.grpc.ServerInterceptors;
-import lombok.extern.log4j.Log4j;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 
-@Log4j
+@Slf4j
 public class GrpcServer implements ApplicationRunner {
 
-    @Autowired
-    GeneralProperties properties;
+    private ProducerService producerService;
+//    private ConsumerStreamService consumerStreamService;
+    private ConsumerService consumerService;
 
     @Autowired
-    private ProducerService producerService;
+    public GrpcServer(ConsumerService consumerService,
+               ProducerService producerService) {
+
+        this.consumerService = consumerService;
+        this.producerService = producerService;
+    }
+
+    @Autowired
+    private GeneralProperties properties;
+
 
     @Autowired
     HeaderServerInterceptor headerServerInterceptor;
@@ -31,10 +41,14 @@ public class GrpcServer implements ApplicationRunner {
     private Server server;
 
     public void start() throws Exception {
+
         server = ServerBuilder.forPort(properties.getGrpc_port())
-                .addService(ServerInterceptors.intercept(producerService, headerServerInterceptor))
+                .addService(producerService)
+//                .addService(ServerInterceptors.intercept(consumerStreamService,headerServerInterceptor))
+                .addService(consumerService)
                 .build()
                 .start();
+
         log.info("Listening on port " + properties.getGrpc_port());
         Runtime.getRuntime().addShutdownHook(new Thread() {
             @Override
