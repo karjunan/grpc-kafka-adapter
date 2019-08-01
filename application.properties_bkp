@@ -1,0 +1,45 @@
+grpc_port=8000
+server.port=5555
+
+spring.application.name=GRPC-SERVER
+
+###################################
+## Producer configuration
+##################################
+spring.kafka.producer.configmap.bootstrap.servers=localhost:9092,localhost:9093,localhost:9094
+spring.kafka.producer.configmap.key.serializer=org.apache.kafka.common.serialization.StringSerializer
+spring.kafka.producer.configmap.value.serializer=com.grpc.server.interceptor.AvroSerializer
+spring.kafka.producer.configmap.enable.idempotence=true
+spring.kafka.producer.configmap.schema.registry.url=http://localhost:8081
+spring.kafka.producer.configmap.transactional.id=server-1
+spring.kafka.producer.configmap.transaction.timeout.ms=100
+spring.kafka.producer.configmap.transactional.id.prefix=transactionServer-1-
+
+###################################
+## Consumer Configuration
+##################################
+spring.kafka.consumer.configmap.bootstrap.servers=localhost:9092,localhost:9093,localhost:9094
+spring.kafka.consumer.configmap.group.id=group1
+spring.kafka.consumer.configmap.key.deserializer=org.apache.kafka.common.serialization.StringDeserializer
+spring.kafka.consumer.configmap.value.deserializer=com.grpc.server.interceptor.AvroDeSerializer
+spring.kafka.consumer.configmap.schema.registry.url=http://localhost:8081
+
+
+###################################
+## General Configuration
+##################################
+#debug=true
+avro.schema.name=avroSchema
+
+#################################################################################
+# The below configuration is used for conditional annotation. This will be helpful
+# for unit testing.
+#################################################################################
+KStreamAndKTableService=false
+ConsumerService=true
+producerBinding=true
+
+#debug=true
+
+
+azure.application-insights.instrumentation-key=77b41a19-bc52-42a1-9d90-7bffe24d4ade

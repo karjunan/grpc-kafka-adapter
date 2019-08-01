@@ -12,7 +12,7 @@ RUN ls -ltr /usr/src/app
 
 FROM openjdk:8
 COPY --from=0 /usr/src/app/target/*.jar ./
-COPY --from=0 /usr/src/app/target/application.properties .
+COPY --from=0 /usr/src/app/application.properties .
 
 #COPY java-grpc-server.jar .
 #ENV CLASSPATH java-grpc-server.jar;
