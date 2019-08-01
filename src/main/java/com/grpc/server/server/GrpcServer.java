@@ -15,7 +15,6 @@ import org.springframework.boot.ApplicationRunner;
 public class GrpcServer implements ApplicationRunner {
 
     private ProducerService producerService;
-//    private ConsumerStreamService consumerStreamService;
     private ConsumerService consumerService;
 
     @Autowired
