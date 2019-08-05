@@ -1,14 +1,27 @@
-# grpc-kafka-adapter
+<!-- <p align="center">
+  <a href="https://www.pickles.com.au/" target="blank"><img src="https://upload.wikimedia.org/wikipedia/commons/4/48/Pickles-Logo.jpg" width="320" alt="Pickles Logo" /></a>
+</p> -->
 
+![Pickles Logo](/images/logo.jpg)
+
+# Reference Grpc-Kafka-Adapter powered by Java
+
+## Table of Contents
+
+- [Introduction](#intro)
+- [NPM Functional Dependencies](#npm-functional-dependencies)
+
+
+## intro
 This documentation provides a basic Java programmer’s introduction to working with gRPC server and how to build services 
 to connect to Kafka.
 
 By walking through this example you’ll learn how to:
 
-Define a service in a .proto file.
-Generate server code using the protocol buffer compiler.
-Gennerate Avro files using Avro plugins.
-Use the Java gRPC API to write two simple services which would produce and consume messages from Kafka
+1.Define a service in a .proto file.
+1.Generate server code using the protocol buffer compiler.
+1.Gennerate Avro files using Avro plugins.
+1.Use the Java gRPC API to write two simple services which would produce and consume messages from Kafka
 
 Why use gRPC?
 
