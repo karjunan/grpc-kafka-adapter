@@ -9,8 +9,8 @@
 ## Table of Contents
 
 - [Introduction](#Introduction)
-- [Why use gRPC](#Why use GRPC)
-- [Functional dependencies](#Functional dependencies)
+- [Why use gRPC](#Why-use-gRPC)
+- [Functional dependencies](#Functional-dependencies)
 
 
 ## Introduction
@@ -24,7 +24,7 @@ By walking through this example you’ll learn how to:
 1. Generate Avro files using Avro plugins.
 1. Use the Java gRPC API to write two simple services which would produce and consume messages from Kafka
 
-## Why use GRPC
+## Why use gRPC
 
    The microservices are build using Node js. Nodejs libraries which connect to kafka dosent support some features provided by node client 
    libraries. Eg ( Transcational , Idempotent producer, Excatly once semantics and some features related to streaming api's). The core features which are mentioned above will be implemented in java using grpc server and will be exposed as api to node microservices. The node microservices would use the apis to invoke the produce and consume functionalities. Also some of the complex streaming functionalities which node js dosent support can also be introduced in Grpc service and can be exposed to node microserivce using grpc streaming apis. 
