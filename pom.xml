@@ -18,7 +18,7 @@
 
     <properties>
         <grpc.version>1.21.0</grpc.version>
-        <avro.version>1.8.2</avro.version>
+        <avro.version>1.11.3</avro.version>
         <kafka.version>2.2.0</kafka.version>
         <junit.version>4.12</junit.version>
         <mockito.version>2.23.4</mockito.version>
